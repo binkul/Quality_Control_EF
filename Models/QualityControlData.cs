@@ -94,5 +94,7 @@ namespace Quality_Control_EF.Models
         public string Voc { get; set; }
         public string FRemarks { get; set; }
         public string Comments { get; set; }
+
+        public virtual QualityControl QualityControl { get; set; }
     }
 }

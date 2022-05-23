@@ -9,6 +9,11 @@ namespace Quality_Control_EF.Models
 {
     public partial class QualityControl
     {
+        public QualityControl()
+        {
+            QualityControlData = new HashSet<QualityControlData>();
+        }
+
         public long Id { get; set; }
         public DateTime ProductionDate { get; set; }
         public int Number { get; set; }
@@ -17,7 +22,11 @@ namespace Quality_Control_EF.Models
         public int ProductTypeId { get; set; }
         public string Remarks { get; set; }
         public string ActiveFields { get; set; }
-        public int LoginId { get; set; }
         public string ProductIndex { get; set; }
+
+        public long LoginId { get; set; }
+        public virtual Users User { get; set; }
+
+        public virtual ICollection<QualityControlData> QualityControlData { get; set; }
     }
 }
