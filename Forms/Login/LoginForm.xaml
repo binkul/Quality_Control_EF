@@ -1,9 +1,9 @@
-﻿<Window x:Class="Quality_Control.Forms.Login.LoginForm"
+﻿<Window x:Class="Quality_Control_EF.Forms.Login.LoginForm"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Quality_Control.Forms.Login"
+        xmlns:local="clr-namespace:Quality_Control_EF.Forms.Login"
         mc:Ignorable="d"
         Title="Logowanie" Height="400" Width="400" WindowStartupLocation="CenterScreen" FontSize="14" 
         Background="#FF04c582" BorderBrush="#FFC3EE2B" ResizeMode="NoResize" KeyDown="Window_KeyDown" Icon="/img/Ok-icon.png">

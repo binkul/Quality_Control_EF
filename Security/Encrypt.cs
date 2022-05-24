@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace Quality_Control.Security
+namespace Quality_Control_EF.Security
 {
     public class Encrypt
     {

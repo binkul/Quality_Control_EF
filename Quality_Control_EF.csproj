@@ -38,6 +38,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>packages\CommonServiceLocator.2.0.2\lib\net47\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
+      <HintPath>packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.4.1.0, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
+      <HintPath>packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
+      <HintPath>packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.1.1.1\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -155,6 +167,9 @@
       <HintPath>packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -173,20 +188,43 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\DatePickerLostFocus.cs" />
+    <Compile Include="Behaviors\TextBooxLostFocus.cs" />
+    <Compile Include="Commons\DefaultData.cs" />
+    <Compile Include="Commons\SortableObservableCollection.cs" />
+    <Compile Include="Converters\BoolToNotConverter.cs" />
+    <Compile Include="Converters\ColumnVisibilityConverter.cs" />
+    <Compile Include="Converters\DateTimeConverter.cs" />
+    <Compile Include="Converters\IgnoreNewItemPlaceholderConverter.cs" />
+    <Compile Include="Converters\NaviCurrentConverter.cs" />
+    <Compile Include="Converters\NaviTotalConverter.cs" />
+    <Compile Include="Forms\Navigation\INavigation.cs" />
+    <Compile Include="Forms\Navigation\NaviButtonFirst.cs" />
+    <Compile Include="Forms\Navigation\NaviButtonLast.cs" />
+    <Compile Include="Forms\Navigation\NaviButtonLeft.cs" />
+    <Compile Include="Forms\Navigation\NaviButtonRight.cs" />
+    <Compile Include="Forms\Navigation\NavigationMV.cs" />
+    <Compile Include="Forms\Quality\Command\AddNewButton.cs" />
+    <Compile Include="Forms\Quality\Command\DeleteButton.cs" />
+    <Compile Include="Forms\Quality\Command\ModificationButton.cs" />
+    <Compile Include="Forms\Quality\Command\SaveButton.cs" />
+    <Compile Include="Forms\Quality\Command\SettingsButton.cs" />
+    <Compile Include="Forms\Quality\Command\StatisticButton.cs" />
+    <Compile Include="Forms\Quality\ModelView\QualityMV.cs" />
+    <Compile Include="Forms\Quality\Model\WindowData.cs" />
+    <Compile Include="Forms\Quality\Model\WindowSettings.cs" />
     <Compile Include="Forms\Register\RegisterForm.xaml.cs">
       <DependentUpon>RegisterForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Tools\WindowsOperation.cs" />
     <Compile Include="Security\Encrypt.cs" />
     <Compile Include="Security\UserSingleton.cs" />
+    <Compile Include="Service\QualityService.cs" />
     <Page Include="Forms\Login\LoginForm.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Forms\Register\RegisterForm.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -196,10 +234,6 @@
     </Compile>
     <Compile Include="Forms\Login\LoginForm.xaml.cs">
       <DependentUpon>LoginForm.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -237,6 +271,32 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Img\Ok-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\arrow-left.png" />
+    <Resource Include="Img\arrow-left_first.png" />
+    <Resource Include="Img\arrow-right.png" />
+    <Resource Include="Img\arrow-right_last.png" />
+    <Resource Include="Img\calculator.png" />
+    <Resource Include="Img\calculator1.ico" />
+    <Resource Include="Img\calculator2.png" />
+    <Resource Include="Img\copy.png" />
+    <Resource Include="Img\delete.png" />
+    <Resource Include="Img\mark.png" />
+    <Resource Include="Img\Modify.png" />
+    <Resource Include="Img\New.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\qc-icon-7.ico" />
+    <Resource Include="Img\question.png" />
+    <Resource Include="Img\Save.png" />
+    <Resource Include="Img\Settings.png" />
+    <Resource Include="Img\Statistic.ico" />
+    <Resource Include="Img\today1.ico" />
+    <Resource Include="Img\today1.png" />
+    <Resource Include="Img\today2.png" />
+    <Resource Include="Img\today3.png" />
+    <Resource Include="Img\Trash.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets')" />

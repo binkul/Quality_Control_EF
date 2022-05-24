@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Quality_Control.Forms.Register;
-using Quality_Control.Security;
+using Quality_Control_EF.Forms.Register;
+using Quality_Control_EF.Security;
 using Quality_Control_EF.Models;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Quality_Control.Forms.Login
+namespace Quality_Control_EF.Forms.Login
 {
     /// <summary>
     /// Logika interakcji dla klasy LoginForm.xaml

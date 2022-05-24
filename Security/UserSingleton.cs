@@ -1,4 +1,4 @@
-﻿namespace Quality_Control.Security
+﻿namespace Quality_Control_EF.Security
 {
     public sealed class UserSingleton
     {

@@ -1,12 +1,12 @@
-﻿using Quality_Control.Forms.Login;
-using Quality_Control.Security;
+﻿using Quality_Control_EF.Forms.Login;
+using Quality_Control_EF.Security;
 using Quality_Control_EF.Models;
 using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Quality_Control.Forms.Register
+namespace Quality_Control_EF.Forms.Register
 {
     /// <summary>
     /// Logika interakcji dla klasy RegisterForm.xaml
