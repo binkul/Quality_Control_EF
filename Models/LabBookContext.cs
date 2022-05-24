@@ -24,7 +24,7 @@ namespace Quality_Control_EF.Models
         public virtual DbSet<QualityControl> QualityControl { get; set; }
         public virtual DbSet<QualityControlData> QualityControlData { get; set; }
         public virtual DbSet<QualityControlFields> QualityControlFields { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -329,8 +329,9 @@ namespace Quality_Control_EF.Models
                 entity.Property(e => e.LabbookId).HasColumnName("labbook_id");
             });
 
-            modelBuilder.Entity<Users>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
+                entity.ToTable("Users");
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Active)

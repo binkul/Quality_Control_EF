@@ -23,6 +23,6 @@ namespace Quality_Control_EF.Models
         public DateTime Created { get; set; }
 
         public long LoginId { get; set; }
-        public virtual Users User { get; set; }
+        public virtual User User { get; set; }
     }
 }

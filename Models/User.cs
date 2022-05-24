@@ -7,9 +7,9 @@ using System.Collections.Generic;
 
 namespace Quality_Control_EF.Models
 {
-    public partial class Users
+    public partial class User
     {
-        public Users()
+        public User()
         {
             Products = new HashSet<Product>();
             QualityControls = new HashSet<QualityControl>();

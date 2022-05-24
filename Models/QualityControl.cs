@@ -19,13 +19,13 @@ namespace Quality_Control_EF.Models
         public int Number { get; set; }
         public string ProductName { get; set; }
         public long? LabbookId { get; set; }
-        public int ProductTypeId { get; set; }
+        public long ProductTypeId { get; set; }
         public string Remarks { get; set; }
         public string ActiveFields { get; set; }
         public string ProductIndex { get; set; }
 
         public long LoginId { get; set; }
-        public virtual Users User { get; set; }
+        public virtual User User { get; set; }
 
         public virtual ICollection<QualityControlData> QualityControlData { get; set; }
     }
