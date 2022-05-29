@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Quality_Control_EF.Models;
 
 namespace Quality_Control_EF.Forms.Quality.ModelView
 {
@@ -26,7 +27,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
         private readonly double _startLeftPosition = 32;
         private readonly WindowData _windowData = WindowSettings.Read();
         private readonly QualityService _service = new QualityService();
-        private QualityDataMV _qualityDataMV;
+        //private QualityDataMV _qualityDataMV;
         private NavigationMV _navigationMV;
         private int _selectedIndex;
         private string _remarks;
@@ -47,17 +48,17 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             OnComboYearSelectionChanged = new RelayCommand<SelectionChangedEventArgs>(OnYearSelectionCommandExecuted);
         }
 
-        internal void SetQualityDataMV(QualityDataMV qualityDataMV)
-        {
-            _qualityDataMV = qualityDataMV;
-        }
+        //internal void SetQualityDataMV(QualityDataMV qualityDataMV)
+        //{
+        //    _qualityDataMV = qualityDataMV;
+        //}
 
         internal NavigationMV SetNavigationMV
         {
             set => _navigationMV = value;
         }
 
-        public SortableObservableCollection<QualityModel> Quality => _service.Quality;
+        public SortableObservableCollection<QualityControl> Quality => _service.Quality;
 
         internal bool Modified => ModifiedQuality || ModifiedData;
 
@@ -67,9 +68,9 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
         {
             get
             {
-                if (_qualityDataMV != null)
-                    return _qualityDataMV.Modified;
-                else
+                //if (_qualityDataMV != null)
+                //    return _qualityDataMV.Modified;
+                //else
                     return false;
             }
         }
@@ -199,9 +200,9 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         public bool IsAnyQuality => _service.GetQualityCount > 0;
 
-        internal QualityModel GetCurrentQuality => _service.Quality[_selectedIndex];
+        internal QualityControl GetCurrentQuality => _service.Quality[_selectedIndex];
 
-        public QualityModel ActualQuality { internal get; set; }
+        public QualityControl ActualQuality { internal get; set; }
 
         public bool IsTextBoxActive { get; set; } = true;
 
@@ -244,7 +245,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             get => _selectedIndex;
             set
             {
-                QualityModel model = null;
+                QualityControl model = null;
                 _selectedIndex = value;
 
                 if (value >= 0 && _service.GetQualityCount != 0 && value < _service.GetQualityCount)
@@ -266,7 +267,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
                     nameof(ProductionDate),
                     nameof(IsTextBoxActive));
 
-                if (_qualityDataMV != null) _qualityDataMV.RefreshQualityData(model);
+                //if (_qualityDataMV != null) _qualityDataMV.RefreshQualityData(model);
                 Refresh();
             }
         }
@@ -349,8 +350,8 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         internal void SaveDataQuality()
         {
-            if (ModifiedData)
-                _qualityDataMV.Save();
+            //if (ModifiedData)
+            //    _qualityDataMV.Save();
         }
 
         internal void SaveAll()
@@ -358,7 +359,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             bool reload = SaveQuality();
             SaveDataQuality();
 
-            _qualityDataMV.Save();
+            //_qualityDataMV.Save();
             if (reload) ReloadYears();
         }
 

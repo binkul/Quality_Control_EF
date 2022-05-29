@@ -1,4 +1,5 @@
 ﻿using Quality_Control_EF.Commons;
+using Quality_Control_EF.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,13 +10,11 @@ namespace Quality_Control_EF.Service
 {
     public class QualityService
     {
-        private readonly QualityRepository _repository;
-        public SortableObservableCollection<QualityModel> FullQuality { get; private set; }
-        public SortableObservableCollection<QualityModel> Quality { get; private set; }
+        public SortableObservableCollection<QualityControl> FullQuality { get; private set; }
+        public SortableObservableCollection<QualityControl> Quality { get; private set; }
 
         public QualityService()
         {
-            _repository = new QualityRepository();
             ReloadQuality(DateTime.Today.Year);
             Years = GetAllYears();
         }
@@ -41,104 +40,118 @@ namespace Quality_Control_EF.Service
             Quality = FullQuality;
         }
 
-        public void AddQuality(QualityModel quality)
+        public void AddQuality(QualityControl quality)
         {
-            FullQuality.Add(quality);
-            FullQuality.Sort(x => x.Number, ListSortDirection.Ascending);
+            //FullQuality.Add(quality);
+            //FullQuality.Sort(x => x.Number, ListSortDirection.Ascending);
         }
 
-        public SortableObservableCollection<QualityModel> GetAllQuality(int year)
+        public SortableObservableCollection<QualityControl> GetAllQuality(int year)
         {
-            SortableObservableCollection<QualityModel> list = _repository.GetAllByYear(year);
+            LabBookContext contex = new LabBookContext();
+            var tmpList = contex.QualityControl
+                .Where(x => x.ProductionDate.Year == year);
+
+            SortableObservableCollection<QualityControl> list = new SortableObservableCollection<QualityControl>();
+            foreach(QualityControl qualityControl in tmpList)
+            {
+                list.Add(qualityControl);
+            }
             list.Sort(x => x.Number, ListSortDirection.Ascending);
             return list;
         }
 
         public List<int> GetAllYears()
         {
-            return _repository.GetAllYears();
+            LabBookContext contex = new LabBookContext();
+
+            return contex.QualityControl
+                .Select(x => x.ProductionDate.Year)
+                .ToList();
         }
 
-        public QualityModel SaveNewQuality(QualityModel quality)
+        public QualityControl SaveNewQuality(QualityControl quality)
         {
-            string fields = _repository.GetActiveFieldsByLabBookId(quality.LabBookId);
-            quality.ActiveDataFields = !string.IsNullOrEmpty(fields) ? fields : DefaultData.DefaultDataFields;
-            QualityModel result = _repository.Save(quality);
-            return result;
+            //string fields = _repository.GetActiveFieldsByLabBookId(quality.LabBookId);
+            //quality.ActiveDataFields = !string.IsNullOrEmpty(fields) ? fields : DefaultData.DefaultDataFields;
+            //QualityModel result = _repository.Save(quality);
+            //return result;
+
+            return null;
         }
 
         public void Filter(string ProductNumber, string ProductName)
         {
-            if (!string.IsNullOrEmpty(ProductName) || !string.IsNullOrEmpty(ProductNumber))
-            {
+            //if (!string.IsNullOrEmpty(ProductName) || !string.IsNullOrEmpty(ProductNumber))
+            //{
 
-                int number = ProductNumber.Length > 0 ? Convert.ToInt32(ProductNumber) : -1;
+            //    int number = ProductNumber.Length > 0 ? Convert.ToInt32(ProductNumber) : -1;
 
-                List<QualityModel> result = FullQuality
-                    .Where(x => x.ProductName.ToLower().Contains(ProductName))
-                    .Where(x => x.Number >= number)
-                    .ToList();
+            //    List<QualityModel> result = FullQuality
+            //        .Where(x => x.ProductName.ToLower().Contains(ProductName))
+            //        .Where(x => x.Number >= number)
+            //        .ToList();
 
-                SortableObservableCollection<QualityModel> newQuality = new SortableObservableCollection<QualityModel>();
-                foreach (QualityModel model in result)
-                {
-                    newQuality.Add(model);
-                }
+            //    SortableObservableCollection<QualityModel> newQuality = new SortableObservableCollection<QualityModel>();
+            //    foreach (QualityModel model in result)
+            //    {
+            //        newQuality.Add(model);
+            //    }
 
-                Quality = newQuality;
-            }
-            else
-            {
-                Quality = FullQuality;
-            }
+            //    Quality = newQuality;
+            //}
+            //else
+            //{
+            //    Quality = FullQuality;
+            //}
         }
 
-        public void Delete(QualityModel quality)
+        public void Delete(QualityControl quality)
         {
-            long id = quality.Id;
-            QualityDataRepository qualityDataRepository = new QualityDataRepository();
+            //long id = quality.Id;
+            //QualityDataRepository qualityDataRepository = new QualityDataRepository();
 
-            bool result = false;
-            if (MessageBox.Show("Czy na pewno usunąć produkcję P" + quality.Number + " '" + quality.ProductName + "' z listy?", "Usuwanie",
-                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                result = _repository.DeleteQualityById(id) && qualityDataRepository.DeleteQualityDataByQualityId(id);
-            }
+            //bool result = false;
+            //if (MessageBox.Show("Czy na pewno usunąć produkcję P" + quality.Number + " '" + quality.ProductName + "' z listy?", "Usuwanie",
+            //    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            //{
+            //    result = _repository.DeleteQualityById(id) && qualityDataRepository.DeleteQualityDataByQualityId(id);
+            //}
 
-            if (result)
-            {
-                QualityModel delQuality = FullQuality.First(x => x.Id == id);
-                _ = FullQuality.Remove(delQuality);
-                _ = Quality.Remove(delQuality);
-            }
+            //if (result)
+            //{
+            //    QualityModel delQuality = FullQuality.First(x => x.Id == id);
+            //    _ = FullQuality.Remove(delQuality);
+            //    _ = Quality.Remove(delQuality);
+            //}
         }
 
         public bool Update()
         {
             bool reload = false;
 
-            List<QualityModel> qualities = FullQuality.Where(x => x.Modified).ToList();
-            foreach (QualityModel quality in qualities)
-            {
-                if (_repository.Update(quality))
-                {
-                    quality.Modified = false;
-                    if (CheckQualityYear(quality)) reload = true;
-                }
-            }
+            //List<QualityModel> qualities = FullQuality.Where(x => x.Modified).ToList();
+            //foreach (QualityModel quality in qualities)
+            //{
+            //    if (_repository.Update(quality))
+            //    {
+            //        quality.Modified = false;
+            //        if (CheckQualityYear(quality)) reload = true;
+            //    }
+            //}
             return reload;
         }
 
-        private bool CheckQualityYear(QualityModel quality)
+        private bool CheckQualityYear(QualityControl quality)
         {
             bool result = false;
 
-            if (quality.ProductionDate.Year != Year)
-            {
-                _ = FullQuality.Remove(quality);
-                _ = Quality.Remove(quality);
-                if (FullQuality.Count == 0 || !Years.Contains(quality.ProductionDate.Year)) result = true;
-            }
+            //if (quality.ProductionDate.Year != Year)
+            //{
+            //    _ = FullQuality.Remove(quality);
+            //    _ = Quality.Remove(quality);
+            //    if (FullQuality.Count == 0 || !Years.Contains(quality.ProductionDate.Year)) result = true;
+            //}
 
             return result;
         }

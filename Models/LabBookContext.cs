@@ -103,6 +103,8 @@ namespace Quality_Control_EF.Models
 
             modelBuilder.Entity<QualityControl>(entity =>
             {
+                entity.Ignore(e => e.YearNumber);
+                entity.Ignore(e => e.Modified);
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.ActiveFields)
                     .HasColumnName("active_fields")
