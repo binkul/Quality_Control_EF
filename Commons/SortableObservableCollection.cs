@@ -9,6 +9,11 @@ namespace Quality_Control_EF.Commons
 {
     public class SortableObservableCollection<T> : ObservableCollection<T> where T : INotifyPropertyChanged
     {
+        public SortableObservableCollection(ICollection<T> collection) : base(collection)
+        {
+            CollectionChanged += SortableObservableCollection_CollectionChanged;
+        }
+
         public SortableObservableCollection()
         {
             CollectionChanged += SortableObservableCollection_CollectionChanged;
@@ -42,12 +47,12 @@ namespace Quality_Control_EF.Commons
         {
             switch (direction)
             {
-                case System.ComponentModel.ListSortDirection.Ascending:
+                case ListSortDirection.Ascending:
                     {
                         ApplySort(Items.OrderBy(keySelector));
                         break;
                     }
-                case System.ComponentModel.ListSortDirection.Descending:
+                case ListSortDirection.Descending:
                     {
                         ApplySort(Items.OrderByDescending(keySelector));
                         break;

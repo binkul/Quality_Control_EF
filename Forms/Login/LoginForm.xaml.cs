@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using Quality_Control_EF.Forms.Quality;
 
 namespace Quality_Control_EF.Forms.Login
 {
@@ -51,8 +52,8 @@ namespace Quality_Control_EF.Forms.Login
             else if ((bool)user.Active)
             {
                 _ = UserSingleton.CreateInstance(user.Id, user.Name, user.Surname, user.Permission, user.Identifier, (bool)user.Active);
-//                QualityForm quality = new QualityForm();
-//                quality.Show();
+                QualityForm quality = new QualityForm();
+                quality.Show();
                 Close();
             }
             else

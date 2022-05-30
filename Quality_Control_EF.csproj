@@ -166,6 +166,7 @@
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -213,6 +214,9 @@
     <Compile Include="Forms\Quality\ModelView\QualityMV.cs" />
     <Compile Include="Forms\Quality\Model\WindowData.cs" />
     <Compile Include="Forms\Quality\Model\WindowSettings.cs" />
+    <Compile Include="Forms\Quality\QualityForm.xaml.cs">
+      <DependentUpon>QualityForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Register\RegisterForm.xaml.cs">
       <DependentUpon>RegisterForm.xaml</DependentUpon>
     </Compile>
@@ -223,6 +227,10 @@
     <Page Include="Forms\Login\LoginForm.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Forms\Quality\QualityForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Forms\Register\RegisterForm.xaml">
       <Generator>MSBuild:Compile</Generator>

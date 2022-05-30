@@ -49,15 +49,12 @@ namespace Quality_Control_EF.Service
         public SortableObservableCollection<QualityControl> GetAllQuality(int year)
         {
             LabBookContext contex = new LabBookContext();
-            var tmpList = contex.QualityControl
-                .Where(x => x.ProductionDate.Year == year);
+            List<QualityControl> tmpList = contex.QualityControl
+                .Where(x => x.ProductionDate.Year == year)
+                .OrderBy(x => x.Number)
+                .ToList();
 
-            SortableObservableCollection<QualityControl> list = new SortableObservableCollection<QualityControl>();
-            foreach(QualityControl qualityControl in tmpList)
-            {
-                list.Add(qualityControl);
-            }
-            list.Sort(x => x.Number, ListSortDirection.Ascending);
+            SortableObservableCollection<QualityControl> list = new SortableObservableCollection<QualityControl>(tmpList);
             return list;
         }
 
@@ -67,6 +64,8 @@ namespace Quality_Control_EF.Service
 
             return contex.QualityControl
                 .Select(x => x.ProductionDate.Year)
+                .Distinct()
+                .OrderBy(x => x)
                 .ToList();
         }
 

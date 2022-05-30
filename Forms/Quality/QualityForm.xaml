@@ -1,0 +1,336 @@
+﻿<RibbonWindow x:Class="Quality_Control_EF.Forms.Quality.QualityForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Quality_Control_EF.Forms.Quality"
+        xmlns:Convertors="clr-namespace:Quality_Control_EF.Converters"
+        xmlns:vm="clr-namespace:Quality_Control_EF.Forms.Quality.ModelView"
+        xmlns:naviMV="clr-namespace:Quality_Control_EF.Forms.Navigation"
+        xmlns:beh="clr-namespace:Quality_Control_EF.Behaviors"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:cmd="http://www.galasoft.ch/mvvmlight"
+        mc:Ignorable="d"
+        ResizeMode="CanResize"
+        Title="Kontrola jakości" 
+        Height="{Binding FormHeight, Mode=TwoWay}" 
+        Width="{Binding FormWidth, Mode=TwoWay}"
+        Top="{Binding FormYpos, Mode=TwoWay}"
+        Left="{Binding FormXpos, Mode=TwoWay}" 
+        Icon="/img/Ok-icon.png">
+    <Window.DataContext>
+        <vm:QualityMV />
+    </Window.DataContext>
+    <Window.Resources>
+        <!--<vm:QualityDataMV x:Key="QualityData" />-->
+        <naviMV:NavigationMV x:Key="navi" />
+        <Convertors:DateTimeConverter x:Key="DateTimeConverter" />
+        <Convertors:ColumnVisibilityConverter x:Key="ColumnVisibility" />
+        <Convertors:IgnoreNewItemPlaceholderConverter x:Key="IgnoreNewItemConverter" />
+        <Convertors:NaviCurrentConverter x:Key="NaviCurrentConverter" />
+        <Convertors:NaviTotalConverter x:Key="NaviTotalConverter" />
+        <Style x:Key="AllignColmnHeaderCenter" TargetType="DataGridColumnHeader">
+            <Setter Property="SeparatorBrush" Value="WhiteSmoke" />
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Height" Value="25" />
+        </Style>
+        <Style x:Key="AllignCellCenter" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Padding" Value="0,0,0,0" />
+            <Setter Property="FontWeight" Value="Normal" />
+        </Style>
+        <Style x:Key="AllignCellLeft" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Padding" Value="3,0,0,0" />
+            <Setter Property="FontWeight" Value="Normal" />
+        </Style>
+        <Style x:Key="DateErrorStyle" TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="Background" Value="Yellow"/>
+                    <Setter Property="ToolTip" Value="Niepoprawny format daty"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="DoubleErrorStyle" TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="Background" Value="Yellow"/>
+                    <Setter Property="ToolTip" Value="Wartość nie jest liczbą"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <SolidColorBrush x:Key="DataGridBorderColor" Color="#FFB1AEAE"/>
+    </Window.Resources>
+    <i:Interaction.Triggers>
+        <!-- Closing Form event -->
+        <i:EventTrigger EventName="Closing">
+            <cmd:EventToCommand Command="{Binding OnClosingCommand}" PassEventArgsToCommand="True" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <DockPanel Margin="0,0,0,0">
+
+        <Ribbon DockPanel.Dock="Top" FontWeight="Bold" FontSize="14">
+            <RibbonTab Header="Kontrola jakości">
+                <RibbonGroup Header="Wyroby" FontSize="10">
+                    <RibbonButton Label="Nowy" LargeImageSource="/Img/New.ico" FontWeight="Regular"
+                                  Command="{Binding AddNewButton}">
+                        <RibbonButton.ToolTip >
+                            <ToolTip Background="Yellow">
+                                <DockPanel Width="Auto" Height="Auto" Background="Yellow" >
+                                    <TextBlock FontSize="12">Dodaj nowy wpis</TextBlock>
+                                </DockPanel>
+                            </ToolTip>
+                        </RibbonButton.ToolTip>
+                    </RibbonButton>
+                    <RibbonButton Label="Zapisz" LargeImageSource="/Img/Save.png" FontWeight="Regular"
+                                  Command="{Binding SaveButton}">
+                        <RibbonButton.ToolTip >
+                            <ToolTip Background="Yellow">
+                                <DockPanel Width="Auto" Height="Auto" Background="Yellow" >
+                                    <TextBlock FontSize="12">Zapisz zmiany</TextBlock>
+                                </DockPanel>
+                            </ToolTip>
+                        </RibbonButton.ToolTip>
+                    </RibbonButton>
+                    <RibbonButton Label="Usuń" LargeImageSource="/Img/delete.png" FontWeight="Regular"
+                                  Command="{Binding DeleteButton}">
+                        <RibbonButton.ToolTip >
+                            <ToolTip Background="Yellow">
+                                <DockPanel Width="Auto" Height="Auto" Background="Yellow" >
+                                    <TextBlock FontSize="12">Usuń wpis i pomiary</TextBlock>
+                                </DockPanel>
+                            </ToolTip>
+                        </RibbonButton.ToolTip>
+                    </RibbonButton>
+                </RibbonGroup>
+                <RibbonGroup Header="Ustawienia" FontSize="10">
+                    <RibbonButton Label="Modyfikuj" LargeImageSource="/Img/Modify.png" FontWeight="Regular"
+                                  Command="{Binding ModificationButton}">
+                        <RibbonButton.ToolTip >
+                            <ToolTip Background="Yellow">
+                                <DockPanel Width="Auto" Height="Auto" Background="Yellow" >
+                                    <TextBlock FontSize="12">Modyfikuj bierzący wyrób</TextBlock>
+                                </DockPanel>
+                            </ToolTip>
+                        </RibbonButton.ToolTip>
+                    </RibbonButton>
+                    <RibbonButton Label="Ustawienia" LargeImageSource="/Img/Settings.png" FontWeight="Regular"
+                                  Command="{Binding SettingsButton}">
+                        <RibbonButton.ToolTip >
+                            <ToolTip Background="Yellow">
+                                <DockPanel Width="Auto" Height="Auto" Background="Yellow" >
+                                    <TextBlock FontSize="12">Ustawienia dla wszystkich</TextBlock>
+                                </DockPanel>
+                            </ToolTip>
+                        </RibbonButton.ToolTip>
+                    </RibbonButton>
+                </RibbonGroup>
+                <RibbonGroup Header="Analiza" FontSize="10">
+                    <RibbonButton Label="Statystytka" LargeImageSource="/Img/Statistic.ico" FontWeight="Regular"
+                                  Command="{Binding StatisticButton}">
+                        <RibbonButton.ToolTip >
+                            <ToolTip Background="Yellow">
+                                <DockPanel Width="Auto" Height="Auto" Background="Yellow" >
+                                    <TextBlock FontSize="12">Otwórz statystykę</TextBlock>
+                                </DockPanel>
+                            </ToolTip>
+                        </RibbonButton.ToolTip>
+                    </RibbonButton>
+                </RibbonGroup>
+            </RibbonTab>
+        </Ribbon>
+
+        <Grid Background="#FFE5E5E5">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="340" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="80" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="25" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0" >
+                <TextBox x:Name="TxtFilterNumber" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+                         PreviewTextInput="NumberValidationTextBox"
+                         Margin="{Binding TxtNumberLeftPosition, FallbackValue='32,0,0,5'}"
+                         Text="{Binding ProductNumber, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                         Width="{Binding ElementName=ColYearNumber, Path=ActualWidth}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <cmd:EventToCommand Command="{Binding OnProductNumberFilterTextChanged}" PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <i:Interaction.Behaviors>
+                        <beh:DatePickerLostFocus/>
+                    </i:Interaction.Behaviors>
+                </TextBox>
+                <TextBox x:Name="TxtFilterNname" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="1,0,0,5"
+                         Text="{Binding ProductName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                         Width="{Binding ElementName=ColProductName, Path=ActualWidth}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <cmd:EventToCommand Command="{Binding OnProductNameFilterTextChanged}" PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <i:Interaction.Behaviors>
+                        <beh:DatePickerLostFocus/>
+                    </i:Interaction.Behaviors>
+                </TextBox>
+            </StackPanel>
+
+            <!--#### Main DataGrid -->
+            <DataGrid x:Name="DgQuality" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Margin="2,2,2,2" AutoGenerateColumns="False" 
+                      ColumnWidth="*" SelectionMode="Single" SelectionUnit="FullRow" IsSynchronizedWithCurrentItem="True" RowHeaderWidth="20"
+                      CanUserAddRows="False"  CanUserResizeColumns="True" CanUserResizeRows="False" FontSize="12" HeadersVisibility="Column"
+                      SelectionChanged="DgQuality_SelectionChanged"
+                      HorizontalGridLinesBrush="{StaticResource DataGridBorderColor}"
+                      VerticalGridLinesBrush="{StaticResource DataGridBorderColor}"
+                      ItemsSource="{Binding Quality}"
+                      SelectedItem="{Binding ActualQuality, Mode=OneWayToSource}"
+                      SelectedIndex="{Binding DgRowIndex, Mode=TwoWay, FallbackValue=0}" >
+
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn x:Name="ColId" Binding="{Binding Id}" Visibility="Collapsed" />
+                    <DataGridTextColumn x:Name="ColNumber" Binding="{Binding Number}" Visibility="Collapsed" />
+                    <DataGridTextColumn x:Name="ColProductIndex" Binding="{Binding ProductIndex}" Visibility="Collapsed" />
+                    <DataGridTextColumn x:Name="ColLabbokId" Binding="{Binding LabbookId}" Visibility="Collapsed" />
+                    <DataGridTextColumn x:Name="ColRemarks" Binding="{Binding Remarks}" Visibility="Collapsed" />
+                    <DataGridTextColumn x:Name="ColActiveFields" Binding="{Binding ActiveFields}" Visibility="Collapsed" />
+                    <DataGridTextColumn x:Name="ColProdDate" Binding="{Binding ProductionDate}" Visibility="Collapsed" />
+                    <DataGridTextColumn x:Name="ColLoginId" Binding="{Binding LoginId}" Visibility="Collapsed" />
+                    <DataGridTextColumn x:Name="ColTypeId" Binding="{Binding ProductTypeId}" Visibility="Collapsed" />
+                    <DataGridTextColumn x:Name="ColModified" Binding="{Binding Modified}" Visibility="Collapsed" />
+
+                    <!-- Arrow selector -->
+                    <DataGridTemplateColumn x:Name="ColStatus" HeaderStyle="{StaticResource AllignColmnHeaderCenter}" 
+                                                        IsReadOnly="True" CanUserSort="False" CanUserResize="False"
+                                                        Width="30">
+                        <DataGridTemplateColumn.CellTemplate >
+                            <DataTemplate>
+                                <StackPanel Background="#FFE5E5E5" Margin="-1,-1,-1,-1">
+                                    <Image x:Name="ArrowRight" Width="18" Height="16" Margin="1,1,1,1" Source="/Img/arrow-right.png" 
+                                                   Visibility="Hidden">
+                                    </Image>
+                                </StackPanel>
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=DataGridRow}}" Value="True" >
+                                        <Setter TargetName="ArrowRight" Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!-- Column Number/year -->
+                    <DataGridTextColumn x:Name="ColYearNumber" Header="Nr" IsReadOnly="True" Width="0.2*" CanUserSort="False"
+                                        HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
+                                        ElementStyle="{StaticResource AllignCellCenter}"
+                                        Binding="{Binding YearNumber}">
+                    </DataGridTextColumn>
+
+                    <!-- column product name -->
+                    <DataGridTextColumn x:Name="ColProductName" Header="Nazwa" IsReadOnly="True" Width="0.8*" CanUserSort="False"
+                                        HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
+                                        ElementStyle="{StaticResource AllignCellLeft}"
+                                        Binding="{Binding ProductName}">
+                    </DataGridTextColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!--#### ComboBox Year -->
+            <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="3" >
+                <Label Content="Wybierz rok produkcji" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Blue" />
+                <ComboBox x:Name="CmbYear" FontSize="12" Width="80" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="62,0,0,0" 
+                          SelectedValue="{Binding Year}"
+                          ItemsSource="{Binding Years}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <cmd:EventToCommand Command="{Binding OnComboYearSelectionChanged}" PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
+
+            <!-- #### Date label and name -->
+            <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="0" >
+                <DatePicker x:Name="DpPicker" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,0"
+                            SelectedDateFormat="Short"
+                            IsEnabled="{Binding IsTextBoxActive}"
+                            SelectedDate="{Binding ProductionDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" >
+                    <i:Interaction.Behaviors>
+                        <beh:DatePickerLostFocus />
+                    </i:Interaction.Behaviors>
+                </DatePicker>
+                <Label x:Name="LblProduct" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+                       Padding="10,1,5,5" Foreground="Red" 
+                       Content="{Binding SelectedItem.ProductName, ElementName=DgQuality, Mode=OneWay}"/>
+            </StackPanel>
+
+            <!-- Remarks -->
+            <StackPanel Orientation="Vertical" Grid.Column="2" Grid.Row="2" >
+                <Label Content="Uwagi" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Padding="2,5,0,0" Foreground="Blue" FontSize="14" />
+                <TextBox Margin="2,2,5,2" Height="50" AcceptsReturn="True"
+                         IsEnabled="{Binding IsTextBoxActive}"
+                         Text="{Binding Remarks, Mode=TwoWay}"/>
+            </StackPanel>
+
+            <!-- Navigation -->
+            <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="4" Grid.RowSpan="3" >
+                <Button  x:Name="BtnNaviLeftFirst" Height="20" Width="20" Tag="first" Margin="5,0,0,0" 
+                         Command="{Binding MoveFirst, Source={StaticResource navi}}">
+                    <StackPanel Orientation="Horizontal" >
+                        <Image Source="/img/arrow-left_first.png" Stretch="Fill" Height="13"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="BtnNaviLeft" Height="20" Width="20" Tag="left" Margin="1,0,0,0"
+                        Command="{Binding MoveLeft, Source={StaticResource navi}}">
+                    <StackPanel Orientation="Horizontal" >
+                        <Image Source="/img/arrow-left.png" Stretch="Fill" Height="13"/>
+                    </StackPanel>
+                </Button>
+
+                <TextBox x:Name="TxtNavieRec" Width="55" HorizontalAlignment="Left" Padding="0,2,0,0" FontSize="11" Height="20"
+                     FontWeight="SemiBold" IsReadOnly="True" Margin="1,0,0,0" 
+                         Text="{Binding DgRowIndex, Source={StaticResource navi}, Mode=OneWay, Converter={StaticResource NaviCurrentConverter}}"/>
+
+                <Label x:Name="LblNavieRec" Height="20" Width="49" HorizontalAlignment="Left" FontSize="11" FontWeight="SemiBold" 
+                   Padding="0,3,0,0" Margin="1,0,0,0"
+                       Content="{Binding GetRowCount, Source={StaticResource navi}, Mode=OneWay, Converter={StaticResource NaviTotalConverter}}"/>
+
+                <Button x:Name="BtnNaviRight" HorizontalAlignment="Left" Height="20" Width="20" Tag="right" Margin="1,0,0,0"
+                        Command="{Binding MoveRight, Source={StaticResource navi}}">
+                    <StackPanel Orientation="Horizontal" >
+                        <Image Source="/img/arrow-right.png" Stretch="Fill" Height="13"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="BtnNaviRightLast" HorizontalAlignment="Left" Height="20" Width="20" Tag="last" Margin="1,0,0,0"
+                        Command="{Binding MoveLast, Source={StaticResource navi}}">
+                    <StackPanel Orientation="Horizontal" >
+                        <Image Source="/img/arrow-right_last.png" Stretch="Fill" Height="13"/>
+                    </StackPanel>
+                </Button>
+
+            </StackPanel>
+
+        </Grid>
+        
+    </DockPanel>
+</RibbonWindow>
