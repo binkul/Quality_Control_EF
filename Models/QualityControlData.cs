@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -7,11 +8,12 @@ using System.Collections.Generic;
 
 namespace Quality_Control_EF.Models
 {
-    public partial class QualityControlData
+    public partial class QualityControlData : INotifyPropertyChanged
     {
         public long Id { get; set; }
         public long QualityId { get; set; }
         public DateTime MeasureDate { get; set; }
+        public int DayDistance => (int)(DateTime.Today - MeasureDate).TotalDays;
         public double? Density { get; set; }
         public double? PH { get; set; }
         public string Temp { get; set; }
@@ -96,5 +98,7 @@ namespace Quality_Control_EF.Models
         public string Comments { get; set; }
 
         public virtual QualityControl QualityControl { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

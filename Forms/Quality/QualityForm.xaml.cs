@@ -1,7 +1,6 @@
 ﻿using Quality_Control_EF.Forms.Navigation;
 using Quality_Control_EF.Forms.Quality.ModelView;
 using System.Text.RegularExpressions;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Ribbon;
 using System.Windows.Input;

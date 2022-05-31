@@ -191,6 +191,7 @@
     </ApplicationDefinition>
     <Compile Include="Behaviors\DatePickerLostFocus.cs" />
     <Compile Include="Behaviors\TextBooxLostFocus.cs" />
+    <Compile Include="Commons\BindingProxy.cs" />
     <Compile Include="Commons\DefaultData.cs" />
     <Compile Include="Commons\SortableObservableCollection.cs" />
     <Compile Include="Converters\BoolToNotConverter.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Forms\Navigation\NavigationMV.cs" />
     <Compile Include="Forms\Quality\Command\AddNewButton.cs" />
     <Compile Include="Forms\Quality\Command\DeleteButton.cs" />
+    <Compile Include="Forms\Quality\Command\DeleteQualityDataButton.cs" />
     <Compile Include="Forms\Quality\Command\ModificationButton.cs" />
     <Compile Include="Forms\Quality\Command\SaveButton.cs" />
     <Compile Include="Forms\Quality\Command\SettingsButton.cs" />

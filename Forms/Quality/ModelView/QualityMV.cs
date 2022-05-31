@@ -15,10 +15,11 @@ using Quality_Control_EF.Models;
 
 namespace Quality_Control_EF.Forms.Quality.ModelView
 {
-    class QualityMV : INotifyPropertyChanged, INavigation
+    public class QualityMV : INotifyPropertyChanged, INavigation
     {
         private ICommand _saveButton;
         private ICommand _deleteButton;
+        private ICommand _delQualityData;
         private ICommand _addNewButton;
         private ICommand _modificationButton;
         private ICommand _settingsButton;
@@ -38,6 +39,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
         public RelayCommand<TextChangedEventArgs> OnProductNameFilterTextChanged { get; set; }
         public RelayCommand<TextChangedEventArgs> OnProductNumberFilterTextChanged { get; set; }
         public RelayCommand<SelectionChangedEventArgs> OnComboYearSelectionChanged { get; set; }
+        public RelayCommand<InitializingNewItemEventArgs> OnInitializingNewQualityDataCommand { get; set; }
 
 
         public QualityMV()
@@ -46,6 +48,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             OnProductNameFilterTextChanged = new RelayCommand<TextChangedEventArgs>(OnProductNameTextChangedFilter);
             OnProductNumberFilterTextChanged = new RelayCommand<TextChangedEventArgs>(OnProductNumberTextChangedFilter);
             OnComboYearSelectionChanged = new RelayCommand<SelectionChangedEventArgs>(OnYearSelectionCommandExecuted);
+            OnInitializingNewQualityDataCommand = new RelayCommand<InitializingNewItemEventArgs>(OnInitializingNewQualityDataCommandExecuted);
         }
 
         //internal void SetQualityDataMV(QualityDataMV qualityDataMV)
@@ -58,7 +61,11 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             set => _navigationMV = value;
         }
 
-        public SortableObservableCollection<QualityControl> Quality => _service.Quality;
+        public SortableObservableCollection<QualityControl> Quality => _service.Quality; //ok
+
+        public SortableObservableCollection<QualityControlData> QualityData => _service.QualityData;
+
+        public List<string> GetActiveFields => _service.ActiveFields;
 
         internal bool Modified => ModifiedQuality || ModifiedData;
 
@@ -120,6 +127,12 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             _service.ReloadQuality(Year);
             Filter();
         }
+
+        public void OnInitializingNewQualityDataCommandExecuted(InitializingNewItemEventArgs e)
+        {
+
+        }
+
 
         #endregion
 
@@ -245,18 +258,19 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             get => _selectedIndex;
             set
             {
-                QualityControl model = null;
                 _selectedIndex = value;
 
                 if (value >= 0 && _service.GetQualityCount != 0 && value < _service.GetQualityCount)
                 {
-                    model = _service.Quality[_selectedIndex];
+                    QualityControl model = _service.Quality[_selectedIndex];
+                    _service.RefreshQualityData(model);
                     _remarks = model.Remarks;
                     _productionDate = model.ProductionDate;
                     IsTextBoxActive = true;
                 }
                 else
                 {
+                    _service.RefreshQualityData(null);
                     _remarks = "";
                     _productionDate = DateTime.Today;
                     IsTextBoxActive = false;
@@ -265,9 +279,9 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
                     nameof(IsAnyQuality),
                     nameof(Remarks),
                     nameof(ProductionDate),
-                    nameof(IsTextBoxActive));
+                    nameof(IsTextBoxActive),
+                    nameof(GetActiveFields));
 
-                //if (_qualityDataMV != null) _qualityDataMV.RefreshQualityData(model);
                 Refresh();
             }
         }
@@ -299,6 +313,15 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             {
                 if (_deleteButton == null) _deleteButton = new DeleteButton(this);
                 return _deleteButton;
+            }
+        }
+
+        public ICommand DeleteQualityDataButton
+        {
+            get
+            {
+                if (_delQualityData == null) _delQualityData = new DeleteQualityDataButton(this);
+                return _delQualityData;
             }
         }
 
@@ -373,6 +396,11 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
         {
             if (ActualQuality == null) return;
             _service.Delete(ActualQuality);
+        }
+
+        internal void DeleteData()
+        {
+
         }
 
         internal void AddNew()
