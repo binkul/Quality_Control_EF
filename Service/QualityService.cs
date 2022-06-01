@@ -131,28 +131,25 @@ namespace Quality_Control_EF.Service
 
         public void Filter(string ProductNumber, string ProductName)
         {
-            //if (!string.IsNullOrEmpty(ProductName) || !string.IsNullOrEmpty(ProductNumber))
-            //{
+            if (!string.IsNullOrEmpty(ProductName) || !string.IsNullOrEmpty(ProductNumber))
+            {
 
-            //    int number = ProductNumber.Length > 0 ? Convert.ToInt32(ProductNumber) : -1;
+                int number = ProductNumber.Length > 0 ? Convert.ToInt32(ProductNumber) : -1;
 
-            //    List<QualityModel> result = FullQuality
-            //        .Where(x => x.ProductName.ToLower().Contains(ProductName))
-            //        .Where(x => x.Number >= number)
-            //        .ToList();
+                var result = FullQuality
+                    .Where(x => x.ProductName.ToLower().Contains(ProductName))
+                    .Where(x => x.Number >= number)
+                    .OrderBy(x => x.Number)
+                    .ToList();
 
-            //    SortableObservableCollection<QualityModel> newQuality = new SortableObservableCollection<QualityModel>();
-            //    foreach (QualityModel model in result)
-            //    {
-            //        newQuality.Add(model);
-            //    }
+                SortableObservableCollection<QualityControl> newQuality = new SortableObservableCollection<QualityControl>(result);
 
-            //    Quality = newQuality;
-            //}
-            //else
-            //{
-            //    Quality = FullQuality;
-            //}
+                Quality = newQuality;
+            }
+            else
+            {
+                Quality = FullQuality;
+            }
         }
 
         public void Delete(QualityControl quality)
