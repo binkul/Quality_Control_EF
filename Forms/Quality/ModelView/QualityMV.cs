@@ -3,9 +3,7 @@ using Quality_Control_EF.Commons;
 using Quality_Control_EF.Forms.Navigation;
 using Quality_Control_EF.Forms.Quality.Command;
 using Quality_Control.Forms.Quality.Model;
-using Quality_Control_EF.Security;
 using Quality_Control_EF.Service;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
@@ -28,11 +26,8 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
         private readonly double _startLeftPosition = 32;
         private readonly WindowData _windowData = WindowSettings.Read();
         private readonly QualityService _service = new QualityService();
-        //private QualityDataMV _qualityDataMV;
         private NavigationMV _navigationMV;
         private int _selectedIndex;
-        private string _remarks;
-        private DateTime _productionDate;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public RelayCommand<CancelEventArgs> OnClosingCommand { get; set; }
@@ -51,11 +46,6 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             OnInitializingNewQualityDataCommand = new RelayCommand<InitializingNewItemEventArgs>(OnInitializingNewQualityDataCommandExecuted);
         }
 
-        //internal void SetQualityDataMV(QualityDataMV qualityDataMV)
-        //{
-        //    _qualityDataMV = qualityDataMV;
-        //}
-
         internal NavigationMV SetNavigationMV
         {
             set => _navigationMV = value;
@@ -63,9 +53,9 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         public SortableObservableCollection<QualityControl> Quality => _service.Quality; //ok
 
-        public SortableObservableCollection<QualityControlData> QualityData => _service.QualityData;
+        public SortableObservableCollection<QualityControlData> QualityData => _service.QualityData; //ok
 
-        public List<string> GetActiveFields => _service.ActiveFields;
+        public List<string> GetActiveFields => _service.ActiveFields; //ok
 
         internal bool Modified => ModifiedQuality || ModifiedData;
 
@@ -119,8 +109,8 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         private void OnYearSelectionCommandExecuted(SelectionChangedEventArgs e)
         {
-            SaveDataQuality();
-            if (SaveQuality())
+            //SaveDataQuality();
+            //if (SaveQuality())
             {
                 ReloadYears();
             }
@@ -219,28 +209,6 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         public bool IsTextBoxActive { get; set; } = true;
 
-        public string Remarks
-        {
-            get => _remarks;
-            set
-            {
-                _remarks = value;
-                _service.Quality[_selectedIndex].Remarks = _remarks;
-                _service.Quality[_selectedIndex].Modified = true;
-            }
-        }
-
-        public DateTime ProductionDate
-        {
-            get => _productionDate;
-            set
-            {
-                _productionDate = value;
-                _service.Quality[_selectedIndex].ProductionDate = _productionDate;
-                _service.Quality[_selectedIndex].Modified = true;
-            }
-        }
-
         public int Year
         {
             get => _service.Year;
@@ -264,21 +232,15 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
                 {
                     QualityControl model = _service.Quality[_selectedIndex];
                     _service.RefreshQualityData(model);
-                    _remarks = model.Remarks;
-                    _productionDate = model.ProductionDate;
                     IsTextBoxActive = true;
                 }
                 else
                 {
                     _service.RefreshQualityData(null);
-                    _remarks = "";
-                    _productionDate = DateTime.Today;
                     IsTextBoxActive = false;
                 }
                 OnPropertyChanged(nameof(DgRowIndex),
                     nameof(IsAnyQuality),
-                    nameof(Remarks),
-                    nameof(ProductionDate),
                     nameof(IsTextBoxActive),
                     nameof(GetActiveFields));
 

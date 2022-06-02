@@ -10,22 +10,44 @@ namespace Quality_Control_EF.Models
 {
     public partial class QualityControl : INotifyPropertyChanged
     {
+        private string _remarks;
+        private DateTime _productionDate;
+
         public QualityControl()
         {
             QualityControlData = new HashSet<QualityControlData>();
         }
 
         public long Id { get; set; }
-        public DateTime ProductionDate { get; set; }
+
+        public DateTime ProductionDate
+        {
+            get => _productionDate;
+            set
+            {
+                _productionDate = value;
+                Modified = true;
+            }
+        }
+
         public int Number { get; set; }
         public string YearNumber => ProductionDate.Year.ToString().Substring(2, 2) + "/" + Number.ToString();
         public string ProductName { get; set; }
         public long? LabbookId { get; set; }
         public long ProductTypeId { get; set; }
-        public string Remarks { get; set; }
+
+        public string Remarks
+        {
+            get => _remarks;
+            set
+            {
+                _remarks = value;
+                Modified = true;
+            }
+        }
+
         public string ActiveFields { get; set; }
         public string ProductIndex { get; set; }
-
         public bool Modified { get; set; } = false;
 
         public long LoginId { get; set; }

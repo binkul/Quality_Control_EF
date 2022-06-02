@@ -129,14 +129,14 @@ namespace Quality_Control_EF.Service
             return null;
         }
 
-        public void Filter(string ProductNumber, string ProductName)
+        public void Filter(string ProductNumber, string ProductName) //ok
         {
             if (!string.IsNullOrEmpty(ProductName) || !string.IsNullOrEmpty(ProductNumber))
             {
 
                 int number = ProductNumber.Length > 0 ? Convert.ToInt32(ProductNumber) : -1;
 
-                var result = FullQuality
+                List<QualityControl> result = FullQuality
                     .Where(x => x.ProductName.ToLower().Contains(ProductName))
                     .Where(x => x.Number >= number)
                     .OrderBy(x => x.Number)
@@ -176,15 +176,19 @@ namespace Quality_Control_EF.Service
         {
             bool reload = false;
 
-            //List<QualityModel> qualities = FullQuality.Where(x => x.Modified).ToList();
-            //foreach (QualityModel quality in qualities)
-            //{
-            //    if (_repository.Update(quality))
-            //    {
-            //        quality.Modified = false;
-            //        if (CheckQualityYear(quality)) reload = true;
-            //    }
-            //}
+            //List<QualityControl> modified = _contex.ChangeTracker.Entries()
+            //    .Where(x => x.Entity.GetType().Name.Equals(nameof(QualityControl)))
+            //    .Where(x => x.State == EntityState.Modified)
+            //    .Select(x => (QualityControl)x.Entity)
+            //    .ToList();
+
+            _contex.SaveChanges();
+            List<QualityControl> qualities = FullQuality.Where(x => x.Modified).ToList();
+            foreach (QualityControl quality in qualities)
+            {
+                quality.Modified = false;
+                if (CheckQualityYear(quality)) reload = true;
+            }
             return reload;
         }
 
@@ -192,12 +196,12 @@ namespace Quality_Control_EF.Service
         {
             bool result = false;
 
-            //if (quality.ProductionDate.Year != Year)
-            //{
-            //    _ = FullQuality.Remove(quality);
-            //    _ = Quality.Remove(quality);
-            //    if (FullQuality.Count == 0 || !Years.Contains(quality.ProductionDate.Year)) result = true;
-            //}
+            if (quality.ProductionDate.Year != Year)
+            {
+                _ = FullQuality.Remove(quality);
+                _ = Quality.Remove(quality);
+                if (FullQuality.Count == 0 || !Years.Contains(quality.ProductionDate.Year)) result = true;
+            }
 
             return result;
         }

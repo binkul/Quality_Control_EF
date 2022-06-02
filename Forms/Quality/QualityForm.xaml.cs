@@ -17,14 +17,9 @@ namespace Quality_Control_EF.Forms.Quality
             InitializeComponent();
 
             QualityMV view = (QualityMV)DataContext;
-            //QualityDataMV qualityDataMV = Resources["QualityData"] as QualityDataMV;
             NavigationMV navigationMV = Resources["navi"] as NavigationMV;
-            //qualityDataMV.RefreshQualityData(view.Quality[view.DgRowIndex]);
 
             navigationMV.ModelView = view;
-            //qualityDataMV.SetQualityMV(view);
-
-            //view.SetQualityDataMV(qualityDataMV);
             view.SetNavigationMV = navigationMV;
         }
 
