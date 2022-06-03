@@ -149,6 +149,7 @@ namespace Quality_Control_EF.Models
             modelBuilder.Entity<QualityControlData>(entity =>
             {
                 entity.Ignore(e => e.DayDistance);
+                entity.Ignore(e => e.Modified);
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.AM).HasColumnName("a_m");
                 entity.Property(e => e.AS).HasColumnName("a_s");

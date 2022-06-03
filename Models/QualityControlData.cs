@@ -97,6 +97,8 @@ namespace Quality_Control_EF.Models
         public string FRemarks { get; set; }
         public string Comments { get; set; }
 
+        public bool Modified { get; set; }
+
         public virtual QualityControl QualityControl { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;

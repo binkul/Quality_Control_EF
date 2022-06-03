@@ -226,6 +226,7 @@
     <Compile Include="Security\Encrypt.cs" />
     <Compile Include="Security\UserSingleton.cs" />
     <Compile Include="Service\QualityService.cs" />
+    <Compile Include="Validate\DoubleCellValidation.cs" />
     <Page Include="Forms\Login\LoginForm.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

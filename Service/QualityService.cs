@@ -28,13 +28,17 @@ namespace Quality_Control_EF.Service
 
         public bool ModifiedQuality => Quality.Any(x => x.Modified);
 
+        public bool ModifiedControlData => QualityData.Any(x => x.Modified);
+
+        public bool Modified => ModifiedQuality || ModifiedControlData;
+
         public List<int> Years { get; private set; }
 
         public int Year { get; set; } = DateTime.Today.Year;
 
         public int GetQualityCount => Quality.Count;
 
-        public void ReloadYears()
+        public void ReloadYears() //ok
         {
             int tmpYear = Year;
             Years = GetAllYears();
@@ -77,9 +81,9 @@ namespace Quality_Control_EF.Service
                 .ToList();
         }
 
-        public List<string> ActiveFields { get; } = new List<string>(DefaultFields);
+        public List<string> ActiveFields { get; } = new List<string>(DefaultFields); //ok
 
-        public List<string> GetActiveFields(QualityControl quality) //ok
+        private List<string> GetActiveFields(QualityControl quality) //ok
         {
             List<string> result = new List<string>();
             string fields = quality.ActiveFields;
@@ -95,9 +99,11 @@ namespace Quality_Control_EF.Service
             return result;
         }
 
-        public void RefreshQualityData(QualityControl quality) //almost ok
+        public void RefreshQualityData(QualityControl quality) //ok
         {
-            //Save(quality.Id);
+            if (Modified)
+                _ = Save();
+
             if (quality != null)
             {
                 QualityData.Clear();
@@ -105,6 +111,7 @@ namespace Quality_Control_EF.Service
                 {
                     QualityData.Add(data);
                 }
+                QualityData.Sort(x => x.DayDistance, ListSortDirection.Ascending);
                 ActiveFields.Clear();
                 ActiveFields.AddRange(GetActiveFields(quality));
             }
@@ -172,9 +179,26 @@ namespace Quality_Control_EF.Service
             //}
         }
 
-        public bool Update()
+        public bool Save() //ok
         {
             bool reload = false;
+
+            try
+            {
+                _ = _contex.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                _ = MessageBox.Show("Błąd 'DbUpdateConcurrencyException' w czasie zapisu danych do tabel QualityControl i QualityControlData: " + e, "Błąd zapisu",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+            catch (DbUpdateException e)
+            {
+                _ = MessageBox.Show("Błąd 'DbUpdateException' w czasie zapisu danych do tabel QualityControl i QualityControlData: " + e, "Błąd zapisu",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
 
             //List<QualityControl> modified = _contex.ChangeTracker.Entries()
             //    .Where(x => x.Entity.GetType().Name.Equals(nameof(QualityControl)))
@@ -182,17 +206,24 @@ namespace Quality_Control_EF.Service
             //    .Select(x => (QualityControl)x.Entity)
             //    .ToList();
 
-            _contex.SaveChanges();
-            List<QualityControl> qualities = FullQuality.Where(x => x.Modified).ToList();
+            var qualities = FullQuality.Where(x => x.Modified).ToList();
             foreach (QualityControl quality in qualities)
             {
                 quality.Modified = false;
-                if (CheckQualityYear(quality)) reload = true;
+                if (CheckQualityYear(quality))
+                    reload = true;
             }
+
+            var dates = QualityData.Where(x => x.Modified).ToList();
+            foreach(QualityControlData data in dates)
+            {
+                data.Modified = false;
+            }
+
             return reload;
         }
 
-        private bool CheckQualityYear(QualityControl quality)
+        private bool CheckQualityYear(QualityControl quality) //ok
         {
             bool result = false;
 
@@ -200,7 +231,8 @@ namespace Quality_Control_EF.Service
             {
                 _ = FullQuality.Remove(quality);
                 _ = Quality.Remove(quality);
-                if (FullQuality.Count == 0 || !Years.Contains(quality.ProductionDate.Year)) result = true;
+                if (FullQuality.Count == 0 || !Years.Contains(quality.ProductionDate.Year))
+                    result = true;
             }
 
             return result;

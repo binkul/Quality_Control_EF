@@ -8,6 +8,7 @@
         xmlns:vm="clr-namespace:Quality_Control_EF.Forms.Quality.ModelView"
         xmlns:naviMV="clr-namespace:Quality_Control_EF.Forms.Navigation"
         xmlns:beh="clr-namespace:Quality_Control_EF.Behaviors"
+        xmlns:val="clr-namespace:Quality_Control_EF.Validate"
         xmlns:common="clr-namespace:Quality_Control_EF.Commons"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:cmd="http://www.galasoft.ch/mvvmlight"
@@ -64,7 +65,7 @@
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="true">
                     <Setter Property="Background" Value="Yellow"/>
-                    <Setter Property="ToolTip" Value="Wartość nie jest liczbą"/>
+                    <Setter Property="ToolTip" Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -292,13 +293,17 @@
                       HorizontalGridLinesBrush="{StaticResource DataGridBorderColor}"
                       VerticalGridLinesBrush="{StaticResource DataGridBorderColor}"
                       IsEnabled="{Binding IsAnyQuality, Mode=OneWay}"
+                      SelectedItem="{Binding ActualControlData, Mode=OneWayToSource, Converter={StaticResource IgnoreNewItemConverter}}"
                       ItemsSource="{Binding QualityData, UpdateSourceTrigger=PropertyChanged}" >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="InitializingNewItem">
                         <cmd:EventToCommand Command="{Binding OnInitializingNewQualityDataCommand}" PassEventArgsToCommand="True" />
                     </i:EventTrigger>
+                    <i:EventTrigger EventName="CellEditEnding">
+                        <cmd:EventToCommand Command="{Binding OnCellQualityDataChange}" PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
                 </i:Interaction.Triggers>
-
+                                
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="ColDataId" Binding="{Binding Id}" Visibility="Collapsed" />
                     <DataGridTextColumn x:Name="ColQualityId" Binding="{Binding QualityId}" Visibility="Collapsed" />
@@ -337,18 +342,34 @@
                     <!-- density -->
                     <DataGridTextColumn Header="Gęstość" Width="80" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, Converter={StaticResource ColumnVisibility}, ConverterParameter=density}" 
-                                        Binding="{Binding Density, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
-                                        ElementStyle="{StaticResource AllignCellCenter}" />
+                                        ElementStyle="{StaticResource AllignCellCenter}" >
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="Density" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" ConverterCulture="pl-PL" 
+                                     StringFormat="N2" ValidatesOnDataErrors="True" >
+                                <Binding.ValidationRules>
+                                    <val:DoubleCellValidation />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
                     <!-- pH -->
                     <DataGridTextColumn Header="pH" Width="45" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=pH}" 
-                                        Binding="{Binding PH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
-                                        ElementStyle="{StaticResource AllignCellCenter}" />
+                                        ElementStyle="{StaticResource AllignCellCenter}" >
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="PH" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" ConverterCulture="pl-PL" 
+                                     StringFormat="N2" ValidatesOnDataErrors="True" >
+                                <Binding.ValidationRules>
+                                    <val:DoubleCellValidation />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
                     <!-- vis_1 -->
                     <DataGridTextColumn Header="Lep 1" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 

@@ -28,6 +28,8 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
         private readonly QualityService _service = new QualityService();
         private NavigationMV _navigationMV;
         private int _selectedIndex;
+        public QualityControl ActualQuality { private get; set; }
+        public QualityControlData ActualControlData { private get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
         public RelayCommand<CancelEventArgs> OnClosingCommand { get; set; }
@@ -35,7 +37,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
         public RelayCommand<TextChangedEventArgs> OnProductNumberFilterTextChanged { get; set; }
         public RelayCommand<SelectionChangedEventArgs> OnComboYearSelectionChanged { get; set; }
         public RelayCommand<InitializingNewItemEventArgs> OnInitializingNewQualityDataCommand { get; set; }
-
+        public RelayCommand<DataGridCellEditEndingEventArgs> OnCellQualityDataChange { get; set; }
 
         public QualityMV()
         {
@@ -44,6 +46,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             OnProductNumberFilterTextChanged = new RelayCommand<TextChangedEventArgs>(OnProductNumberTextChangedFilter);
             OnComboYearSelectionChanged = new RelayCommand<SelectionChangedEventArgs>(OnYearSelectionCommandExecuted);
             OnInitializingNewQualityDataCommand = new RelayCommand<InitializingNewItemEventArgs>(OnInitializingNewQualityDataCommandExecuted);
+            OnCellQualityDataChange = new RelayCommand<DataGridCellEditEndingEventArgs>(OnCellQualityDataChangeExecuted);
         }
 
         internal NavigationMV SetNavigationMV
@@ -57,20 +60,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         public List<string> GetActiveFields => _service.ActiveFields; //ok
 
-        internal bool Modified => ModifiedQuality || ModifiedData;
-
-        private bool ModifiedQuality => _service.ModifiedQuality;
-
-        private bool ModifiedData
-        {
-            get
-            {
-                //if (_qualityDataMV != null)
-                //    return _qualityDataMV.Modified;
-                //else
-                    return false;
-            }
-        }
+        internal bool Modified => _service.Modified; //ok
 
         #region Events - RelayCommand
 
@@ -123,6 +113,10 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         }
 
+        private void OnCellQualityDataChangeExecuted(DataGridCellEditEndingEventArgs e)
+        {
+            ActualControlData.Modified = true;
+        }
 
         #endregion
 
@@ -204,8 +198,6 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
         public bool IsAnyQuality => _service.GetQualityCount > 0;
 
         internal QualityControl GetCurrentQuality => _service.Quality[_selectedIndex];
-
-        public QualityControl ActualQuality { internal get; set; }
 
         public bool IsTextBoxActive { get; set; } = true;
 
@@ -326,26 +318,13 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         }
 
-        internal bool SaveQuality()
-        {
-            if (!ModifiedQuality) return false;
-            bool reload = _service.Update();
-            return reload;
-        }
-
-        internal void SaveDataQuality()
-        {
-            //if (ModifiedData)
-            //    _qualityDataMV.Save();
-        }
-
         internal void SaveAll()
         {
-            bool reload = SaveQuality();
-            SaveDataQuality();
+            if (!Modified)
+                return;
 
-            //_qualityDataMV.Save();
-            if (reload) ReloadYears();
+            if (_service.Save())
+                ReloadYears();
         }
 
         private void ReloadYears()
