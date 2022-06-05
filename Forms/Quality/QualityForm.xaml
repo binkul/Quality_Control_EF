@@ -386,7 +386,7 @@
                     <DataGridTextColumn Header="Lep 2" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_2}" 
-                                        Binding="{Binding Vis2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis2, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat={}{0:G}, ConverterCulture='pl-PL'}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -394,7 +394,7 @@
                     <DataGridTextColumn Header="Lep 5" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_5}" 
-                                        Binding="{Binding Vis5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis5, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat={}{0:G}, ConverterCulture='pl-PL'}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -402,7 +402,7 @@
                     <DataGridTextColumn Header="Lep 10" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_10}" 
-                                        Binding="{Binding Vis10, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis10, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat={}{0:G}, ConverterCulture='pl-PL'}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -410,7 +410,7 @@
                     <DataGridTextColumn Header="Lep 15" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_15}" 
-                                        Binding="{Binding Vis15, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis15, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -418,7 +418,7 @@
                     <DataGridTextColumn Header="Lep 20" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_20}" 
-                                        Binding="{Binding Vis20, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis20, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -426,7 +426,7 @@
                     <DataGridTextColumn Header="Lep 25" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_25}" 
-                                        Binding="{Binding Vis25, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis25, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -434,7 +434,7 @@
                     <DataGridTextColumn Header="Lep 30" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_30}" 
-                                        Binding="{Binding Vis30, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis30, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -442,7 +442,7 @@
                     <DataGridTextColumn Header="Lep 35" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_35}" 
-                                        Binding="{Binding Vis35, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis35, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -450,7 +450,7 @@
                     <DataGridTextColumn Header="Lep 40" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_40}" 
-                                        Binding="{Binding Vis40, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis40, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -458,7 +458,7 @@
                     <DataGridTextColumn Header="Lep 45" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_45}" 
-                                        Binding="{Binding Vis45, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis45, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -466,7 +466,7 @@
                     <DataGridTextColumn Header="Lep 50" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_50}" 
-                                        Binding="{Binding Vis50, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis50, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -474,7 +474,7 @@
                     <DataGridTextColumn Header="Lep 55" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_55}" 
-                                        Binding="{Binding Vis55, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis55, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -482,7 +482,7 @@
                     <DataGridTextColumn Header="Lep 60" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_60}" 
-                                        Binding="{Binding Vis60, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis60, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -490,7 +490,7 @@
                     <DataGridTextColumn Header="Lep 65" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_65}" 
-                                        Binding="{Binding Vis65, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis65, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -498,7 +498,7 @@
                     <DataGridTextColumn Header="Lep 70" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_70}" 
-                                        Binding="{Binding Vis70, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis70, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -506,7 +506,7 @@
                     <DataGridTextColumn Header="Lep 75" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                    Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_75}" 
-                                        Binding="{Binding Vis75, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis75, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -514,7 +514,7 @@
                     <DataGridTextColumn Header="Lep 80" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_80}" 
-                                        Binding="{Binding Vis80, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis80, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -522,7 +522,7 @@
                     <DataGridTextColumn Header="Lep 85" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_85}" 
-                                        Binding="{Binding Vis85, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis85, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -530,7 +530,7 @@
                     <DataGridTextColumn Header="Lep 90" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_90}" 
-                                        Binding="{Binding Vis90, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis90, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -538,7 +538,7 @@
                     <DataGridTextColumn Header="Lep 95" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_95}" 
-                                        Binding="{Binding Vis95, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis95, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -546,7 +546,7 @@
                     <DataGridTextColumn Header="Lep 100" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=vis_100}" 
-                                        Binding="{Binding Vis100, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Vis100, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -570,7 +570,7 @@
                     <DataGridTextColumn Header="Krycie 75" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=contrast_75}" 
-                                        Binding="{Binding Contrast75, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Contrast75, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -578,7 +578,7 @@
                     <DataGridTextColumn Header="Krycie 100" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=contrast_100}" 
-                                        Binding="{Binding Contrast100, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Contrast100, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -586,7 +586,7 @@
                     <DataGridTextColumn Header="Krycie 125" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=contrast_125}" 
-                                        Binding="{Binding Contrast125, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Contrast125, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -594,7 +594,7 @@
                     <DataGridTextColumn Header="Krycie 150" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=contrast_150}" 
-                                        Binding="{Binding Contrast150, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Contrast150, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -602,7 +602,7 @@
                     <DataGridTextColumn Header="Krycie 200" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=contrast_200}" 
-                                        Binding="{Binding Contrast200, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Contrast200, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -610,7 +610,7 @@
                     <DataGridTextColumn Header="Krycie 240" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=contrast_240}" 
-                                        Binding="{Binding Contrast240, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Contrast240, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -618,7 +618,7 @@
                     <DataGridTextColumn Header="Krycie 250" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=contrast_250}" 
-                                        Binding="{Binding Contrast250, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Contrast250, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -626,7 +626,7 @@
                     <DataGridTextColumn Header="Krycie 300" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=contrast_300}" 
-                                        Binding="{Binding Contrast300, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Contrast300, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -634,7 +634,7 @@
                     <DataGridTextColumn Header="Śruba 100" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=contrast_wire_100}" 
-                                        Binding="{Binding ContrastWire100, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding ContrastWire100, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -642,7 +642,7 @@
                     <DataGridTextColumn Header="Śruba 125" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=contrast_wire_125}" 
-                                        Binding="{Binding ContrastWire125, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding ContrastWire125, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -650,7 +650,7 @@
                     <DataGridTextColumn Header="Śruba 150" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=contrast_wire_150}" 
-                                        Binding="{Binding ContrastWire150, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding ContrastWire150, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -658,7 +658,7 @@
                     <DataGridTextColumn Header="Śruba 200" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=contrast_wire_200}" 
-                                        Binding="{Binding ContrastWire200, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding ContrastWire200, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -666,7 +666,7 @@
                     <DataGridTextColumn Header="Śruba 250" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=contrast_wire_250}" 
-                                        Binding="{Binding ContrastWire250, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding ContrastWire250, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -690,7 +690,7 @@
                     <DataGridTextColumn Header="L mokry" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=L_m}" 
-                                        Binding="{Binding LM, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding LM, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -698,7 +698,7 @@
                     <DataGridTextColumn Header="a mokry" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=a_m}" 
-                                        Binding="{Binding AM, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding AM, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -706,7 +706,7 @@
                     <DataGridTextColumn Header="b mokry" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=b_m}" 
-                                        Binding="{Binding BM, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding BM, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -714,7 +714,7 @@
                     <DataGridTextColumn Header="WI mokra" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=WI_m}" 
-                                        Binding="{Binding WiM, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding WiM, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -722,7 +722,7 @@
                     <DataGridTextColumn Header="YI mokra" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=YI_m}" 
-                                        Binding="{Binding YiM, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding YiM, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -730,7 +730,7 @@
                     <DataGridTextColumn Header="L suchy" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=L_s}" 
-                                        Binding="{Binding LS, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding LS, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -738,7 +738,7 @@
                     <DataGridTextColumn Header="a suchy" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=a_s}" 
-                                        Binding="{Binding AS, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding AS, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -746,7 +746,7 @@
                     <DataGridTextColumn Header="b suchy" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=b_s}" 
-                                        Binding="{Binding BS, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding BS, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -754,7 +754,7 @@
                     <DataGridTextColumn Header="WI sucha" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=WI_s}" 
-                                        Binding="{Binding WiS, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding WiS, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -762,7 +762,7 @@
                     <DataGridTextColumn Header="YI suchy" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=YI_s}" 
-                                        Binding="{Binding YiS, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding YiS, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -770,7 +770,7 @@
                     <DataGridTextColumn Header="DE" Width="50" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=DE}" 
-                                        Binding="{Binding De, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding De, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -786,7 +786,7 @@
                     <DataGridTextColumn Header="Połysk 20" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=gloss_20}" 
-                                        Binding="{Binding Gloss20, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Gloss20, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -794,7 +794,7 @@
                     <DataGridTextColumn Header="Połysk 60" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=gloss_60}" 
-                                        Binding="{Binding Gloss60, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Gloss60, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -802,7 +802,7 @@
                     <DataGridTextColumn Header="Połysk 85" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=gloss_85}" 
-                                        Binding="{Binding Gloss85, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Gloss85, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -930,7 +930,7 @@
                     <DataGridTextColumn Header="Części stałe" Width="100" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=f_solids}" 
-                                        Binding="{Binding FSolids, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding FSolids, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -938,7 +938,7 @@
                     <DataGridTextColumn Header="Popiół 450" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=f_450}" 
-                                        Binding="{Binding F450, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding F450, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -946,7 +946,7 @@
                     <DataGridTextColumn Header="Popiół 900" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=f_900}" 
-                                        Binding="{Binding F900, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding F900, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -954,7 +954,7 @@
                     <DataGridTextColumn Header="Części organiczne" Width="100" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=f_organic}" 
-                                        Binding="{Binding FOrganic, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding FOrganic, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -962,7 +962,7 @@
                     <DataGridTextColumn Header="Kreda" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=f_lime}" 
-                                        Binding="{Binding FLime, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding FLime, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -970,7 +970,7 @@
                     <DataGridTextColumn Header="Talk" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=f_talcum}" 
-                                        Binding="{Binding FTalcum, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding FTalcum, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -978,7 +978,7 @@
                     <DataGridTextColumn Header="Dwutlenek tytanu" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=f_titanium}" 
-                                        Binding="{Binding FTitanium, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding FTitanium, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -986,7 +986,7 @@
                     <DataGridTextColumn Header="VOC" Width="90" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=VOC}" 
-                                        Binding="{Binding Voc, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:F}}"
+                                        Binding="{Binding Voc, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ConverterCulture='pl-PL', StringFormat={}{0:G}}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -994,7 +994,7 @@
                     <DataGridTextColumn Header="Spalanie uwagi" Width="200" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=f_remarks}" 
-                                        Binding="{Binding FRemarks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Binding="{Binding FRemarks, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
@@ -1002,7 +1002,7 @@
                     <DataGridTextColumn Header="Uwagi ogólne" Width="300" CanUserSort="False" 
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, 
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=comments}" 
-                                        Binding="{Binding Comments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Binding="{Binding Comments, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
                                         ElementStyle="{StaticResource AllignCellCenter}" />
