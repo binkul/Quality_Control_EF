@@ -197,6 +197,8 @@
     <Compile Include="Converters\BoolToNotConverter.cs" />
     <Compile Include="Converters\ColumnVisibilityConverter.cs" />
     <Compile Include="Converters\DateTimeConverter.cs" />
+    <Compile Include="Converters\DotConverter.cs" />
+    <Compile Include="Converters\IdToEnableConverter.cs" />
     <Compile Include="Converters\IgnoreNewItemPlaceholderConverter.cs" />
     <Compile Include="Converters\NaviCurrentConverter.cs" />
     <Compile Include="Converters\NaviTotalConverter.cs" />

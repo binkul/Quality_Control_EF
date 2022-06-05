@@ -57,7 +57,19 @@ namespace Quality_Control_EF.Service
             //FullQuality.Sort(x => x.Number, ListSortDirection.Ascending);
         }
 
+        internal QualityControlData AddQualityData(QualityControl quality) //ok
+        {
+            QualityControlData data = new QualityControlData
+            {
+                MeasureDate = DateTime.Today,
+                QualityControl = quality,
+                Modified = true
+            };
 
+            _ = _contex.Add<QualityControlData>(data);
+
+            return data;
+        }
 
 
         public SortableObservableCollection<QualityControl> GetAllQuality(int year) //ok
@@ -106,12 +118,8 @@ namespace Quality_Control_EF.Service
 
             if (quality != null)
             {
-                QualityData.Clear();
-                foreach (QualityControlData data in quality.QualityControlData)
-                {
-                    QualityData.Add(data);
-                }
-                QualityData.Sort(x => x.DayDistance, ListSortDirection.Ascending);
+                QualityData = new SortableObservableCollection<QualityControlData>(quality.QualityControlData);
+                QualityData.Sort(x => x.MeasureDate, ListSortDirection.Ascending);
                 ActiveFields.Clear();
                 ActiveFields.AddRange(GetActiveFields(quality));
             }
@@ -136,7 +144,7 @@ namespace Quality_Control_EF.Service
             return null;
         }
 
-        public void Filter(string ProductNumber, string ProductName) //ok
+        internal void Filter(string ProductNumber, string ProductName) //ok
         {
             if (!string.IsNullOrEmpty(ProductName) || !string.IsNullOrEmpty(ProductNumber))
             {
@@ -159,27 +167,42 @@ namespace Quality_Control_EF.Service
             }
         }
 
-        public void Delete(QualityControl quality)
+        internal void Delete(QualityControl quality) //ok
         {
-            //long id = quality.Id;
-            //QualityDataRepository qualityDataRepository = new QualityDataRepository();
-
-            //bool result = false;
-            //if (MessageBox.Show("Czy na pewno usunąć produkcję P" + quality.Number + " '" + quality.ProductName + "' z listy?", "Usuwanie",
-            //    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            //{
-            //    result = _repository.DeleteQualityById(id) && qualityDataRepository.DeleteQualityDataByQualityId(id);
-            //}
-
-            //if (result)
-            //{
-            //    QualityModel delQuality = FullQuality.First(x => x.Id == id);
-            //    _ = FullQuality.Remove(delQuality);
-            //    _ = Quality.Remove(delQuality);
-            //}
+            if (MessageBox.Show("Czy na pewno usunąć produkcję P" + quality.Number + " '" + quality.ProductName + "' z listy?", "Usuwanie",
+                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                _ = FullQuality.Remove(quality);
+                _ = Quality.Remove(quality);
+                _ = _contex.QualityControl.Remove(quality);
+                _ = _contex.SaveChanges();
+            }
         }
 
-        public bool Save() //ok
+        internal void DeleteData(QualityControlData qualityControlData, QualityControl qualityControl) //ok
+        {
+            MessageBoxResult response = MessageBox.Show("Czy usunąć wybrany pomiar z dnia: '" + qualityControlData.MeasureDate.ToShortDateString() + "'", "Usuwanie",
+                MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            try
+            {
+                if (response == MessageBoxResult.Yes)
+                {
+                    _ = QualityData.Remove(qualityControlData);
+                    _ = _contex.QualityControlData.Remove(qualityControlData);
+                    _ = _contex.SaveChanges();
+                }
+
+                _ = qualityControl.QualityControlData.Remove(qualityControlData);
+            }
+            catch (Exception e)
+            {
+                _ = MessageBox.Show("Błąd w czasie usuwania rekordu: '" + e.Message + "'", "Błąd usuwania",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        internal bool Save() //ok
         {
             bool reload = false;
 

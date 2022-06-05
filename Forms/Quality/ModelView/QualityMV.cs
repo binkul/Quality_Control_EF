@@ -10,6 +10,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Quality_Control_EF.Models;
+using System;
+using System.Data;
 
 namespace Quality_Control_EF.Forms.Quality.ModelView
 {
@@ -36,8 +38,9 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
         public RelayCommand<TextChangedEventArgs> OnProductNameFilterTextChanged { get; set; }
         public RelayCommand<TextChangedEventArgs> OnProductNumberFilterTextChanged { get; set; }
         public RelayCommand<SelectionChangedEventArgs> OnComboYearSelectionChanged { get; set; }
-        public RelayCommand<InitializingNewItemEventArgs> OnInitializingNewQualityDataCommand { get; set; }
+        public RelayCommand<AddingNewItemEventArgs> OnInitializingNewQualityDataCommand { get; set; }
         public RelayCommand<DataGridCellEditEndingEventArgs> OnCellQualityDataChange { get; set; }
+
 
         public QualityMV()
         {
@@ -45,11 +48,11 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             OnProductNameFilterTextChanged = new RelayCommand<TextChangedEventArgs>(OnProductNameTextChangedFilter);
             OnProductNumberFilterTextChanged = new RelayCommand<TextChangedEventArgs>(OnProductNumberTextChangedFilter);
             OnComboYearSelectionChanged = new RelayCommand<SelectionChangedEventArgs>(OnYearSelectionCommandExecuted);
-            OnInitializingNewQualityDataCommand = new RelayCommand<InitializingNewItemEventArgs>(OnInitializingNewQualityDataCommandExecuted);
+            OnInitializingNewQualityDataCommand = new RelayCommand<AddingNewItemEventArgs>(OnInitializingNewQualityDataCommandExecuted);
             OnCellQualityDataChange = new RelayCommand<DataGridCellEditEndingEventArgs>(OnCellQualityDataChangeExecuted);
         }
 
-        internal NavigationMV SetNavigationMV
+        internal NavigationMV SetNavigationMV //ok
         {
             set => _navigationMV = value;
         }
@@ -99,8 +102,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         private void OnYearSelectionCommandExecuted(SelectionChangedEventArgs e)
         {
-            //SaveDataQuality();
-            //if (SaveQuality())
+            SaveAll();
             {
                 ReloadYears();
             }
@@ -108,14 +110,15 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             Filter();
         }
 
-        public void OnInitializingNewQualityDataCommandExecuted(InitializingNewItemEventArgs e)
+        public void OnInitializingNewQualityDataCommandExecuted(AddingNewItemEventArgs e)
         {
-
+            e.NewItem = _service.AddQualityData(ActualQuality); ;
         }
 
         private void OnCellQualityDataChangeExecuted(DataGridCellEditEndingEventArgs e)
         {
-            ActualControlData.Modified = true;
+            if (ActualControlData != null)
+                ActualControlData.Modified = true;
         }
 
         #endregion
@@ -234,7 +237,8 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
                 OnPropertyChanged(nameof(DgRowIndex),
                     nameof(IsAnyQuality),
                     nameof(IsTextBoxActive),
-                    nameof(GetActiveFields));
+                    nameof(GetActiveFields),
+                    nameof(QualityData));
 
                 Refresh();
             }
@@ -341,7 +345,14 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         internal void DeleteData()
         {
-
+            if (ActualControlData == null || ActualQuality == null)
+            {
+                return;
+            }
+            else
+            {
+                _service.DeleteData(ActualControlData, ActualQuality);
+            }
         }
 
         internal void AddNew()
