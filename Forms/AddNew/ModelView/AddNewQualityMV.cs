@@ -5,8 +5,6 @@ using Quality_Control_EF.Service;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -18,6 +16,7 @@ namespace Quality_Control_EF.Forms.AddNew.ModelView
         private ProductService _service = new ProductService();
         private int _selectedIndex;
         private NavigationMV _navigationMV;
+        public Product ActualProduct { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public RelayCommand<TextChangedEventArgs> OnProductNameFilterTextChanged { get; set; }
@@ -38,23 +37,34 @@ namespace Quality_Control_EF.Forms.AddNew.ModelView
 
         public List<Product> Products => _service?.FilteredProducts;
 
-        public Product ActualProduct { get; set; }
-
         public string ProductNumber { get; set; }
-
-        public string ProductIndex => ActualProduct != null ? ActualProduct.HpIndex : "";
-
-        public string ProductName => ActualProduct != null ? ActualProduct.Name : "";
-
-        public long ProductLabBookId => ActualProduct != null ? ActualProduct.LabbookId : 0;
-
-        public long ProductType => ActualProduct != null ? ActualProduct.ProductTypeId : 1;
 
         public DateTime ProductionDate { get; set; } = DateTime.Today;
 
         internal bool IsNumberCorrect()
         {
-            return _service.ExistByNumberAndYear(ActualProduct);
+
+            if (!int.TryParse(ProductNumber, out int number))
+            {
+                _ = MessageBox.Show("Wprowadzona numer produkcji nie jest liczbą całkowitą.", "Błąd wartości", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
+            if (number <= 0)
+            {
+                _ = MessageBox.Show("Numer produkcji musi być liczba dodatnią.", "Błąd wartości", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+            else if (_service.ExistByNumberAndYear(number, ProductionDate.Year))
+            {
+                _ = MessageBox.Show("Podany numer produckji P" + number + " z dnia produkcji " + ProductionDate.ToShortDateString() +
+                        " istnieje już w bazie danych!", "Błędny numer", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         protected void OnPropertyChanged(params string[] names)

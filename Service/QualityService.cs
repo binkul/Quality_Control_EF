@@ -11,7 +11,7 @@ namespace Quality_Control_EF.Service
 {
     public class QualityService
     {
-        public static readonly List<string> DefaultFields = new List<string>() { "measure_date", "temp", "density", "pH", "vis_1", "vis_5", "vis_20", "disc", "comments" };
+        public static readonly List<string> DefaultFieldsList = new List<string>() { "measure_date", "temp", "density", "pH", "vis_1", "vis_5", "vis_20", "disc", "comments" };
 
         private readonly LabBookContext _contex = new LabBookContext();
         public SortableObservableCollection<QualityControl> FullQuality { get; private set; }
@@ -51,11 +51,6 @@ namespace Quality_Control_EF.Service
             Quality = FullQuality;
         }
 
-        public void AddQuality(QualityControl quality)
-        {
-            //FullQuality.Add(quality);
-            //FullQuality.Sort(x => x.Number, ListSortDirection.Ascending);
-        }
 
         internal QualityControlData AddQualityData(QualityControl quality) //ok
         {
@@ -66,11 +61,10 @@ namespace Quality_Control_EF.Service
                 Modified = true
             };
 
-            _ = _contex.Add<QualityControlData>(data);
+            _ = _contex.Add(data);
 
             return data;
         }
-
 
         public SortableObservableCollection<QualityControl> GetAllQuality(int year) //ok
         {
@@ -93,7 +87,7 @@ namespace Quality_Control_EF.Service
                 .ToList();
         }
 
-        internal List<string> ActiveFields { get; } = new List<string>(DefaultFields); //ok
+        internal List<string> ActiveFields { get; } = new List<string>(DefaultFieldsList); //ok
 
         private List<string> GetActiveFields(QualityControl quality) //ok
         {
@@ -106,9 +100,19 @@ namespace Quality_Control_EF.Service
                 result.AddRange(tmp);
             }
             else
-                result = DefaultFields;
+                result = DefaultFieldsList;
 
             return result;
+        }
+
+        public string GetActiveFields(long labBookId)
+        {
+            string result = _contex.QualityControlFields
+                .Where(x => x.LabbookId == labBookId)
+                .Select(x => x.ActiveFields)
+                .FirstOrDefault();
+
+            return !string.IsNullOrEmpty(result) ? result : DefaultData.DefaultDataFields;
         }
 
         internal void RefreshQualityData(QualityControl quality) //ok
@@ -127,21 +131,23 @@ namespace Quality_Control_EF.Service
             {
                 QualityData = new SortableObservableCollection<QualityControlData>();
                 ActiveFields.Clear();
-                ActiveFields.AddRange(DefaultFields);
+                ActiveFields.AddRange(DefaultFieldsList);
             }
         }
 
 
-
+        public void AddQuality(QualityControl quality)
+        {
+            FullQuality.Add(quality);
+            FullQuality.Sort(x => x.Number, ListSortDirection.Ascending);
+        }
 
         public QualityControl SaveNewQuality(QualityControl quality)
         {
-            //string fields = _repository.GetActiveFieldsByLabBookId(quality.LabBookId);
-            //quality.ActiveDataFields = !string.IsNullOrEmpty(fields) ? fields : DefaultData.DefaultDataFields;
-            //QualityModel result = _repository.Save(quality);
-            //return result;
+            _ = _contex.QualityControl.Add(quality);
+            _ = Save();
 
-            return null;
+            return quality;
         }
 
         internal void Filter(string ProductNumber, string ProductName) //ok

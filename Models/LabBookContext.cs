@@ -40,6 +40,7 @@ namespace Quality_Control_EF.Models
 
             modelBuilder.Entity<Product>(entity =>
             {
+                entity.Ignore(e => e.User);
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Created)
@@ -92,12 +93,6 @@ namespace Quality_Control_EF.Models
                 entity.Property(e => e.ProductTypeId)
                     .HasColumnName("product_type_id")
                     .HasDefaultValueSql("((1))");
-
-                entity
-                .HasOne(d => d.User)
-                .WithMany(p => p.Products)
-                .HasForeignKey(d => d.LoginId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
 
@@ -105,6 +100,7 @@ namespace Quality_Control_EF.Models
             {
                 entity.Ignore(e => e.YearNumber);
                 entity.Ignore(e => e.Modified);
+                entity.Ignore(e => e.User);
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.ActiveFields)
                     .HasColumnName("active_fields")
@@ -138,12 +134,6 @@ namespace Quality_Control_EF.Models
                 entity.Property(e => e.Remarks)
                     .HasColumnName("remarks")
                     .HasMaxLength(500);
-
-                entity
-                .HasOne(p => p.User)
-                .WithMany(d => d.QualityControls)
-                .HasForeignKey(d => d.LoginId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<QualityControlData>(entity =>

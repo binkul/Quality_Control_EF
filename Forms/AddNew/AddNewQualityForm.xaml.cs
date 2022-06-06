@@ -16,11 +16,8 @@ namespace Quality_Control_EF.Forms.AddNew
     {
         private readonly AddNewQualityMV view;
         public bool Cancel { get; private set; } = true;
-        public string Product => view.ProductName;
-        public string Index => view.ProductIndex;
+        public Product Product => view.ActualProduct;
         public int Number => Convert.ToInt32(view.ProductNumber);
-        public long Type => view.ProductType;
-        public long LabBookId => view.ProductLabBookId;
         public DateTime ProductionDate => view.ProductionDate;
 
         public AddNewQualityForm()
@@ -59,11 +56,6 @@ namespace Quality_Control_EF.Forms.AddNew
             {
                 Cancel = false;
                 Close();
-            }
-            else
-            {
-                _ = MessageBox.Show("Podany numer produckji P" + Number + " z dnia produkcji " + ProductionDate.ToShortDateString() +
-                    " istnieje już w bazie danych!", "Błędny numer", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

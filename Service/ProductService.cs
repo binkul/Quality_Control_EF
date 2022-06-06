@@ -27,11 +27,11 @@ namespace Quality_Control_EF.Service
             }
         }
 
-        internal bool ExistByNumberAndYear(Product product)
+        internal bool ExistByNumberAndYear(int number, int year)
         {
             using (LabBookContext contex = new LabBookContext())
             {
-                return contex.QualityControlFields.Any(x => x.LabbookId == product.LabbookId);
+                return contex.QualityControl.Any(x => x.Number == number && x.ProductionDate.Year == year);
             }
         }
 

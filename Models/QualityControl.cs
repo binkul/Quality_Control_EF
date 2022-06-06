@@ -49,9 +49,8 @@ namespace Quality_Control_EF.Models
         public string ActiveFields { get; set; }
         public string ProductIndex { get; set; }
         public bool Modified { get; set; } = false;
-
         public long LoginId { get; set; }
-        public virtual User User { get; set; }
+        public User User { get; set; }
 
         public virtual ICollection<QualityControlData> QualityControlData { get; set; }
 

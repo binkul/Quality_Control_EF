@@ -367,40 +367,48 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             AddNewQualityForm form = new AddNewQualityForm();
             _ = form.ShowDialog();
 
-            //if (form.Cancel) return;
+            if (form.Cancel) return;
 
-            //QualityModel quality = new QualityModel(form.Number, form.Product, form.Index, form.LabBookId,
-            //        form.Type, "", "", "", form.ProductionDate, UserSingleton.Id, UserSingleton.Login);
+            QualityControl quality = new QualityControl()
+            {
+                ProductionDate = form.ProductionDate,
+                Number = form.Number,
+                ProductName = form.Product.Name,
+                LabbookId = form.Product.LabbookId,
+                ProductTypeId = form.Product.ProductTypeId,
+                ProductIndex = form.Product.HpIndex,
+                LoginId = _user.Id,
+                User = _user,
+                ActiveFields = _service.GetActiveFields(form.Product.LabbookId)
+            };
 
-            //quality = _service.SaveNewQuality(quality);
+            quality = _service.SaveNewQuality(quality);
 
-            //if (quality.Id <= 0) return;
+            if (quality.ProductionDate.Year == Year)
+            {
+                _service.AddQuality(quality);
+            }
+            else if (quality.ProductionDate.Year != Year && Years.Contains(quality.ProductionDate.Year))
+            {
+                Year = quality.ProductionDate.Year;
+                OnPropertyChanged(nameof(Year));
+            }
+            else
+            {
+                ReloadYears();
+                Year = quality.ProductionDate.Year;
+                OnPropertyChanged(nameof(Year));
+            }
 
-            //if (quality.ProductionDate.Year == Year)
-            //{
-            //    _service.AddQuality(quality);
-            //}
-            //else if (quality.ProductionDate.Year != Year && Years.Contains(quality.ProductionDate.Year))
-            //{
-            //    Year = quality.ProductionDate.Year;
-            //    OnPropertyChanged(nameof(Year));
-            //}
-            //else
-            //{
-            //    ReloadYears();
-            //    Year = quality.ProductionDate.Year;
-            //    OnPropertyChanged(nameof(Year));
-            //}
-
-            //Filter();
-            //for (int i = 0; i < _service.GetQualityCount; i++)
-            //{
-            //    if (quality.Id == _service.Quality[i].Id)
-            //    {
-            //        DgRowIndex = i;
-            //        break;
-            //    }
-            //}
+            Filter();
+            for (int i = 0; i < _service.GetQualityCount; i++)
+            {
+                if (quality.Id == _service.Quality[i].Id)
+                {
+                    DgRowIndex = i;
+                    break;
+                }
+            }
         }
 
         internal void ModifiyFields()
