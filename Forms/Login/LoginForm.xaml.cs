@@ -51,12 +51,13 @@ namespace Quality_Control_EF.Forms.Login
             }
             else if ((bool)user.Active)
             {
-                _ = UserSingleton.CreateInstance(user.Id, user.Name, user.Surname, user.Permission, user.Identifier, (bool)user.Active);
+                user.Password = "";
+                //_ = UserSingleton.CreateInstance(user.Id, user.Name, user.Surname, user.Permission, user.Identifier, (bool)user.Active);
                 Mouse.OverrideCursor = Cursors.Wait;
-                QualityForm quality = new QualityForm();
+                QualityForm quality = new QualityForm(user);
                 quality.Show();
-                Mouse.OverrideCursor = null;
                 Close();
+                Mouse.OverrideCursor = null;
             }
             else
             {

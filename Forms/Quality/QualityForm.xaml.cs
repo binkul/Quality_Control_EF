@@ -1,5 +1,6 @@
 ﻿using Quality_Control_EF.Forms.Navigation;
 using Quality_Control_EF.Forms.Quality.ModelView;
+using Quality_Control_EF.Models;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using System.Windows.Controls.Ribbon;
@@ -12,7 +13,7 @@ namespace Quality_Control_EF.Forms.Quality
     /// </summary>
     public partial class QualityForm : RibbonWindow
     {
-        public QualityForm()
+        public QualityForm(User user)
         {
             InitializeComponent();
 
@@ -21,6 +22,7 @@ namespace Quality_Control_EF.Forms.Quality
 
             navigationMV.ModelView = view;
             view.SetNavigationMV = navigationMV;
+            view.SetUser = user;
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)

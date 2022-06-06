@@ -17,9 +17,9 @@ namespace Quality_Control_EF.Models
         public bool? IsDanger { get; set; }
         public bool? IsArchive { get; set; }
         public bool? IsExperimetPhase { get; set; }
-        public int ProductPriceId { get; set; }
-        public int ProductTypeId { get; set; }
-        public int ProductGlossId { get; set; }
+        public long ProductPriceId { get; set; }
+        public long ProductTypeId { get; set; }
+        public long ProductGlossId { get; set; }
         public DateTime Created { get; set; }
 
         public long LoginId { get; set; }

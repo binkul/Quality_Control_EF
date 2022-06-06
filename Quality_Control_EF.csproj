@@ -202,6 +202,10 @@
     <Compile Include="Converters\IgnoreNewItemPlaceholderConverter.cs" />
     <Compile Include="Converters\NaviCurrentConverter.cs" />
     <Compile Include="Converters\NaviTotalConverter.cs" />
+    <Compile Include="Forms\AddNew\AddNewQualityForm.xaml.cs">
+      <DependentUpon>AddNewQualityForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddNew\ModelView\AddNewQualityMV.cs" />
     <Compile Include="Forms\Navigation\INavigation.cs" />
     <Compile Include="Forms\Navigation\NaviButtonFirst.cs" />
     <Compile Include="Forms\Navigation\NaviButtonLast.cs" />
@@ -227,8 +231,13 @@
     <Compile Include="Forms\Tools\WindowsOperation.cs" />
     <Compile Include="Security\Encrypt.cs" />
     <Compile Include="Security\UserSingleton.cs" />
+    <Compile Include="Service\ProductService.cs" />
     <Compile Include="Service\QualityService.cs" />
     <Compile Include="Validate\DoubleCellValidation.cs" />
+    <Page Include="Forms\AddNew\AddNewQualityForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Forms\Login\LoginForm.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

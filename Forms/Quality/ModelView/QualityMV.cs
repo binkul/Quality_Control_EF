@@ -12,6 +12,7 @@ using System.Windows.Input;
 using Quality_Control_EF.Models;
 using System;
 using System.Data;
+using Quality_Control_EF.Forms.AddNew;
 
 namespace Quality_Control_EF.Forms.Quality.ModelView
 {
@@ -30,6 +31,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
         private readonly QualityService _service = new QualityService();
         private NavigationMV _navigationMV;
         private int _selectedIndex;
+        private User _user;
         public QualityControl ActualQuality { private get; set; }
         public QualityControlData ActualControlData { private get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
@@ -55,6 +57,11 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
         internal NavigationMV SetNavigationMV //ok
         {
             set => _navigationMV = value;
+        }
+
+        internal User SetUser //ok
+        {
+            set => _user = value;
         }
 
         public SortableObservableCollection<QualityControl> Quality => _service.Quality; //ok
@@ -322,7 +329,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         }
 
-        internal void SaveAll()
+        internal void SaveAll() //ok
         {
             if (!Modified)
                 return;
@@ -331,19 +338,19 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
                 ReloadYears();
         }
 
-        private void ReloadYears()
+        private void ReloadYears() //ok
         {
             _service.ReloadYears();
             OnPropertyChanged(nameof(Years), nameof(Year));
         }
 
-        internal void DeleteAll()
+        internal void DeleteAll() //ok
         {
             if (ActualQuality == null) return;
             _service.Delete(ActualQuality);
         }
 
-        internal void DeleteData()
+        internal void DeleteData() //ok
         {
             if (ActualControlData == null || ActualQuality == null)
             {
@@ -357,8 +364,8 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         internal void AddNew()
         {
-            //AddNewForm form = new AddNewForm();
-            //_ = form.ShowDialog();
+            AddNewQualityForm form = new AddNewQualityForm();
+            _ = form.ShowDialog();
 
             //if (form.Cancel) return;
 

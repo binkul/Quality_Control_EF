@@ -26,17 +26,17 @@ namespace Quality_Control_EF.Service
             Years = GetAllYears();
         }
 
-        public bool ModifiedQuality => Quality.Any(x => x.Modified);
+        private bool ModifiedQuality => Quality.Any(x => x.Modified);
 
-        public bool ModifiedControlData => QualityData.Any(x => x.Modified);
+        private bool ModifiedControlData => QualityData.Any(x => x.Modified);
 
-        public bool Modified => ModifiedQuality || ModifiedControlData;
+        internal bool Modified => ModifiedQuality || ModifiedControlData; //ok
 
-        public List<int> Years { get; private set; }
+        public List<int> Years { get; private set; } //ok
 
-        public int Year { get; set; } = DateTime.Today.Year;
+        public int Year { get; set; } = DateTime.Today.Year; //ok
 
-        public int GetQualityCount => Quality.Count;
+        internal int GetQualityCount => Quality.Count; //ok
 
         public void ReloadYears() //ok
         {
@@ -84,7 +84,7 @@ namespace Quality_Control_EF.Service
             return list;
         }
 
-        public List<int> GetAllYears() //ok
+        private List<int> GetAllYears() //ok
         {
             return _contex.QualityControl
                 .Select(x => x.ProductionDate.Year)
@@ -93,7 +93,7 @@ namespace Quality_Control_EF.Service
                 .ToList();
         }
 
-        public List<string> ActiveFields { get; } = new List<string>(DefaultFields); //ok
+        internal List<string> ActiveFields { get; } = new List<string>(DefaultFields); //ok
 
         private List<string> GetActiveFields(QualityControl quality) //ok
         {
@@ -111,7 +111,7 @@ namespace Quality_Control_EF.Service
             return result;
         }
 
-        public void RefreshQualityData(QualityControl quality) //ok
+        internal void RefreshQualityData(QualityControl quality) //ok
         {
             if (Modified)
                 _ = Save();
