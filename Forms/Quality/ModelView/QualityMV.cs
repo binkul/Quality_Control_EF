@@ -13,6 +13,7 @@ using Quality_Control_EF.Models;
 using System;
 using System.Data;
 using Quality_Control_EF.Forms.AddNew;
+using System.Linq;
 
 namespace Quality_Control_EF.Forms.Quality.ModelView
 {
@@ -61,7 +62,11 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         internal User SetUser //ok
         {
-            set => _user = value;
+            set
+            {
+                _user = value;
+                _service.AttachUser(_user);
+            }
         }
 
         public SortableObservableCollection<QualityControl> Quality => _service.Quality; //ok
@@ -74,7 +79,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         #region Events - RelayCommand
 
-        protected void OnPropertyChanged(params string[] names)
+        protected void OnPropertyChanged(params string[] names) //ok
         {
             if (PropertyChanged != null)
             {
@@ -83,7 +88,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             }
         }
 
-        private void OnClosingCommandExecuted(CancelEventArgs e)
+        private void OnClosingCommandExecuted(CancelEventArgs e) //ok
         {
             MessageBoxResult ansver = MessageBoxResult.No;
 
@@ -107,22 +112,19 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             }
         }
 
-        private void OnYearSelectionCommandExecuted(SelectionChangedEventArgs e)
+        private void OnYearSelectionCommandExecuted(SelectionChangedEventArgs e) //ok
         {
             SaveAll();
-            {
-                ReloadYears();
-            }
             _service.ReloadQuality(Year);
             Filter();
         }
 
-        public void OnInitializingNewQualityDataCommandExecuted(AddingNewItemEventArgs e)
+        public void OnInitializingNewQualityDataCommandExecuted(AddingNewItemEventArgs e) //ok
         {
             e.NewItem = _service.AddQualityData(ActualQuality); ;
         }
 
-        private void OnCellQualityDataChangeExecuted(DataGridCellEditEndingEventArgs e)
+        private void OnCellQualityDataChangeExecuted(DataGridCellEditEndingEventArgs e) //ok
         {
             if (ActualControlData != null)
                 ActualControlData.Modified = true;
@@ -132,16 +134,16 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         #region Filtering
 
-        public string ProductName { get; set; } = "";
+        public string ProductName { get; set; } = ""; //ok
 
-        public string ProductNumber { get; set; } = "";
+        public string ProductNumber { get; set; } = ""; //ok
 
-        public void OnProductNameTextChangedFilter(TextChangedEventArgs e)
+        public void OnProductNameTextChangedFilter(TextChangedEventArgs e) //ok
         {
             Filter();
         }
 
-        public void OnProductNumberTextChangedFilter(TextChangedEventArgs e)
+        public void OnProductNumberTextChangedFilter(TextChangedEventArgs e) //ok
         {
             Filter();
         }
@@ -335,13 +337,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
                 return;
 
             if (_service.Save())
-                ReloadYears();
-        }
-
-        private void ReloadYears() //ok
-        {
-            _service.ReloadYears();
-            OnPropertyChanged(nameof(Years), nameof(Year));
+                OnPropertyChanged(nameof(Years));
         }
 
         internal void DeleteAll() //ok
@@ -362,31 +358,18 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             }
         }
 
-        internal void AddNew()
+        internal void AddNew() //ok
         {
             AddNewQualityForm form = new AddNewQualityForm();
             _ = form.ShowDialog();
 
             if (form.Cancel) return;
 
-            QualityControl quality = new QualityControl()
-            {
-                ProductionDate = form.ProductionDate,
-                Number = form.Number,
-                ProductName = form.Product.Name,
-                LabbookId = form.Product.LabbookId,
-                ProductTypeId = form.Product.ProductTypeId,
-                ProductIndex = form.Product.HpIndex,
-                LoginId = _user.Id,
-                User = _user,
-                ActiveFields = _service.GetActiveFields(form.Product.LabbookId)
-            };
-
-            quality = _service.SaveNewQuality(quality);
+            QualityControl quality = _service.AddNewQuality(form.Product, form.Number, form.ProductionDate);
 
             if (quality.ProductionDate.Year == Year)
             {
-                _service.AddQuality(quality);
+                _service.AddNewQualityToList(quality);
             }
             else if (quality.ProductionDate.Year != Year && Years.Contains(quality.ProductionDate.Year))
             {
@@ -395,20 +378,16 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             }
             else
             {
-                ReloadYears();
+                _service.ReloadYears();
                 Year = quality.ProductionDate.Year;
-                OnPropertyChanged(nameof(Year));
+                OnPropertyChanged(nameof(Years), nameof(Year));
             }
 
             Filter();
-            for (int i = 0; i < _service.GetQualityCount; i++)
-            {
-                if (quality.Id == _service.Quality[i].Id)
-                {
-                    DgRowIndex = i;
-                    break;
-                }
-            }
+            DgRowIndex = Quality
+                .Where(x => x.Id == quality.Id)
+                .Select(Quality.IndexOf)
+                .FirstOrDefault();
         }
 
         internal void ModifiyFields()

@@ -93,6 +93,12 @@ namespace Quality_Control_EF.Models
                 entity.Property(e => e.ProductTypeId)
                     .HasColumnName("product_type_id")
                     .HasDefaultValueSql("((1))");
+
+                entity.HasOne(e => e.User)
+                    .WithMany(p => p.Products)
+                    .HasForeignKey(e => e.LoginId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
             });
 
 
@@ -134,6 +140,11 @@ namespace Quality_Control_EF.Models
                 entity.Property(e => e.Remarks)
                     .HasColumnName("remarks")
                     .HasMaxLength(500);
+
+                entity.HasOne(e => e.User)
+                    .WithMany(p => p.QualityControls)
+                    .HasForeignKey(e => e.LoginId)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<QualityControlData>(entity =>

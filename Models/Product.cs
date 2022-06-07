@@ -22,6 +22,6 @@ namespace Quality_Control_EF.Models
         public long ProductGlossId { get; set; }
         public DateTime Created { get; set; }
         public long LoginId { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 }

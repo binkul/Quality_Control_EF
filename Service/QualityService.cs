@@ -11,14 +11,13 @@ namespace Quality_Control_EF.Service
 {
     public class QualityService
     {
-        public static readonly List<string> DefaultFieldsList = new List<string>() { "measure_date", "temp", "density", "pH", "vis_1", "vis_5", "vis_20", "disc", "comments" };
-
+        private User _user;
         private readonly LabBookContext _contex = new LabBookContext();
         public SortableObservableCollection<QualityControl> FullQuality { get; private set; }
         public SortableObservableCollection<QualityControl> Quality { get; private set; }
         public SortableObservableCollection<QualityControlData> QualityData { get; set; }
-        
-        
+
+
         public QualityService()
         {
             ReloadQuality(DateTime.Today.Year);
@@ -26,9 +25,15 @@ namespace Quality_Control_EF.Service
             Years = GetAllYears();
         }
 
-        private bool ModifiedQuality => Quality.Any(x => x.Modified);
+        internal void AttachUser(User user) //ok
+        {
+            _user = user;
+            _ = _contex.Users.Attach(_user);
+        }
 
-        private bool ModifiedControlData => QualityData.Any(x => x.Modified);
+        private bool ModifiedQuality => Quality.Any(x => x.Modified); //ok
+
+        private bool ModifiedControlData => QualityData.Any(x => x.Modified); //ok
 
         internal bool Modified => ModifiedQuality || ModifiedControlData; //ok
 
@@ -50,7 +55,6 @@ namespace Quality_Control_EF.Service
             FullQuality = GetAllQuality(year);
             Quality = FullQuality;
         }
-
 
         internal QualityControlData AddQualityData(QualityControl quality) //ok
         {
@@ -87,7 +91,7 @@ namespace Quality_Control_EF.Service
                 .ToList();
         }
 
-        internal List<string> ActiveFields { get; } = new List<string>(DefaultFieldsList); //ok
+        internal List<string> ActiveFields { get; } = new List<string>(DefaultData.DefaultFieldsList); //ok
 
         private List<string> GetActiveFields(QualityControl quality) //ok
         {
@@ -100,7 +104,7 @@ namespace Quality_Control_EF.Service
                 result.AddRange(tmp);
             }
             else
-                result = DefaultFieldsList;
+                result = DefaultData.DefaultFieldsList;
 
             return result;
         }
@@ -131,19 +135,30 @@ namespace Quality_Control_EF.Service
             {
                 QualityData = new SortableObservableCollection<QualityControlData>();
                 ActiveFields.Clear();
-                ActiveFields.AddRange(DefaultFieldsList);
+                ActiveFields.AddRange(DefaultData.DefaultFieldsList);
             }
         }
 
-
-        public void AddQuality(QualityControl quality)
+        public void AddNewQualityToList(QualityControl quality) //ok
         {
             FullQuality.Add(quality);
             FullQuality.Sort(x => x.Number, ListSortDirection.Ascending);
         }
 
-        public QualityControl SaveNewQuality(QualityControl quality)
+        public QualityControl AddNewQuality(Product product, int number, DateTime productionDate)
         {
+            QualityControl quality = new QualityControl()
+            {
+                ProductionDate = productionDate,
+                Number = number,
+                ProductName = product.Name,
+                LabbookId = product.LabbookId,
+                ProductTypeId = product.ProductTypeId,
+                ProductIndex = product.HpIndex,
+                User = _user,
+                ActiveFields = GetActiveFields(product.LabbookId)
+            };
+
             _ = _contex.QualityControl.Add(quality);
             _ = Save();
 
@@ -240,7 +255,10 @@ namespace Quality_Control_EF.Service
             {
                 quality.Modified = false;
                 if (CheckQualityYear(quality))
+                {
+                    ReloadYears();
                     reload = true;
+                }
             }
 
             var dates = QualityData.Where(x => x.Modified).ToList();

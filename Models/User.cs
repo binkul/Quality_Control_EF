@@ -11,8 +11,8 @@ namespace Quality_Control_EF.Models
     {
         public User()
         {
-            //Products = new HashSet<Product>();
-            //QualityControls = new HashSet<QualityControl>();
+            Products = new HashSet<Product>();
+            QualityControls = new HashSet<QualityControl>();
         }
 
         public long Id { get; set; }
@@ -26,7 +26,7 @@ namespace Quality_Control_EF.Models
         public bool? Active { get; set; }
         public DateTime Date { get; set; }
 
-        //public virtual ICollection<Product> Products { get; set; }
-        //public virtual ICollection<QualityControl> QualityControls { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<QualityControl> QualityControls { get; set; }
     }
 }

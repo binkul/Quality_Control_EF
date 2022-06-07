@@ -6,6 +6,7 @@ namespace Quality_Control_EF.Commons
     {
         public static readonly string DefaultDataFields = "measure_date|temp|density|pH|vis_1|vis_5|vis_20|disc|comments";
         public static readonly string DefaultDataFieldsNoPh = "measure_date|density|temp|vis_1|vis_5|vis_20|disc|visc_remarks";
+        public static readonly List<string> DefaultFieldsList = new List<string>() { "measure_date", "temp", "density", "pH", "vis_1", "vis_5", "vis_20", "disc", "comments" };
 
         public static IDictionary<string, string> DataFields { get; } = new Dictionary<string, string>()
         {
