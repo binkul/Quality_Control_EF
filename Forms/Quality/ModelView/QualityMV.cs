@@ -226,7 +226,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         #region Navigation
 
-        public int DgRowIndex
+        public int DgRowIndex //ok
         {
             get => _selectedIndex;
             set
@@ -254,9 +254,9 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             }
         }
 
-        public int GetRowCount => _service.GetQualityCount;
+        public int GetRowCount => _service.GetQualityCount; //ok
 
-        public void Refresh()
+        public void Refresh() //ok
         {
             if (_navigationMV != null)
                 _navigationMV.Refresh();
@@ -265,6 +265,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
         #endregion
 
         #region Command and their procedures
+
         public ICommand SaveButton
         {
             get
@@ -390,7 +391,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
                 .FirstOrDefault();
         }
 
-        internal void ModifiyFields()
+        internal void ModifiyFields() //ok
         {
             ModificationForm form = new ModificationForm(ActualQuality);
             _ = form.ShowDialog();
