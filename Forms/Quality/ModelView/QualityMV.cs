@@ -14,6 +14,7 @@ using System;
 using System.Data;
 using Quality_Control_EF.Forms.AddNew;
 using System.Linq;
+using Quality_Control_EF.Forms.Modification;
 
 namespace Quality_Control_EF.Forms.Quality.ModelView
 {
@@ -234,8 +235,8 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
                 if (value >= 0 && _service.GetQualityCount != 0 && value < _service.GetQualityCount)
                 {
-                    QualityControl model = _service.Quality[_selectedIndex];
-                    _service.RefreshQualityData(model);
+                    QualityControl quality = _service.Quality[_selectedIndex];
+                    _service.RefreshQualityData(quality);
                     IsTextBoxActive = true;
                 }
                 else
@@ -264,7 +265,6 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
         #endregion
 
         #region Command and their procedures
-
         public ICommand SaveButton
         {
             get
@@ -392,17 +392,16 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         internal void ModifiyFields()
         {
-//            ModificationForm form = new ModificationForm(ActualQuality);
-//            _ = form.ShowDialog();
-//
-//            if (!form.Cancel)
-//            {
-//                QualityModel quality = _service.Quality[_selectedIndex];
-//                quality.ActiveDataFields = form.Fields;
-//                quality.Modified = true;
-//                if (_qualityDataMV != null)
-//                    _qualityDataMV.RefreshQualityData(quality);
-//            }
+            ModificationForm form = new ModificationForm(ActualQuality);
+            _ = form.ShowDialog();
+
+            if (!form.Cancel)
+            {
+                Quality[_selectedIndex].ActiveFields = form.Fields;
+                Quality[_selectedIndex].Modified = true;
+                _service.RefreshQualityData(ActualQuality);
+                OnPropertyChanged(nameof(GetActiveFields));
+            }
         }
 
         internal void Settings()

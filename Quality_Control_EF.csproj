@@ -206,6 +206,19 @@
       <DependentUpon>AddNewQualityForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Forms\AddNew\ModelView\AddNewQualityMV.cs" />
+    <Compile Include="Forms\InputBox\InputBox.xaml.cs">
+      <DependentUpon>InputBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Modification\Command\DeleteButton.cs" />
+    <Compile Include="Forms\Modification\Command\SetButton.cs" />
+    <Compile Include="Forms\Modification\Command\StandardButton.cs" />
+    <Compile Include="Forms\Modification\Command\StandardpHButton.cs" />
+    <Compile Include="Forms\Modification\ModelView\ModificationMV.cs" />
+    <Compile Include="Forms\Modification\Model\ModificationModel.cs" />
+    <Compile Include="Forms\Modification\Model\QualityFieldsModel.cs" />
+    <Compile Include="Forms\Modification\ModificationForm.xaml.cs">
+      <DependentUpon>ModificationForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Navigation\INavigation.cs" />
     <Compile Include="Forms\Navigation\NaviButtonFirst.cs" />
     <Compile Include="Forms\Navigation\NaviButtonLast.cs" />
@@ -231,6 +244,7 @@
     <Compile Include="Forms\Tools\WindowsOperation.cs" />
     <Compile Include="Security\Encrypt.cs" />
     <Compile Include="Security\UserSingleton.cs" />
+    <Compile Include="Service\ModificationService.cs" />
     <Compile Include="Service\ProductService.cs" />
     <Compile Include="Service\QualityService.cs" />
     <Compile Include="Validate\DoubleCellValidation.cs" />
@@ -238,9 +252,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Forms\InputBox\InputBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Forms\Login\LoginForm.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Forms\Modification\ModificationForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Forms\Quality\QualityForm.xaml">
       <SubType>Designer</SubType>
@@ -320,6 +342,7 @@
     <Resource Include="Img\today3.png" />
     <Resource Include="Img\Trash.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
