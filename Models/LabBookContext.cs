@@ -40,7 +40,8 @@ namespace Quality_Control_EF.Models
 
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.Ignore(e => e.User);
+                entity.Ignore(e => e.ActiveFields);
+                entity.Ignore(e => e.Modified);
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Created)

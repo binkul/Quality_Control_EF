@@ -20,11 +20,13 @@ namespace Quality_Control_EF.Forms.AddNew
         public int Number => Convert.ToInt32(view.ProductNumber);
         public DateTime ProductionDate => view.ProductionDate;
 
-        public AddNewQualityForm()
+        public AddNewQualityForm(LabBookContext contex)
         {
             InitializeComponent();
-            view = (AddNewQualityMV)DataContext;
+
+            AddNewQualityMV view = new AddNewQualityMV(contex);
             NavigationMV navigationMV = Resources["navi"] as NavigationMV;
+            DataContext = view;
 
             navigationMV.ModelView = view;
             view.SetNavigationMV = navigationMV;

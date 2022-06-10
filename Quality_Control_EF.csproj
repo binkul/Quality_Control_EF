@@ -241,6 +241,16 @@
     <Compile Include="Forms\Register\RegisterForm.xaml.cs">
       <DependentUpon>RegisterForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Settings\Command\CopyButton.cs" />
+    <Compile Include="Forms\Settings\Command\DeleteButton.cs" />
+    <Compile Include="Forms\Settings\Command\SaveFieldsButton.cs" />
+    <Compile Include="Forms\Settings\Command\SetButton.cs" />
+    <Compile Include="Forms\Settings\Command\StandardButton.cs" />
+    <Compile Include="Forms\Settings\Command\StandardpHButton.cs" />
+    <Compile Include="Forms\Settings\ModelView\SettingMV.cs" />
+    <Compile Include="Forms\Settings\SettingForm.xaml.cs">
+      <DependentUpon>SettingForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Tools\WindowsOperation.cs" />
     <Compile Include="Security\Encrypt.cs" />
     <Compile Include="Security\UserSingleton.cs" />
@@ -279,6 +289,10 @@
     <Compile Include="Forms\Login\LoginForm.xaml.cs">
       <DependentUpon>LoginForm.xaml</DependentUpon>
     </Compile>
+    <Page Include="Forms\Settings\SettingForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\LabBookContext.cs" />

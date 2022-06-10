@@ -13,7 +13,7 @@ namespace Quality_Control_EF.Forms.AddNew.ModelView
     public class AddNewQualityMV : INotifyPropertyChanged, INavigation
     {
         private readonly double _startLeftPosition = 32;
-        private ProductService _service = new ProductService();
+        private readonly ProductService _service;
         private int _selectedIndex;
         private NavigationMV _navigationMV;
         public Product ActualProduct { get; set; }
@@ -22,8 +22,9 @@ namespace Quality_Control_EF.Forms.AddNew.ModelView
         public RelayCommand<TextChangedEventArgs> OnProductNameFilterTextChanged { get; set; }
         public RelayCommand<TextChangedEventArgs> OnProductIndexFilterTextChanged { get; set; }
 
-        public AddNewQualityMV()
+        public AddNewQualityMV(LabBookContext contex)
         {
+            _service = new ProductService(contex);
             OnProductNameFilterTextChanged = new RelayCommand<TextChangedEventArgs>(OnProductNameTextChangedFilter);
             OnProductIndexFilterTextChanged = new RelayCommand<TextChangedEventArgs>(OnProductIndexTextChangedFilter);
         }

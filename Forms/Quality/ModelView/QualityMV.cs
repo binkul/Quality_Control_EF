@@ -15,6 +15,7 @@ using System.Data;
 using Quality_Control_EF.Forms.AddNew;
 using System.Linq;
 using Quality_Control_EF.Forms.Modification;
+using Quality_Control_EF.Forms.Settings;
 
 namespace Quality_Control_EF.Forms.Quality.ModelView
 {
@@ -361,7 +362,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         internal void AddNew() //ok
         {
-            AddNewQualityForm form = new AddNewQualityForm();
+            AddNewQualityForm form = new AddNewQualityForm(_service.GetContex);
             _ = form.ShowDialog();
 
             if (form.Cancel) return;
@@ -405,10 +406,10 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             }
         }
 
-        internal void Settings()
+        internal void Settings() //ok
         {
-//            SettingForm form = new SettingForm();
-//            _ = form.ShowDialog();
+            SettingForm form = new SettingForm(_service.GetContex);
+            _ = form.ShowDialog();
         }
 
         internal void StatisticOpen()

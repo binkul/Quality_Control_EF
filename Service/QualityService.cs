@@ -31,6 +31,8 @@ namespace Quality_Control_EF.Service
             _ = _contex.Users.Attach(_user);
         }
 
+        internal LabBookContext GetContex => _contex;
+
         private bool ModifiedQuality => Quality.Any(x => x.Modified); //ok
 
         private bool ModifiedControlData => QualityData.Any(x => x.Modified); //ok
@@ -156,7 +158,7 @@ namespace Quality_Control_EF.Service
                 ProductTypeId = product.ProductTypeId,
                 ProductIndex = product.HpIndex,
                 User = _user,
-                ActiveFields = GetActiveFields(product.LabbookId)
+                ActiveFields = product.ActiveFields
             };
 
             _ = _contex.QualityControl.Add(quality);

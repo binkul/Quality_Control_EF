@@ -23,5 +23,8 @@ namespace Quality_Control_EF.Models
         public DateTime Created { get; set; }
         public long LoginId { get; set; }
         public virtual User User { get; set; }
+
+        public string ActiveFields { get; set; }
+        public bool Modified { get; set; } = false;
     }
 }

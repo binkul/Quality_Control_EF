@@ -13,9 +13,9 @@
         xmlns:cmd="http://www.galasoft.ch/mvvmlight"
         mc:Ignorable="d"
         Title="Nowa produkcja" Height="600" Width="800" Icon="/img/Ok-icon.png" WindowStartupLocation="CenterScreen">
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <vm:AddNewQualityMV />
-    </Window.DataContext>
+    </Window.DataContext>-->
     <Window.Resources>
         <naviMV:NavigationMV x:Key="navi" />
         <Convertors:NaviCurrentConverter x:Key="NaviCurrentConverter" />
