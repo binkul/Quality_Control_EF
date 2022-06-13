@@ -251,12 +251,26 @@
     <Compile Include="Forms\Settings\SettingForm.xaml.cs">
       <DependentUpon>SettingForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Statistic\Command\ProductButton.cs" />
+    <Compile Include="Forms\Statistic\Command\RangeButton.cs" />
+    <Compile Include="Forms\Statistic\Command\TodayButton.cs" />
+    <Compile Include="Forms\Statistic\Command\TodaySaveButton.cs" />
+    <Compile Include="Forms\Statistic\ModelView\StatisticMV.cs" />
+    <Compile Include="Forms\Statistic\ModelView\StatisticTodayMV.cs" />
+    <Compile Include="Forms\Statistic\Model\StatisticDto.cs" />
+    <Compile Include="Forms\Statistic\StatisticForm.xaml.cs">
+      <DependentUpon>StatisticForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Statistic\StatisticTodayForm.xaml.cs">
+      <DependentUpon>StatisticTodayForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Tools\WindowsOperation.cs" />
     <Compile Include="Security\Encrypt.cs" />
     <Compile Include="Security\UserSingleton.cs" />
     <Compile Include="Service\ModificationService.cs" />
     <Compile Include="Service\ProductService.cs" />
     <Compile Include="Service\QualityService.cs" />
+    <Compile Include="Service\StatisticService.cs" />
     <Compile Include="Validate\DoubleCellValidation.cs" />
     <Page Include="Forms\AddNew\AddNewQualityForm.xaml">
       <SubType>Designer</SubType>
@@ -290,6 +304,14 @@
       <DependentUpon>LoginForm.xaml</DependentUpon>
     </Compile>
     <Page Include="Forms\Settings\SettingForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Statistic\StatisticForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Statistic\StatisticTodayForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

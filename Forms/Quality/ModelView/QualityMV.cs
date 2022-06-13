@@ -16,6 +16,7 @@ using Quality_Control_EF.Forms.AddNew;
 using System.Linq;
 using Quality_Control_EF.Forms.Modification;
 using Quality_Control_EF.Forms.Settings;
+using Quality_Control_EF.Forms.Statistic;
 
 namespace Quality_Control_EF.Forms.Quality.ModelView
 {
@@ -414,8 +415,8 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         internal void StatisticOpen()
         {
-//            StatisticForm form = new StatisticForm();
-//            _ = form.ShowDialog();
+            StatisticForm form = new StatisticForm(_service.GetContex);
+            _ = form.ShowDialog();
         }
 
         #endregion
