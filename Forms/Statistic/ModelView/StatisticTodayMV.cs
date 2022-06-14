@@ -1,4 +1,5 @@
-﻿using Quality_Control_EF.Forms.Statistic.Command;
+﻿using Quality_Control_EF.Commons;
+using Quality_Control_EF.Forms.Statistic.Command;
 using Quality_Control_EF.Forms.Statistic.Model;
 using Quality_Control_EF.Models;
 using Quality_Control_EF.Service;
@@ -36,14 +37,13 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
             }
         }
 
-        public List<Product> TodayData => _service.Statistic;
+        public SortableObservableCollection<QualityControlData> TodayData => _service.Statistic;
 
-        public List<string> GetActiveFields => _service.ActiveFields;;
+        public List<string> GetActiveFields => _service.GetVisibleColumn;
 
         public bool IsAnyQuality => TodayData.Count > 0;
 
-        public bool Modified => _service.Modified;
-
+        public bool Modified => _service.Statistic.Any(x => x.Modified);
 
         public ICommand TodaySaveButton
         {
@@ -56,7 +56,7 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
 
         internal void SaveToday()
         {
-            _ = _service.SaveToday();
+            //_ = _service.SaveToday();
         }
 
     }

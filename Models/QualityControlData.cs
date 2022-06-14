@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Quality_Control_EF.Commons;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -13,7 +14,6 @@ namespace Quality_Control_EF.Models
         public long Id { get; set; }
         public long QualityId { get; set; }
         public DateTime MeasureDate { get; set; }
-        public int DayDistance => (int)(DateTime.Today - MeasureDate).TotalDays;
         public double? Density { get; set; }
         public double? PH { get; set; }
         public string Temp { get; set; }
@@ -97,6 +97,10 @@ namespace Quality_Control_EF.Models
         public string FRemarks { get; set; }
         public string Comments { get; set; }
 
+        public string ProductNumber { get; set; } = "";
+        public string ProductName { get; set; } = "";
+        public string ProductActiveFields { get; set; } = DefaultData.DefaultDataFields;
+        public int DayDistance => (int)(DateTime.Today - MeasureDate).TotalDays;
         public bool Modified { get; set; }
 
         public virtual QualityControl QualityControl { get; set; }

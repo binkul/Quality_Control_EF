@@ -150,6 +150,9 @@ namespace Quality_Control_EF.Models
 
             modelBuilder.Entity<QualityControlData>(entity =>
             {
+                entity.Ignore(e => e.ProductName);
+                entity.Ignore(e => e.ProductNumber);
+                entity.Ignore(e => e.ProductActiveFields);
                 entity.Ignore(e => e.DayDistance);
                 entity.Ignore(e => e.Modified);
                 entity.Property(e => e.Id).HasColumnName("id");
