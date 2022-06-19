@@ -24,12 +24,11 @@ namespace Quality_Control_EF.Forms.AddNew
         {
             InitializeComponent();
 
-            AddNewQualityMV view = new AddNewQualityMV(contex);
+            view = new AddNewQualityMV(contex);
             NavigationMV navigationMV = Resources["navi"] as NavigationMV;
-            DataContext = view;
-
             navigationMV.ModelView = view;
             view.SetNavigationMV = navigationMV;
+            DataContext = view;
 
             Height = SystemParameters.PrimaryScreenHeight - 100;
             if (SystemParameters.PrimaryScreenWidth <= 800)

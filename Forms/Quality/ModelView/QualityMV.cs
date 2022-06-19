@@ -391,6 +391,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
                 .Where(x => x.Id == quality.Id)
                 .Select(Quality.IndexOf)
                 .FirstOrDefault();
+            OnPropertyChanged(nameof(DgRowIndex));
         }
 
         internal void ModifiyFields() //ok

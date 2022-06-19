@@ -193,6 +193,7 @@
     <Compile Include="Behaviors\TextBooxLostFocus.cs" />
     <Compile Include="Commons\BindingProxy.cs" />
     <Compile Include="Commons\DefaultData.cs" />
+    <Compile Include="Commons\QualityDataColumn.cs" />
     <Compile Include="Commons\SortableObservableCollection.cs" />
     <Compile Include="Converters\BoolToNotConverter.cs" />
     <Compile Include="Converters\ColumnVisibilityConverter.cs" />
@@ -264,6 +265,7 @@
     <Compile Include="Forms\Statistic\StatisticTodayForm.xaml.cs">
       <DependentUpon>StatisticTodayForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Tools\BindingProxy.cs" />
     <Compile Include="Forms\Tools\WindowsOperation.cs" />
     <Compile Include="Security\Encrypt.cs" />
     <Compile Include="Security\UserSingleton.cs" />

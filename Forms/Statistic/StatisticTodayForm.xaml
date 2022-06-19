@@ -4,9 +4,100 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Quality_Control_EF.Forms.Statistic"
+        xmlns:Convertors="clr-namespace:Quality_Control_EF.Converters"
+        xmlns:Prox="clr-namespace:Quality_Control_EF.Forms.Tools"
+        xmlns:vm="clr-namespace:Quality_Control_EF.Forms.Statistic.ModelView"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:cmd="http://www.galasoft.ch/mvvmlight"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:StatisticTodayMV, IsDesignTimeCreatable=false}"
         Title="StatisticTodayForm" Height="450" Width="800">
-    <Grid>
+    <Window.Resources>
+        <Prox:BindingProxy x:Key="proxy" Data="{Binding}" />
+        <Convertors:DateTimeConverter x:Key="DateTimeConverter" />
+        <Convertors:ColumnVisibilityConverter x:Key="ColumnVisibility" />
+        <Style x:Key="AllignColmnHeaderCenter" TargetType="DataGridColumnHeader">
+            <Setter Property="SeparatorBrush" Value="WhiteSmoke" />
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Height" Value="25" />
+        </Style>
+        <Style x:Key="AllignCellCenter" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Padding" Value="0,0,0,0" />
+            <Setter Property="FontWeight" Value="Normal" />
+        </Style>
+        <Style x:Key="AllignCellLeft" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Padding" Value="3,0,0,0" />
+            <Setter Property="FontWeight" Value="Normal" />
+        </Style>
+        <Style x:Key="DateErrorStyle" TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="Background" Value="Yellow"/>
+                    <Setter Property="ToolTip" Value="Niepoprawny format daty"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="DoubleErrorStyle" TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="Background" Value="Yellow"/>
+                    <Setter Property="ToolTip" Value="Wartość nie jest liczbą"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <SolidColorBrush x:Key="DataGridBorderColor" Color="#FFB1AEAE"/>
+    </Window.Resources>
+
+    <DockPanel>
+
+        <!-- Menu -->
+        <Ribbon DockPanel.Dock="Top" FontWeight="Bold" FontSize="14">
+            <RibbonTab Header="Operacje">
+                <RibbonGroup Header="Statystyka" FontSize="10">
+                    <StackPanel Orientation="Vertical" Margin="5,0,0,0">
+                        <Button Width="48" Height="48"
+                                Command="{Binding TodaySaveButton}">
+                            <Image Source="/img/save.png"/>
+                            <Button.ToolTip >
+                                <ToolTip Background="Yellow">
+                                    <DockPanel Width="Auto" Height="Auto" Background="Yellow" >
+                                        <TextBlock FontSize="12">Zapisz zmiany</TextBlock>
+                                    </DockPanel>
+                                </ToolTip>
+                            </Button.ToolTip>
+                        </Button>
+                        <Label Content="Zapisz" Padding="0,2,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="12" FontWeight="Bold" />
+                    </StackPanel>
+
+                </RibbonGroup>
+            </RibbonTab>
+        </Ribbon>
+
+        <!-- Main DataGrid -->
+        <DataGrid x:Name="DgQualityData" Grid.Column="2" Grid.Row="1" Margin="2,2,5,2" AutoGenerateColumns="False" FrozenColumnCount="4" HorizontalScrollBarVisibility="Auto"
+                  ColumnWidth="*" SelectionMode="Single" SelectionUnit="FullRow"  IsSynchronizedWithCurrentItem="True" RowHeaderWidth="20"
+                  CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="True" CanUserResizeRows="False" FontSize="12" HeadersVisibility="Column"
+                  HorizontalGridLinesBrush="{StaticResource DataGridBorderColor}"
+                  VerticalGridLinesBrush="{StaticResource DataGridBorderColor}"
+                  IsEnabled="{Binding IsAnyQuality, Mode=OneWay}"
+                  ItemsSource="{Binding TodayData, UpdateSourceTrigger=PropertyChanged}" 
+                  PreviewKeyDown="DgQualityData_PreviewKeyDown">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" Visibility="Collapsed" />
+                <DataGridTextColumn Binding="{Binding QualityId}" Visibility="Collapsed" />
+
+            </DataGrid.Columns>
+
+        </DataGrid>
         
-    </Grid>
+    </DockPanel>
 </Window>
