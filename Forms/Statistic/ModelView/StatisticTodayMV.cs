@@ -1,4 +1,5 @@
-﻿using Quality_Control_EF.Commons;
+﻿using GalaSoft.MvvmLight.Command;
+using Quality_Control_EF.Commons;
 using Quality_Control_EF.Forms.Statistic.Command;
 using Quality_Control_EF.Forms.Statistic.Model;
 using Quality_Control_EF.Models;
@@ -10,6 +11,8 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Quality_Control_EF.Forms.Statistic.ModelView
@@ -21,11 +24,16 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
 
         private ICommand _saveTodayButton;
         private readonly StatisticService _service;
+        public QualityControlData ActualControlData { private get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
+        public RelayCommand<CancelEventArgs> OnClosingCommand { get; set; }
+        public RelayCommand<DataGridCellEditEndingEventArgs> OnCellQualityDataChange { get; set; }
 
         public StatisticTodayMV(LabBookContext context)
         {
             _service = new StatisticService(context, today);
+            OnClosingCommand = new RelayCommand<CancelEventArgs>(OnClosingCommandExecuted);
+            OnCellQualityDataChange = new RelayCommand<DataGridCellEditEndingEventArgs>(OnCellQualityDataChangeExecuted);
         }
 
         private void OnPropertyChanged(params string[] names)
@@ -45,6 +53,31 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
 
         public bool Modified => _service.Statistic.Any(x => x.Modified);
 
+        private void OnClosingCommandExecuted(CancelEventArgs e) //ok
+        {
+            MessageBoxResult ansver = MessageBoxResult.No;
+
+            if (Modified)
+            {
+                ansver = MessageBox.Show("Dokonano zmian w rekordach. Czy zapisać zmiany?", "Zapis zmian", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+            }
+
+            if (ansver == MessageBoxResult.Yes)
+            {
+                SaveToday();
+            }
+            else if (ansver == MessageBoxResult.Cancel)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void OnCellQualityDataChangeExecuted(DataGridCellEditEndingEventArgs e)
+        {
+            if (ActualControlData != null)
+                ActualControlData.Modified = true;
+        }
+
         public ICommand TodaySaveButton
         {
             get
@@ -56,7 +89,7 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
 
         internal void SaveToday()
         {
-            //_ = _service.SaveToday();
+            _service.Save();
         }
 
     }

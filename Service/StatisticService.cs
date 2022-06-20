@@ -2,11 +2,9 @@
 using Quality_Control_EF.Commons;
 using Quality_Control_EF.Forms.Statistic.Model;
 using Quality_Control_EF.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace Quality_Control_EF.Service
 {
@@ -30,7 +28,6 @@ namespace Quality_Control_EF.Service
             _statistic = statistic;
             Statistic = GetStatistic();
             GetVisibleColumn = ColumnVisibility();
-
         }
 
         private SortableObservableCollection<QualityControlData> GetStatistic()
@@ -52,6 +49,7 @@ namespace Quality_Control_EF.Service
                 .Where(x => x.ProductionDate.Date == _statistic.DateStart.Date)
                 .Include(x => x.QualityControlData)
                 .OrderBy(x => x.Number)
+                .ThenBy(x => x.Id)
                 .ToList();
 
             SortableObservableCollection<QualityControlData> result = new SortableObservableCollection<QualityControlData>();
@@ -61,6 +59,7 @@ namespace Quality_Control_EF.Service
                 {
                     data.ProductNumber = "P" + quality.Number;
                     data.ProductName = quality.ProductName;
+                    data.ProductActiveFields = quality.ActiveFields;
                     result.Add(data);
                 }
             }
@@ -80,5 +79,35 @@ namespace Quality_Control_EF.Service
                     .ToList();
         }
 
+        internal bool Save()
+        {
+            bool result = true;
+
+            try
+            {
+                _ = _contex.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                _ = MessageBox.Show("Błąd 'DbUpdateConcurrencyException' w czasie zapisu danych do tabel QualityControl i QualityControlData: " + e, "Błąd zapisu",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+            catch (DbUpdateException e)
+            {
+                _ = MessageBox.Show("Błąd 'DbUpdateException' w czasie zapisu danych do tabel QualityControl i QualityControlData: " + e, "Błąd zapisu",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
+            var dates = Statistic.Where(x => x.Modified).ToList();
+            foreach (QualityControlData data in dates)
+            {
+                data.Modified = false;
+            }
+
+
+            return result;
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Quality_Control_EF.Forms.Statistic.ModelView;
+﻿using Quality_Control_EF.Commons;
+using Quality_Control_EF.Converters;
+using Quality_Control_EF.Forms.Statistic.ModelView;
 using Quality_Control_EF.Models;
 using System;
 using System.Windows;
@@ -23,21 +25,62 @@ namespace Quality_Control_EF.Forms.Statistic
             StatisticTodayMV statisticMV = new StatisticTodayMV(contex);
             DataContext = statisticMV;
 
+            SetColumns(statisticMV);
+        }
 
+        private void SetColumns(StatisticTodayMV statisticMV)
+        {
             Style headerStyle = (Style)Resources["AllignColmnHeaderCenter"];
-            Style cellStyle = (Style)Resources["AllignCellCenter"];
-            Binding binding = new Binding("ProductNumber");
-            binding.Mode = BindingMode.OneWay;
+            Style cellStyleCenter = (Style)Resources["AllignCellCenter"];
+            Style cellStyleLeft = (Style)Resources["AllignCellLeft"];
 
-            DataGridTextColumn column = new DataGridTextColumn();
-            column.Header = "Numer";
-            column.Width = 60;
-            column.CanUserSort = false;
-            column.IsReadOnly = true;
-            column.HeaderStyle = headerStyle;
-            column.ElementStyle = cellStyle;
-            column.Binding = binding;
-            DgQualityData.Columns.Add(column);
+
+            foreach (QualityDataColumn data in DefaultData.ColumnData)
+            {
+                if (data.ColumnHeader.Equals("Data") || data.ColumnHeader.Equals("Doba")) continue;
+
+
+                DataGridTextColumn column = new DataGridTextColumn
+                {
+                    HeaderStyle = headerStyle,
+                    ElementStyle = data.ColumnHeader.Equals("Wyrób") ? cellStyleLeft : cellStyleCenter,
+                    Header = data.ColumnHeader,
+                    Width = data.ColumnWidth,
+                    IsReadOnly = data.IsReadOnly,
+                    CanUserSort = data.CanUserSort
+                };
+
+                Binding binding = new Binding(data.EFColumnName)
+                {
+                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+                };
+
+                if (data.IsValue)
+                {
+                    binding.ConverterCulture = System.Globalization.CultureInfo.CurrentCulture;
+                    binding.StringFormat = data.ValueFormat;
+                    binding.UpdateSourceTrigger = UpdateSourceTrigger.LostFocus;
+                    binding.Mode = BindingMode.TwoWay;
+                    column.EditingElementStyle = (Style)Resources["DoubleErrorStyle"];
+                }
+                column.Binding = binding;
+
+                if (!data.IsAlwaysVisible)
+                {
+                    Binding visible = new Binding
+                    {
+                        Source = statisticMV,
+                        Path = new PropertyPath("GetActiveFields"),
+                        Mode = BindingMode.OneWay,
+                        Converter = new ColumnVisibilityConverter(),
+                        ConverterParameter = data.DBColumnName
+                    };
+
+                    _ = BindingOperations.SetBinding(column, DataGridColumn.VisibilityProperty, visible);
+                }
+
+                DgQualityData.Columns.Add(column);
+            }
         }
 
         private void DgQualityData_PreviewKeyDown(object sender, KeyEventArgs e)

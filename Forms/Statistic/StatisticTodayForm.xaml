@@ -11,11 +11,12 @@
         xmlns:cmd="http://www.galasoft.ch/mvvmlight"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=vm:StatisticTodayMV, IsDesignTimeCreatable=false}"
-        Title="StatisticTodayForm" Height="450" Width="800">
+        Title="Statystyka" Height="450" Width="800" WindowStartupLocation="CenterScreen"  Icon="/Img/Ok-icon.png">
     <Window.Resources>
         <Prox:BindingProxy x:Key="proxy" Data="{Binding}" />
         <Convertors:DateTimeConverter x:Key="DateTimeConverter" />
         <Convertors:ColumnVisibilityConverter x:Key="ColumnVisibility" />
+        <Convertors:IgnoreNewItemPlaceholderConverter x:Key="IgnoreNewItemConverter" />
         <Style x:Key="AllignColmnHeaderCenter" TargetType="DataGridColumnHeader">
             <Setter Property="SeparatorBrush" Value="WhiteSmoke" />
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -49,12 +50,18 @@
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="true">
                     <Setter Property="Background" Value="Yellow"/>
-                    <Setter Property="ToolTip" Value="Wartość nie jest liczbą"/>
+                    <Setter Property="ToolTip" Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
         <SolidColorBrush x:Key="DataGridBorderColor" Color="#FFB1AEAE"/>
     </Window.Resources>
+    <i:Interaction.Triggers>
+        <!-- Closing Form event -->
+        <i:EventTrigger EventName="Closing">
+            <cmd:EventToCommand Command="{Binding OnClosingCommand}" PassEventArgsToCommand="True" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <DockPanel>
 
@@ -88,8 +95,14 @@
                   HorizontalGridLinesBrush="{StaticResource DataGridBorderColor}"
                   VerticalGridLinesBrush="{StaticResource DataGridBorderColor}"
                   IsEnabled="{Binding IsAnyQuality, Mode=OneWay}"
+                  SelectedItem="{Binding ActualControlData, Mode=OneWayToSource, Converter={StaticResource IgnoreNewItemConverter}}"
                   ItemsSource="{Binding TodayData, UpdateSourceTrigger=PropertyChanged}" 
                   PreviewKeyDown="DgQualityData_PreviewKeyDown">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="CellEditEnding">
+                    <cmd:EventToCommand Command="{Binding OnCellQualityDataChange}" PassEventArgsToCommand="True" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
 
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Id}" Visibility="Collapsed" />
