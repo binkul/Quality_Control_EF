@@ -65,7 +65,7 @@
                     </StackPanel>
                 </RibbonGroup>
                 <RibbonGroup Header="Operacje" FontSize="10">
-                    <StackPanel Orientation="Vertical" Margin="5,0,0,0">
+                    <!--<StackPanel Orientation="Vertical" Margin="5,0,0,0">
                         <Button Width="48" Height="48"
                                 Command="{Binding TodayButton}">
                             <Image Source="/img/today1.ico"/>
@@ -78,7 +78,7 @@
                             </Button.ToolTip>
                         </Button>
                         <Label Content="Dziś" Padding="0,2,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="12" FontWeight="Bold" />
-                    </StackPanel>
+                    </StackPanel>-->
 
                     <StackPanel Orientation="Vertical" Margin="10,0,0,0">
                         <Button Width="48" Height="48"

@@ -1,14 +1,14 @@
-﻿using Quality_Control_EF.Forms.Statistic.ModelView;
+﻿using Quality_Control_EF.Forms.Quality.ModelView;
 using System;
 using System.Windows.Input;
 
-namespace Quality_Control_EF.Forms.Statistic.Command
+namespace Quality_Control_EF.Forms.Quality.Command
 {
     internal class TodayButton : ICommand
     {
-        private readonly StatisticMV _modelView;
+        private readonly QualityMV _modelView;
 
-        public TodayButton(StatisticMV modelView)
+        public TodayButton(QualityMV modelView)
         {
             _modelView = modelView ?? throw new ArgumentNullException("Model widoku jest null");
         }

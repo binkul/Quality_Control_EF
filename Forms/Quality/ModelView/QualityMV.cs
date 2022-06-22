@@ -28,6 +28,7 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
         private ICommand _addNewButton;
         private ICommand _modificationButton;
         private ICommand _settingsButton;
+        private ICommand _todayButton;
         private ICommand _statisticButton;
 
         private readonly double _startLeftPosition = 32;
@@ -324,6 +325,15 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         }
 
+        public ICommand TodayButton
+        {
+            get
+            {
+                if (_todayButton == null) _todayButton = new TodayButton(this);
+                return _todayButton;
+            }
+        }
+
         public ICommand StatisticButton
         {
             get
@@ -414,7 +424,13 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
             _ = form.ShowDialog();
         }
 
-        internal void StatisticOpen()
+        internal void ShowToday()
+        {
+            StatisticTodayForm form = new StatisticTodayForm(_service.GetContex);
+            _ = form.ShowDialog();
+        }
+
+        internal void StatisticOpen() //ok
         {
             StatisticForm form = new StatisticForm(_service.GetContex);
             _ = form.ShowDialog();

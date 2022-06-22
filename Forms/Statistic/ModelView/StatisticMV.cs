@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using Quality_Control_EF.Forms.Navigation;
+using Quality_Control_EF.Forms.Quality.Command;
 using Quality_Control_EF.Forms.Statistic.Command;
 using Quality_Control_EF.Models;
 using Quality_Control_EF.Service;
@@ -104,14 +105,14 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
 
         #endregion
 
-        public ICommand TodayButton
-        {
-            get
-            {
-                if (_todayButton == null) _todayButton = new TodayButton(this);
-                return _todayButton;
-            }
-        }
+        //public ICommand TodayButton
+        //{
+        //    get
+        //    {
+        //        if (_todayButton == null) _todayButton = new TodayButton(this);
+        //        return _todayButton;
+        //    }
+        //}
 
         public ICommand ProductButton
         {
@@ -131,11 +132,11 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
             }
         }
 
-        internal void ShowToday()
-        {
-            StatisticTodayForm form = new StatisticTodayForm(_contex);
-            _ = form.ShowDialog();
-        }
+        //internal void ShowToday()
+        //{
+        //    StatisticTodayForm form = new StatisticTodayForm(_contex);
+        //    _ = form.ShowDialog();
+        //}
 
         internal void ShowProduct()
         {

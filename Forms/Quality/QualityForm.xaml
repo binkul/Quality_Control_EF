@@ -140,6 +140,34 @@
                     </RibbonButton>
                 </RibbonGroup>
                 <RibbonGroup Header="Analiza" FontSize="10">
+
+                    <!--<StackPanel Orientation="Vertical" Margin="5,2,0,0">
+                        <Button Width="34" Height="34"
+                                Command="{Binding TodayButton}">
+                            <Image Source="/img/today1.ico"/>
+                            <Button.ToolTip >
+                                <ToolTip Background="Yellow">
+                                    <DockPanel Width="Auto" Height="Auto" Background="Yellow" >
+                                        <TextBlock FontSize="12">Tylko dzień dzisiejszy</TextBlock>
+                                    </DockPanel>
+                                </ToolTip>
+                            </Button.ToolTip>
+                        </Button>
+                        <Label Content="Dziś" Padding="0,2,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="10" FontWeight="Regular" />
+                    </StackPanel>-->
+
+                    <RibbonButton Label="Dziś" LargeImageSource="/Img/today1.ico" FontWeight="Regular"
+                                  Command="{Binding TodayButton}">
+                        <RibbonButton.ToolTip >
+                            <ToolTip Background="Yellow">
+                                <DockPanel Width="Auto" Height="Auto" Background="Yellow" >
+                                    <TextBlock FontSize="12">Dane na dziś</TextBlock>
+                                </DockPanel>
+                            </ToolTip>
+                        </RibbonButton.ToolTip>
+                    </RibbonButton>
+
+
                     <RibbonButton Label="Statystytka" LargeImageSource="/Img/Statistic.ico" FontWeight="Regular"
                                   Command="{Binding StatisticButton}">
                         <RibbonButton.ToolTip >
@@ -150,6 +178,7 @@
                             </ToolTip>
                         </RibbonButton.ToolTip>
                     </RibbonButton>
+
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
