@@ -17,14 +17,14 @@ namespace Quality_Control_EF.Service
 
     internal class StatisticService
     {
-        private readonly LabBookContext _contex;
         private readonly StatisticDto _statistic;
+        public bool Saved { get; set; } = false;
         public List<string> GetVisibleColumn { get; }
+        public ISet<long> ModifiedId { get; } = new HashSet<long>();
         public SortableObservableCollection<QualityControlData> Statistic { get; set; }
 
-        public StatisticService(LabBookContext contex, StatisticDto statistic)
+        public StatisticService(StatisticDto statistic)
         {
-            _contex = contex;
             _statistic = statistic;
             Statistic = GetStatistic();
             GetVisibleColumn = ColumnVisibility();
@@ -45,22 +45,26 @@ namespace Quality_Control_EF.Service
 
         private SortableObservableCollection<QualityControlData> GetTodayData()
         {
-            List<QualityControl> tmpResult = _contex.QualityControl
-                .Where(x => x.ProductionDate.Date == _statistic.DateStart.Date)
-                .Include(x => x.QualityControlData)
-                .OrderBy(x => x.Number)
-                .ThenBy(x => x.Id)
-                .ToList();
-
             SortableObservableCollection<QualityControlData> result = new SortableObservableCollection<QualityControlData>();
-            foreach (QualityControl quality in tmpResult)
+
+            using (LabBookContext contex = new LabBookContext())
             {
-                foreach (QualityControlData data in quality.QualityControlData)
+                List<QualityControl> tmpResult = contex.QualityControl
+                    .Where(x => x.ProductionDate.Date == _statistic.DateStart.Date)
+                    .Include(x => x.QualityControlData)
+                    .OrderBy(x => x.Number)
+                    .ThenBy(x => x.Id)
+                    .ToList();
+
+                foreach (QualityControl quality in tmpResult)
                 {
-                    data.ProductNumber = "P" + quality.Number;
-                    data.ProductName = quality.ProductName;
-                    data.ProductActiveFields = quality.ActiveFields;
-                    result.Add(data);
+                    foreach (QualityControlData data in quality.QualityControlData)
+                    {
+                        data.ProductNumber = "P" + quality.Number;
+                        data.ProductName = quality.ProductName;
+                        data.ProductActiveFields = quality.ActiveFields;
+                        result.Add(data);
+                    }
                 }
             }
 
@@ -85,7 +89,14 @@ namespace Quality_Control_EF.Service
 
             try
             {
-                _ = _contex.SaveChanges();
+                List<QualityControlData> modified = Statistic.Where(x => x.Modified).ToList();
+                using (LabBookContext contex = new LabBookContext())
+                {
+                    contex.UpdateRange(modified);
+                    _ = contex.SaveChanges();
+                }
+
+                Saved = true;
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -100,12 +111,20 @@ namespace Quality_Control_EF.Service
                 return false;
             }
 
-            var dates = Statistic.Where(x => x.Modified).ToList();
-            foreach (QualityControlData data in dates)
+            List<long> list = Statistic
+                .Where(x => x.Modified)
+                .Select(x => x.Id)
+                .ToList();
+
+            foreach (long i in list)
             {
-                data.Modified = false;
+                _ = ModifiedId.Add(i);
             }
 
+            Statistic
+                .Where(x => x.Modified)
+                .ToList()
+                .ForEach(x => x.Modified = false);
 
             return result;
         }

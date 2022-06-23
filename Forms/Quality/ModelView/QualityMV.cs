@@ -48,7 +48,6 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
         public RelayCommand<AddingNewItemEventArgs> OnInitializingNewQualityDataCommand { get; set; }
         public RelayCommand<DataGridCellEditEndingEventArgs> OnCellQualityDataChange { get; set; }
 
-
         public QualityMV()
         {
             OnClosingCommand = new RelayCommand<CancelEventArgs>(OnClosingCommandExecuted);
@@ -426,8 +425,18 @@ namespace Quality_Control_EF.Forms.Quality.ModelView
 
         internal void ShowToday()
         {
-            StatisticTodayForm form = new StatisticTodayForm(_service.GetContex);
+            StatisticTodayForm form = new StatisticTodayForm();
             _ = form.ShowDialog();
+            if (!form.Saved || DateTime.Today.Year != Year) return;
+
+            SaveAll();
+            foreach (long i in form.ModifiedId)
+            {
+                QualityControlData entry = _service.GetContex.QualityControlData.Find(i);
+                _service.GetContex.Entry(entry).Reload();
+            }
+
+            DgRowIndex = DgRowIndex;
         }
 
         internal void StatisticOpen() //ok

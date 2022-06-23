@@ -1,8 +1,8 @@
 ﻿using Quality_Control_EF.Commons;
 using Quality_Control_EF.Converters;
 using Quality_Control_EF.Forms.Statistic.ModelView;
-using Quality_Control_EF.Models;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,14 +15,18 @@ namespace Quality_Control_EF.Forms.Statistic
     /// </summary>
     public partial class StatisticTodayForm : Window
     {
-        public StatisticTodayForm(LabBookContext contex)
+        private readonly StatisticTodayMV statisticMV;
+        public bool Saved => statisticMV.Saved;
+        public ISet<long> ModifiedId => statisticMV.ModifiedId;
+
+        public StatisticTodayForm()
         {
             InitializeComponent();
             Title = "Wyniki na dzień - " + DateTime.Now.ToShortDateString();
             Height = SystemParameters.PrimaryScreenHeight - 100;
             Width = SystemParameters.PrimaryScreenWidth - 200;
 
-            StatisticTodayMV statisticMV = new StatisticTodayMV(contex);
+            statisticMV = new StatisticTodayMV();
             DataContext = statisticMV;
 
             SetColumns(statisticMV);

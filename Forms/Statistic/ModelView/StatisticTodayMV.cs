@@ -29,9 +29,9 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
         public RelayCommand<CancelEventArgs> OnClosingCommand { get; set; }
         public RelayCommand<DataGridCellEditEndingEventArgs> OnCellQualityDataChange { get; set; }
 
-        public StatisticTodayMV(LabBookContext context)
+        public StatisticTodayMV()
         {
-            _service = new StatisticService(context, today);
+            _service = new StatisticService(today);
             OnClosingCommand = new RelayCommand<CancelEventArgs>(OnClosingCommandExecuted);
             OnCellQualityDataChange = new RelayCommand<DataGridCellEditEndingEventArgs>(OnCellQualityDataChangeExecuted);
         }
@@ -46,6 +46,10 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
         }
 
         public SortableObservableCollection<QualityControlData> TodayData => _service.Statistic;
+
+        public bool Saved => _service.Saved;
+
+        public ISet<long> ModifiedId => _service.ModifiedId;
 
         public List<string> GetActiveFields => _service.GetVisibleColumn;
 
@@ -89,7 +93,7 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
 
         internal void SaveToday()
         {
-            _service.Save();
+            _ = _service.Save();
         }
 
     }
