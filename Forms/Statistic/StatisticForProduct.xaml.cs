@@ -1,39 +1,43 @@
 ﻿using Quality_Control_EF.Commons;
 using Quality_Control_EF.Converters;
+using Quality_Control_EF.Forms.Statistic.Model;
 using Quality_Control_EF.Forms.Statistic.ModelView;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Ribbon;
 using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace Quality_Control_EF.Forms.Statistic
 {
     /// <summary>
-    /// Logika interakcji dla klasy StatisticTodayForm.xaml
+    /// Logika interakcji dla klasy StatisticForProduct.xaml
     /// </summary>
-    public partial class StatisticTodayForm : RibbonWindow
+    public partial class StatisticForProduct : RibbonWindow
     {
-        private readonly StatisticTodayMV statisticMV;
-        public bool Saved => statisticMV.Saved;
-        public ISet<long> ModifiedId => statisticMV.ModifiedId;
-
-        public StatisticTodayForm()
+        public StatisticForProduct(StatisticDto statisticDto)
         {
             InitializeComponent();
-            Title = "Wyniki na dzień - " + DateTime.Now.ToShortDateString();
+            Title = statisticDto.Title;
             Height = SystemParameters.PrimaryScreenHeight - 100;
             Width = SystemParameters.PrimaryScreenWidth - 200;
 
-            statisticMV = new StatisticTodayMV();
+            StatisticForProductMV statisticMV = new StatisticForProductMV(statisticDto);
             DataContext = statisticMV;
 
             SetColumns(statisticMV);
         }
 
-        private void SetColumns(StatisticTodayMV statisticMV)
+        private void SetColumns(StatisticForProductMV statisticMV)
         {
             Style headerStyle = (Style)Resources["AllignColmnHeaderCenter"];
             Style cellStyleCenter = (Style)Resources["AllignCellCenter"];
@@ -87,6 +91,7 @@ namespace Quality_Control_EF.Forms.Statistic
                 DgQualityData.Columns.Add(column);
             }
         }
+
 
         private void DgQualityData_PreviewKeyDown(object sender, KeyEventArgs e)
         {

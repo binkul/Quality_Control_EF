@@ -35,7 +35,7 @@ namespace Quality_Control_EF.Service
             switch (_statistic.Type)
             {
                 case StatisticType.Product:
-                    return null;
+                    return GetProductData();
                 case StatisticType.Range:
                     return null; // _repository.GetStatisticRange();
                 default:
@@ -69,6 +69,42 @@ namespace Quality_Control_EF.Service
             }
 
             result.Sort(x => x.ProductNumber, System.ComponentModel.ListSortDirection.Ascending);
+
+            return result;
+        }
+
+        private SortableObservableCollection<QualityControlData> GetProductData()
+        {
+            SortableObservableCollection<QualityControlData> result = new SortableObservableCollection<QualityControlData>();
+
+            using(LabBookContext contex = new LabBookContext())
+            {
+                List<QualityControl> tmpResult = contex.QualityControl
+                    .Where(x => x.ProductName.Equals(_statistic.Product.Name))
+                    .Where(x => x.ProductionDate.Date >= _statistic.DateStart.Date && x.ProductionDate.Date <= _statistic.DateEnd.Date)
+                    .Include(x => x.QualityControlData)
+                    .ToList();
+
+                foreach (QualityControl data in tmpResult)
+                {
+                    ICollection<QualityControlData> measures = data.QualityControlData;
+                    _ = measures.OrderBy(x => x.MeasureDate).ThenBy(x => x.Id);
+                }
+
+                int i = 1;
+                foreach (QualityControl quality in tmpResult)
+                {
+                    if (quality.QualityControlData.Count == 0) continue;
+
+                    QualityControlData data = quality.QualityControlData.FirstOrDefault();
+                    data.ProductNumber = "P" + quality.Number;
+                    data.ProductName = "Produkcja " + i;
+                    data.ProductActiveFields = quality.ActiveFields;
+                    result.Add(data);
+                    i++;
+                }
+
+            }
 
             return result;
         }

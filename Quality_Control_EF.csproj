@@ -253,14 +253,19 @@
       <DependentUpon>SettingForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Forms\Statistic\Command\ProductButton.cs" />
+    <Compile Include="Forms\Statistic\Command\ProductSaveButton.cs" />
     <Compile Include="Forms\Statistic\Command\RangeButton.cs" />
     <Compile Include="Forms\Quality\Command\TodayButton.cs" />
     <Compile Include="Forms\Statistic\Command\TodaySaveButton.cs" />
+    <Compile Include="Forms\Statistic\ModelView\StatisticForProductMV.cs" />
     <Compile Include="Forms\Statistic\ModelView\StatisticMV.cs" />
     <Compile Include="Forms\Statistic\ModelView\StatisticTodayMV.cs" />
     <Compile Include="Forms\Statistic\Model\StatisticDto.cs" />
     <Compile Include="Forms\Statistic\StatisticForm.xaml.cs">
       <DependentUpon>StatisticForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Statistic\StatisticForProduct.xaml.cs">
+      <DependentUpon>StatisticForProduct.xaml</DependentUpon>
     </Compile>
     <Compile Include="Forms\Statistic\StatisticTodayForm.xaml.cs">
       <DependentUpon>StatisticTodayForm.xaml</DependentUpon>
@@ -310,6 +315,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Forms\Statistic\StatisticForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Statistic\StatisticForProduct.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

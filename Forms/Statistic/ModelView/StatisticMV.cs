@@ -2,6 +2,7 @@
 using Quality_Control_EF.Forms.Navigation;
 using Quality_Control_EF.Forms.Quality.Command;
 using Quality_Control_EF.Forms.Statistic.Command;
+using Quality_Control_EF.Forms.Statistic.Model;
 using Quality_Control_EF.Models;
 using Quality_Control_EF.Service;
 using System;
@@ -15,7 +16,6 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
 {
     internal class StatisticMV : INotifyPropertyChanged, INavigation
     {
-        private ICommand _todayButton;
         private ICommand _productButton;
         private ICommand _rangeButton;
 
@@ -105,15 +105,6 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
 
         #endregion
 
-        //public ICommand TodayButton
-        //{
-        //    get
-        //    {
-        //        if (_todayButton == null) _todayButton = new TodayButton(this);
-        //        return _todayButton;
-        //    }
-        //}
-
         public ICommand ProductButton
         {
             get
@@ -132,14 +123,16 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
             }
         }
 
-        //internal void ShowToday()
-        //{
-        //    StatisticTodayForm form = new StatisticTodayForm(_contex);
-        //    _ = form.ShowDialog();
-        //}
-
         internal void ShowProduct()
         {
+            string dateStart = DateStart.ToShortDateString();
+            string dateEnd = DateEnd.ToShortDateString();
+            Product product = Products[_selectedIndex];
+            StatisticDto statisticDto = new StatisticDto("Wyniki dla wyrobu: " + product.Name + " w okresie od " + DateStart + " do: " + dateEnd,
+                DateStart, DateEnd, product, StatisticType.Product);
+
+            StatisticForProduct form = new StatisticForProduct(statisticDto);
+            form.ShowDialog();
         }
 
         internal void ShowRange()
