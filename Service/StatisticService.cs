@@ -2,8 +2,10 @@
 using Quality_Control_EF.Commons;
 using Quality_Control_EF.Forms.Statistic.Model;
 using Quality_Control_EF.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 
 namespace Quality_Control_EF.Service
@@ -20,7 +22,7 @@ namespace Quality_Control_EF.Service
         private readonly StatisticDto _statistic;
         public bool Saved { get; set; } = false;
         public List<string> GetVisibleColumn { get; }
-        public ISet<long> ModifiedId { get; } = new HashSet<long>();
+        public ISet<long> ModifiedId { get; set; } = new HashSet<long>();
         public SortableObservableCollection<QualityControlData> Statistic { get; set; }
 
         public StatisticService(StatisticDto statistic)
@@ -82,6 +84,7 @@ namespace Quality_Control_EF.Service
                 List<QualityControl> tmpResult = contex.QualityControl
                     .Where(x => x.ProductName.Equals(_statistic.Product.Name))
                     .Where(x => x.ProductionDate.Date >= _statistic.DateStart.Date && x.ProductionDate.Date <= _statistic.DateEnd.Date)
+                    .OrderBy(x => x.Number)
                     .Include(x => x.QualityControlData)
                     .ToList();
 
@@ -104,9 +107,51 @@ namespace Quality_Control_EF.Service
                     i++;
                 }
 
+                if (result.Count == 0) return result;
+
+                QualityControlData summary = new QualityControlData();
+                summary.ProductName = DefaultData.MediumStirng;
+                summary.MeasureDate = DateTime.Today;
+
+                foreach (PropertyInfo prop in typeof(QualityControlData).GetProperties())
+                {
+                    if (!prop.PropertyType.FullName.Contains("Double")) continue;
+
+                    double sum = 0;
+                    int count = 0;
+                    foreach (QualityControlData data in result)
+                    {
+                        object val = prop.GetValue(data);
+                        if (val != null)
+                        {
+                            sum += (double)val;
+                            count++;
+                        }
+                    }
+
+                    if (count > 0)
+                    {
+                        sum /= count;
+                        int accuracy = FindAccuracy(prop) >= 0 ? FindAccuracy(prop) : 0;
+                        sum = Math.Round(sum, FindAccuracy(prop));
+                        prop.SetValue(summary, sum);
+                    }
+                }
+
+                result.Add(summary);
             }
 
             return result;
+        }
+
+        private int FindAccuracy(PropertyInfo prop)
+        {
+            foreach (QualityDataColumn column in DefaultData.ColumnData)
+            {
+                if (prop.Name == column.EFColumnName)
+                    return column.ValueAccuracy;
+            }
+            return -1;
         }
 
         private List<string> ColumnVisibility()
@@ -147,15 +192,10 @@ namespace Quality_Control_EF.Service
                 return false;
             }
 
-            List<long> list = Statistic
+            ModifiedId = Statistic
                 .Where(x => x.Modified)
                 .Select(x => x.Id)
-                .ToList();
-
-            foreach (long i in list)
-            {
-                _ = ModifiedId.Add(i);
-            }
+                .ToHashSet();
 
             Statistic
                 .Where(x => x.Modified)

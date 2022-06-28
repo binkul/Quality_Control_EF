@@ -2,8 +2,10 @@
 using Quality_Control_EF.Converters;
 using Quality_Control_EF.Forms.Statistic.Model;
 using Quality_Control_EF.Forms.Statistic.ModelView;
+using Quality_Control_EF.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,15 +48,14 @@ namespace Quality_Control_EF.Forms.Statistic
 
             foreach (QualityDataColumn data in DefaultData.ColumnData)
             {
-                if (data.ColumnHeader.Equals("Data") || data.ColumnHeader.Equals("Doba")) continue;
-
+                if (data.ColumnHeader.Equals("Doba")) continue;
 
                 DataGridTextColumn column = new DataGridTextColumn
                 {
                     HeaderStyle = headerStyle,
                     ElementStyle = data.ColumnHeader.Equals("Wyrób") ? cellStyleLeft : cellStyleCenter,
                     Header = data.ColumnHeader,
-                    Width = data.ColumnWidth,
+                    Width = data.ColumnHeader.Equals("Wyrób") ? 100 : data.ColumnWidth,
                     IsReadOnly = data.IsReadOnly,
                     CanUserSort = data.CanUserSort
                 };
@@ -71,6 +72,11 @@ namespace Quality_Control_EF.Forms.Statistic
                     binding.UpdateSourceTrigger = UpdateSourceTrigger.LostFocus;
                     binding.Mode = BindingMode.TwoWay;
                     column.EditingElementStyle = (Style)Resources["DoubleErrorStyle"];
+                }
+                else if (data.ColumnHeader.Equals("Data"))
+                {
+                    binding.Mode = BindingMode.TwoWay;
+                    binding.Converter = new DateTimeConverter();
                 }
                 column.Binding = binding;
 
@@ -92,7 +98,6 @@ namespace Quality_Control_EF.Forms.Statistic
             }
         }
 
-
         private void DgQualityData_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter || e.Key == Key.Right)
@@ -108,6 +113,5 @@ namespace Quality_Control_EF.Forms.Statistic
                 _ = InputManager.Current.ProcessInput(tabKeyEvent);
             }
         }
-
     }
 }

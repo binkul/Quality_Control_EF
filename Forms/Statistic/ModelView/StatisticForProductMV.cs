@@ -4,22 +4,20 @@ using Quality_Control_EF.Forms.Statistic.Command;
 using Quality_Control_EF.Forms.Statistic.Model;
 using Quality_Control_EF.Models;
 using Quality_Control_EF.Service;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Quality_Control_EF.Forms.Statistic.ModelView
 {
     internal class StatisticForProductMV : INotifyPropertyChanged
     {
         private ICommand _saveTodayButton;
-        private readonly StatisticDto _statisticDto;
         public event PropertyChangedEventHandler PropertyChanged;
         private readonly StatisticService _service;
         public QualityControlData ActualControlData { private get; set; }
@@ -29,7 +27,6 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
 
         public StatisticForProductMV(StatisticDto statisticDto)
         {
-            _statisticDto = statisticDto;
             _service = new StatisticService(statisticDto);
             OnClosingCommand = new RelayCommand<CancelEventArgs>(OnClosingCommandExecuted);
             OnCellQualityDataChange = new RelayCommand<DataGridCellEditEndingEventArgs>(OnCellQualityDataChangeExecuted);
@@ -40,6 +37,8 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
         public bool IsAnyQuality => ProductData.Count > 0;
 
         public bool Modified => _service.Statistic.Any(x => x.Modified);
+
+        public List<string> GetActiveFields => _service.GetVisibleColumn;
 
         private void OnPropertyChanged(params string[] names)
         {
@@ -60,19 +59,19 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
         {
             MessageBoxResult ansver = MessageBoxResult.No;
 
-            //if (Modified)
-            //{
-            //    ansver = MessageBox.Show("Dokonano zmian w rekordach. Czy zapisać zmiany?", "Zapis zmian", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-            //}
+            if (Modified)
+            {
+                ansver = MessageBox.Show("Dokonano zmian w rekordach. Czy zapisać zmiany?", "Zapis zmian", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+            }
 
-            //if (ansver == MessageBoxResult.Yes)
-            //{
-            //    SaveToday();
-            //}
-            //else if (ansver == MessageBoxResult.Cancel)
-            //{
-            //    e.Cancel = true;
-            //}
+            if (ansver == MessageBoxResult.Yes)
+            {
+                Save();
+            }
+            else if (ansver == MessageBoxResult.Cancel)
+            {
+                e.Cancel = true;
+            }
         }
 
         public ICommand TodaySaveButton

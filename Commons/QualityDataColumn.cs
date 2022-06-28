@@ -14,9 +14,10 @@ namespace Quality_Control_EF.Commons
         public bool IsAlwaysVisible { get; set; }
         public bool IsValue { get; set; }
         public string ValueFormat { get; set; }
+        public int ValueAccuracy { get; set; }
 
         public QualityDataColumn(string eFColumnName, string dBColumnName, string columnHeader, int columnIndex, double columnWidth, 
-            bool canUserSort, bool isReadOnly, bool isAlwaysVisible, bool isValue, string valueFormat)
+            bool canUserSort, bool isReadOnly, bool isAlwaysVisible, bool isValue, string valueFormat, int valueAccuracy)
         {
             EFColumnName = eFColumnName;
             DBColumnName = dBColumnName;
@@ -28,6 +29,7 @@ namespace Quality_Control_EF.Commons
             IsAlwaysVisible = isAlwaysVisible;
             IsValue = isValue;
             ValueFormat = valueFormat;
+            ValueAccuracy = valueAccuracy;
         }
     }
 }

@@ -17,6 +17,16 @@
         <Convertors:DateTimeConverter x:Key="DateTimeConverter" />
         <Convertors:ColumnVisibilityConverter x:Key="ColumnVisibility" />
         <Convertors:IgnoreNewItemPlaceholderConverter x:Key="IgnoreNewItemConverter" />
+        <Style x:Key="RowBackgroundYellow" TargetType="DataGridRow">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ProductName}" Value="ŚREDNIA:">
+                    <Setter Property="IsEnabled"  Value="False" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="Background" Value="Yellow" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
         <Style x:Key="AllignColmnHeaderCenter" TargetType="DataGridColumnHeader">
             <Setter Property="SeparatorBrush" Value="WhiteSmoke" />
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -29,14 +39,19 @@
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Padding" Value="0,0,0,0" />
-            <Setter Property="FontWeight" Value="Normal" />
         </Style>
         <Style x:Key="AllignCellLeft" TargetType="TextBlock">
             <Setter Property="FontSize" Value="12" />
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Padding" Value="3,0,0,0" />
-            <Setter Property="FontWeight" Value="Normal" />
+        </Style>
+        <Style x:Key="NotEnableRowFontColor" TargetType="{x:Type DataGridCell}">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType=DataGridRow}}"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
         <Style x:Key="DateErrorStyle" TargetType="TextBox">
             <Style.Triggers>
@@ -94,10 +109,12 @@
                   CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="True" CanUserResizeRows="False" FontSize="12" HeadersVisibility="Column"
                   HorizontalGridLinesBrush="{StaticResource DataGridBorderColor}"
                   VerticalGridLinesBrush="{StaticResource DataGridBorderColor}"
+                  RowStyle="{StaticResource RowBackgroundYellow}"
+                  CellStyle="{StaticResource NotEnableRowFontColor}"
                   IsEnabled="{Binding IsAnyQuality, Mode=OneWay}"
                   SelectedItem="{Binding ActualControlData, Mode=OneWayToSource, Converter={StaticResource IgnoreNewItemConverter}}"
                   ItemsSource="{Binding ProductData, UpdateSourceTrigger=PropertyChanged}" 
-                  PreviewKeyDown="DgQualityData_PreviewKeyDown">
+                  PreviewKeyDown="DgQualityData_PreviewKeyDown" >
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="CellEditEnding">
                     <cmd:EventToCommand Command="{Binding OnCellQualityDataChange}" PassEventArgsToCommand="True" />
@@ -105,8 +122,6 @@
             </i:Interaction.Triggers>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Id}" Visibility="Collapsed" />
-                <DataGridTextColumn Binding="{Binding QualityId}" Visibility="Collapsed" />
 
             </DataGrid.Columns>
 
