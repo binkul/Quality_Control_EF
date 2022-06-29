@@ -52,7 +52,11 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
         private void OnCellQualityDataChangeExecuted(DataGridCellEditEndingEventArgs e)
         {
             if (ActualControlData != null)
+            {
                 ActualControlData.Modified = true;
+                _service.RecalculateProductData();
+                OnPropertyChanged(nameof(ProductData));
+            }
         }
 
         private void OnClosingCommandExecuted(CancelEventArgs e)

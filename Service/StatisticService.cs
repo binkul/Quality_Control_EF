@@ -107,37 +107,10 @@ namespace Quality_Control_EF.Service
                     i++;
                 }
 
-                if (result.Count == 0) return result;
+                if (result.Count == 0) 
+                    return result;
 
-                QualityControlData summary = new QualityControlData();
-                summary.ProductName = DefaultData.MediumStirng;
-                summary.MeasureDate = DateTime.Today;
-
-                foreach (PropertyInfo prop in typeof(QualityControlData).GetProperties())
-                {
-                    if (!prop.PropertyType.FullName.Contains("Double")) continue;
-
-                    double sum = 0;
-                    int count = 0;
-                    foreach (QualityControlData data in result)
-                    {
-                        object val = prop.GetValue(data);
-                        if (val != null)
-                        {
-                            sum += (double)val;
-                            count++;
-                        }
-                    }
-
-                    if (count > 0)
-                    {
-                        sum /= count;
-                        int accuracy = FindAccuracy(prop) >= 0 ? FindAccuracy(prop) : 0;
-                        sum = Math.Round(sum, FindAccuracy(prop));
-                        prop.SetValue(summary, sum);
-                    }
-                }
-
+                QualityControlData summary = CalculateMediums(result);
                 result.Add(summary);
             }
 
@@ -152,6 +125,57 @@ namespace Quality_Control_EF.Service
                     return column.ValueAccuracy;
             }
             return -1;
+        }
+
+        internal void RecalculateProductData()
+        {
+            QualityControlData summary = CalculateMediums(Statistic);
+
+            QualityControlData summaryToRemove = Statistic.FirstOrDefault(x => x.ProductName.Equals(DefaultData.MediumStirng));
+            if (summaryToRemove != null)
+            {
+                _ = Statistic.Remove(summaryToRemove);
+            }
+
+            Statistic.Add(summary);
+        }
+
+        private QualityControlData CalculateMediums(ICollection<QualityControlData> results)
+        {
+            QualityControlData summary = new QualityControlData
+            {
+                ProductName = DefaultData.MediumStirng,
+                MeasureDate = DateTime.Today
+            };
+
+            foreach (PropertyInfo prop in typeof(QualityControlData).GetProperties())
+            {
+                if (!prop.PropertyType.FullName.Contains("Double")) continue;
+
+                double sum = 0;
+                int count = 0;
+                foreach (QualityControlData data in results)
+                {
+                    if (data.ProductName.Equals(DefaultData.MediumStirng)) continue;
+
+                    object val = prop.GetValue(data);
+                    if (val != null)
+                    {
+                        sum += (double)val;
+                        count++;
+                    }
+                }
+
+                if (count > 0)
+                {
+                    sum /= count;
+                    int accuracy = FindAccuracy(prop) >= 0 ? FindAccuracy(prop) : 0;
+                    sum = Math.Round(sum, accuracy);
+                    prop.SetValue(summary, sum);
+                }
+            }
+
+            return summary;
         }
 
         private List<string> ColumnVisibility()
@@ -194,6 +218,7 @@ namespace Quality_Control_EF.Service
 
             ModifiedId = Statistic
                 .Where(x => x.Modified)
+                .Where(x => !x.ProductName.Equals(DefaultData.MediumStirng))
                 .Select(x => x.Id)
                 .ToHashSet();
 
