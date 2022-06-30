@@ -39,7 +39,7 @@ namespace Quality_Control_EF.Service
                 case StatisticType.Product:
                     return GetProductData();
                 case StatisticType.Range:
-                    return null; // _repository.GetStatisticRange();
+                    return GetRangeData();
                 default:
                     return GetTodayData();
             }
@@ -113,6 +113,42 @@ namespace Quality_Control_EF.Service
                 QualityControlData summary = CalculateMediums(result);
                 result.Add(summary);
             }
+
+            return result;
+        }
+
+        private SortableObservableCollection<QualityControlData> GetRangeData()
+        {
+            SortableObservableCollection<QualityControlData> result = new SortableObservableCollection<QualityControlData>();
+
+            using (LabBookContext contex = new LabBookContext())
+            {
+                List<QualityControl> tmpResult = contex.QualityControl
+                    .Where(x => x.ProductionDate.Date >= _statistic.DateStart.Date && x.ProductionDate <= _statistic.DateEnd.Date)
+                    .Include(x => x.QualityControlData)
+                    .OrderBy(x => x.Number)
+                    .ThenBy(x => x.Id)
+                    .ToList();
+
+                foreach (QualityControl control in tmpResult)
+                {
+                    control.QualityControlData.OrderBy(x => x.MeasureDate).ThenBy(x => x.Id);
+                }
+
+                foreach (QualityControl quality in tmpResult)
+                {
+                    var data = quality.QualityControlData.FirstOrDefault();
+                    if (data != null)
+                    {
+                        data.ProductNumber = "P" + quality.Number;
+                        data.ProductName = quality.ProductName;
+                        data.ProductActiveFields = quality.ActiveFields;
+                        result.Add(data);
+                    }
+                }
+            }
+
+            result.Sort(x => x.ProductNumber, System.ComponentModel.ListSortDirection.Ascending);
 
             return result;
         }

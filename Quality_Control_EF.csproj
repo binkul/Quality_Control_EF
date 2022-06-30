@@ -199,6 +199,7 @@
     <Compile Include="Converters\ColumnVisibilityConverter.cs" />
     <Compile Include="Converters\DateTimeConverter.cs" />
     <Compile Include="Converters\DotConverter.cs" />
+    <Compile Include="Converters\EmptyStringToNullConverter.cs" />
     <Compile Include="Converters\IdToEnableConverter.cs" />
     <Compile Include="Converters\IgnoreNewItemPlaceholderConverter.cs" />
     <Compile Include="Converters\NaviCurrentConverter.cs" />
@@ -256,9 +257,11 @@
     <Compile Include="Forms\Statistic\Command\ProductSaveButton.cs" />
     <Compile Include="Forms\Statistic\Command\RangeButton.cs" />
     <Compile Include="Forms\Quality\Command\TodayButton.cs" />
+    <Compile Include="Forms\Statistic\Command\RangeSaveButton.cs" />
     <Compile Include="Forms\Statistic\Command\TodaySaveButton.cs" />
     <Compile Include="Forms\Statistic\ModelView\StatisticForProductMV.cs" />
     <Compile Include="Forms\Statistic\ModelView\StatisticMV.cs" />
+    <Compile Include="Forms\Statistic\ModelView\StatisticRangeMV.cs" />
     <Compile Include="Forms\Statistic\ModelView\StatisticTodayMV.cs" />
     <Compile Include="Forms\Statistic\Model\StatisticDto.cs" />
     <Compile Include="Forms\Statistic\StatisticForm.xaml.cs">
@@ -266,6 +269,9 @@
     </Compile>
     <Compile Include="Forms\Statistic\StatisticForProduct.xaml.cs">
       <DependentUpon>StatisticForProduct.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Statistic\StatisticRangeForm.xaml.cs">
+      <DependentUpon>StatisticRangeForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Forms\Statistic\StatisticTodayForm.xaml.cs">
       <DependentUpon>StatisticTodayForm.xaml</DependentUpon>
@@ -319,6 +325,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Forms\Statistic\StatisticForProduct.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Statistic\StatisticRangeForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

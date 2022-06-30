@@ -25,7 +25,6 @@
         <vm:QualityMV />
     </Window.DataContext>
     <Window.Resources>
-        
         <common:BindingProxy x:Key="proxy" Data="{Binding}" />
         <naviMV:NavigationMV x:Key="navi" />
         <Convertors:DateTimeConverter x:Key="DateTimeConverter" />
@@ -35,6 +34,7 @@
         <Convertors:NaviTotalConverter x:Key="NaviTotalConverter" />
         <Convertors:DotConverter x:Key="DotConverter" />
         <Convertors:IdToEnableConverter x:Key="IdEnableConverter" />
+        <Convertors:EmptyStringToNullConverter x:Key="EmptyToNullConverter" />
         <Style x:Key="AllignColmnHeaderCenter" TargetType="DataGridColumnHeader">
             <Setter Property="SeparatorBrush" Value="WhiteSmoke" />
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -377,15 +377,8 @@
                                         Visibility="{Binding Data.GetActiveFields, Source={StaticResource proxy}, Mode=OneWay, Converter={StaticResource ColumnVisibility}, ConverterParameter=density}" 
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
-                                        ElementStyle="{StaticResource AllignCellCenter}" >
-                        <DataGridTextColumn.Binding>
-                            <Binding Path="Density" UpdateSourceTrigger="LostFocus" Mode="TwoWay" StringFormat="G" ConverterCulture="pl-PL"
-                                     ValidatesOnDataErrors="True" >
-                                <Binding.ValidationRules>
-                                    <val:DoubleCellValidation />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </DataGridTextColumn.Binding>
+                                        ElementStyle="{StaticResource AllignCellCenter}" 
+                                        Binding="{Binding Density, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat={}{0:G}, ConverterCulture='pl-PL', Converter={StaticResource EmptyToNullConverter}}" >
                     </DataGridTextColumn>
                     <!-- pH -->
                     <DataGridTextColumn Header="pH" Width="45" CanUserSort="False" 
@@ -393,15 +386,16 @@
                                                     Converter={StaticResource ColumnVisibility}, ConverterParameter=pH}" 
                                         EditingElementStyle="{StaticResource DoubleErrorStyle}"
                                         HeaderStyle="{StaticResource AllignColmnHeaderCenter}"
-                                        ElementStyle="{StaticResource AllignCellCenter}" >
-                        <DataGridTextColumn.Binding>
+                                        ElementStyle="{StaticResource AllignCellCenter}" 
+                                        Binding="{Binding PH, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat={}{0:G}, ConverterCulture='pl-PL', Converter={StaticResource EmptyToNullConverter}}" >
+                        <!--<DataGridTextColumn.Binding>
                             <Binding Path="PH" UpdateSourceTrigger="LostFocus" Mode="TwoWay" StringFormat="G" ConverterCulture="pl-PL" 
                                      ValidatesOnDataErrors="True" >
                                 <Binding.ValidationRules>
                                     <val:DoubleCellValidation />
                                 </Binding.ValidationRules>
                             </Binding>
-                        </DataGridTextColumn.Binding>
+                        </DataGridTextColumn.Binding>-->
                     </DataGridTextColumn>
                     <!-- vis_1 -->
                     <DataGridTextColumn Header="Lep 1" Width="90" CanUserSort="False" 

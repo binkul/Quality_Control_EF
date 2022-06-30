@@ -2,22 +2,11 @@
 using Quality_Control_EF.Converters;
 using Quality_Control_EF.Forms.Statistic.Model;
 using Quality_Control_EF.Forms.Statistic.ModelView;
-using Quality_Control_EF.Models;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Ribbon;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Quality_Control_EF.Forms.Statistic
 {
@@ -29,7 +18,7 @@ namespace Quality_Control_EF.Forms.Statistic
         public StatisticForProduct(StatisticDto statisticDto)
         {
             InitializeComponent();
-            Title = statisticDto.Title;
+            lblTitle.Content = statisticDto.Title;
             Height = SystemParameters.PrimaryScreenHeight - 100;
             Width = SystemParameters.PrimaryScreenWidth - 200;
 
@@ -71,6 +60,7 @@ namespace Quality_Control_EF.Forms.Statistic
                     binding.StringFormat = data.ValueFormat;
                     binding.UpdateSourceTrigger = UpdateSourceTrigger.LostFocus;
                     binding.Mode = BindingMode.TwoWay;
+                    binding.Converter = new EmptyStringToNullConverter();
                     column.EditingElementStyle = (Style)Resources["DoubleErrorStyle"];
                 }
                 else if (data.ColumnHeader.Equals("Data"))

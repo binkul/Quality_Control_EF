@@ -128,21 +128,21 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
             string dateStart = DateStart.ToShortDateString();
             string dateEnd = DateEnd.ToShortDateString();
             Product product = Products[_selectedIndex];
-            StatisticDto statisticDto = new StatisticDto("Wyniki dla wyrobu: " + product.Name + " w okresie od " + DateStart + " do: " + dateEnd,
+            StatisticDto statisticDto = new StatisticDto("Wyniki dla wyrobu: " + product.Name + " w okresie od " + dateStart + " do: " + dateEnd,
                 DateStart, DateEnd, product, StatisticType.Product);
 
             StatisticForProduct form = new StatisticForProduct(statisticDto);
-            form.ShowDialog();
+            _ = form.ShowDialog();
         }
 
         internal void ShowRange()
         {
-            //string dateStart = DateStart.ToShortDateString();
-            //string dateEnd = DateEnd.ToShortDateString();
-            //StatisticDto range = new StatisticDto("Wyniki dla zakresu: " + dateStart + " do " + dateEnd, DateStart, DateEnd, StatisticType.Range);
+            string dateStart = DateStart.ToShortDateString();
+            string dateEnd = DateEnd.ToShortDateString();
+            StatisticDto range = new StatisticDto("Wyniki dla zakresu: " + dateStart + " do " + dateEnd, DateStart, DateEnd, null, StatisticType.Range);
 
-            //StatisticRangeForm form = new StatisticRangeForm(range);
-            //_ = form.ShowDialog();
+            StatisticRangeForm form = new StatisticRangeForm(range);
+            _ = form.ShowDialog();
         }
 
     }

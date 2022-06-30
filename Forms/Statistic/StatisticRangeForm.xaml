@@ -1,4 +1,4 @@
-﻿<RibbonWindow x:Class="Quality_Control_EF.Forms.Statistic.StatisticForProduct"
+﻿<RibbonWindow x:Class="Quality_Control_EF.Forms.Statistic.StatisticRangeForm"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,24 +9,14 @@
         xmlns:vm="clr-namespace:Quality_Control_EF.Forms.Statistic.ModelView"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:cmd="http://www.galasoft.ch/mvvmlight"
+        d:DataContext="{d:DesignInstance Type=vm:StatisticRangeMV, IsDesignTimeCreatable=false}"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=vm:StatisticForProductMV, IsDesignTimeCreatable=false}"
-        Title="Statystyka dla wyrobu" Height="450" Width="800" WindowStartupLocation="CenterScreen"  Icon="/Img/Ok-icon.png">
+        Title="Zakres produkcji" Height="450" Width="800" WindowStartupLocation="CenterScreen"  Icon="/Img/Ok-icon.png">
     <Window.Resources>
         <Prox:BindingProxy x:Key="proxy" Data="{Binding}" />
         <Convertors:DateTimeConverter x:Key="DateTimeConverter" />
         <Convertors:ColumnVisibilityConverter x:Key="ColumnVisibility" />
         <Convertors:IgnoreNewItemPlaceholderConverter x:Key="IgnoreNewItemConverter" />
-        <Style x:Key="RowBackgroundYellow" TargetType="DataGridRow">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding ProductName}" Value="ŚREDNIA:">
-                    <Setter Property="IsEnabled"  Value="False" />
-                    <Setter Property="FontWeight" Value="Bold" />
-                    <Setter Property="Background" Value="Yellow" />
-                    <Setter Property="Foreground" Value="Black" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
         <Style x:Key="AllignColmnHeaderCenter" TargetType="DataGridColumnHeader">
             <Setter Property="SeparatorBrush" Value="WhiteSmoke" />
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -45,13 +35,6 @@
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Padding" Value="3,0,0,0" />
-        </Style>
-        <Style x:Key="NotEnableRowFontColor" TargetType="{x:Type DataGridCell}">
-            <Style.Triggers>
-                <Trigger Property="IsEnabled" Value="false">
-                    <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType=DataGridRow}}"/>
-                </Trigger>
-            </Style.Triggers>
         </Style>
         <Style x:Key="DateErrorStyle" TargetType="TextBox">
             <Style.Triggers>
@@ -79,7 +62,7 @@
     </i:Interaction.Triggers>
 
     <DockPanel>
-
+        
         <!-- Menu -->
         <Ribbon DockPanel.Dock="Top" FontWeight="Bold" FontSize="14">
             <RibbonTab Header="Operacje">
@@ -96,11 +79,12 @@
                                 </ToolTip>
                             </Button.ToolTip>
                         </Button>
-                        <Label Content="Zapisz" Padding="0,2,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="12" FontWeight="Bold" />
+                        <Label Content="Zapisz" Padding="0,2,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                               FontSize="12" FontWeight="Bold" />
                     </StackPanel>
                 </RibbonGroup>
                 <RibbonGroup Header="Informacje" FontSize="10" VerticalAlignment="Center">
-                    <Label x:Name="lblTitle" Content="Wyrób:" Margin="5,15,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" 
+                    <Label x:Name="lblTitle" Content="Zakres:" Margin="5,15,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" 
                            FontSize="16" FontWeight="Bold" Foreground="Blue" />
                 </RibbonGroup>
             </RibbonTab>
@@ -112,8 +96,6 @@
                   CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="True" CanUserResizeRows="False" FontSize="12" HeadersVisibility="Column"
                   HorizontalGridLinesBrush="{StaticResource DataGridBorderColor}"
                   VerticalGridLinesBrush="{StaticResource DataGridBorderColor}"
-                  RowStyle="{StaticResource RowBackgroundYellow}"
-                  CellStyle="{StaticResource NotEnableRowFontColor}"
                   IsEnabled="{Binding IsAnyQuality, Mode=OneWay}"
                   SelectedItem="{Binding ActualControlData, Mode=OneWayToSource, Converter={StaticResource IgnoreNewItemConverter}}"
                   ItemsSource="{Binding ProductData, UpdateSourceTrigger=PropertyChanged}" 

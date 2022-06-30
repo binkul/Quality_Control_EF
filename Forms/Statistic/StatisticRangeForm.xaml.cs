@@ -1,8 +1,7 @@
 ﻿using Quality_Control_EF.Commons;
 using Quality_Control_EF.Converters;
+using Quality_Control_EF.Forms.Statistic.Model;
 using Quality_Control_EF.Forms.Statistic.ModelView;
-using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Ribbon;
@@ -12,28 +11,26 @@ using System.Windows.Input;
 namespace Quality_Control_EF.Forms.Statistic
 {
     /// <summary>
-    /// Logika interakcji dla klasy StatisticTodayForm.xaml
+    /// Logika interakcji dla klasy StatisticRangeForm.xaml
     /// </summary>
-    public partial class StatisticTodayForm : RibbonWindow
+    public partial class StatisticRangeForm : RibbonWindow
     {
-        private readonly StatisticTodayMV statisticMV;
-        public bool Saved => statisticMV.Saved;
-        public ISet<long> ModifiedId => statisticMV.ModifiedId;
-
-        public StatisticTodayForm()
+        public StatisticRangeForm(StatisticDto statisticDto)
         {
             InitializeComponent();
-            Title = "Wyniki na dzień - " + DateTime.Now.ToShortDateString();
+
+            lblTitle.Content = statisticDto.Title;
             Height = SystemParameters.PrimaryScreenHeight - 100;
             Width = SystemParameters.PrimaryScreenWidth - 200;
 
-            statisticMV = new StatisticTodayMV();
+            StatisticRangeMV statisticMV = new StatisticRangeMV(statisticDto);
             DataContext = statisticMV;
 
             SetColumns(statisticMV);
+
         }
 
-        private void SetColumns(StatisticTodayMV statisticMV)
+        private void SetColumns(StatisticRangeMV statisticMV)
         {
             Style headerStyle = (Style)Resources["AllignColmnHeaderCenter"];
             Style cellStyleCenter = (Style)Resources["AllignCellCenter"];
@@ -42,8 +39,7 @@ namespace Quality_Control_EF.Forms.Statistic
 
             foreach (QualityDataColumn data in DefaultData.ColumnData)
             {
-                if (data.ColumnHeader.Equals("Data") || data.ColumnHeader.Equals("Doba")) continue;
-
+                if (data.ColumnHeader.Equals("Doba")) continue;
 
                 DataGridTextColumn column = new DataGridTextColumn
                 {
@@ -68,6 +64,12 @@ namespace Quality_Control_EF.Forms.Statistic
                     binding.Mode = BindingMode.TwoWay;
                     binding.Converter = new EmptyStringToNullConverter();
                     column.EditingElementStyle = (Style)Resources["DoubleErrorStyle"];
+                }
+                else if (data.ColumnHeader.Equals("Data"))
+                {
+                    binding.Mode = BindingMode.TwoWay;
+                    binding.Converter = new DateTimeConverter();
+                    column.IsReadOnly = true;
                 }
                 column.Binding = binding;
 

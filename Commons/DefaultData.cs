@@ -9,6 +9,19 @@ namespace Quality_Control_EF.Commons
         public static readonly List<string> DefaultFieldsList = new List<string>() { "measure_date", "temp", "density", "pH", "vis_1", "vis_5", "vis_20", "disc", "comments" };
         public static readonly string MediumStirng = "ŚREDNIA:";
 
+        /// <summary>
+        /// 1 - property name in EF model
+        /// 2 - field name in DataBase
+        /// 3 - header name in DataGrid
+        /// 4 - DataGrid column index
+        /// 5 - DataGrid column width
+        /// 6 - DataGrid column IsSortable
+        /// 7 - DataGrid column IsReadOnly
+        /// 8 - DataGrid column IsAlwaysVisible
+        /// 9 - DataGrid column IsNumber (double)
+        /// 10 - DataGrid column for IsNumber - value format
+        /// 11 - DataGrid cell accuracy - number of decimal points
+        /// </summary>
         public static IList<QualityDataColumn> ColumnData = new List<QualityDataColumn>()
         {
             new QualityDataColumn("ProductName", "none", "Wyrób", 0, 230, false, true, true, false, "", -1),

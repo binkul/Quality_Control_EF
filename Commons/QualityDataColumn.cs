@@ -1,4 +1,16 @@
-﻿using System;
+﻿/// <summary>
+/// 1 - property name in EF model
+/// 2 - field name in DataBase
+/// 3 - header name in DataGrid
+/// 4 - DataGrid column index
+/// 5 - DataGrid column width
+/// 6 - DataGrid column IsSortable
+/// 7 - DataGrid column IsReadOnly
+/// 8 - DataGrid column IsAlwaysVisible
+/// 9 - DataGrid column IsNumber (double)
+/// 10 - DataGrid column for IsNumber - value format
+/// 11 - DataGrid cell accuracy - number of decimal points
+/// </summary>
 
 namespace Quality_Control_EF.Commons
 {
