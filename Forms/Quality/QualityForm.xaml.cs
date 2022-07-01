@@ -1,9 +1,13 @@
-﻿using Quality_Control_EF.Forms.Navigation;
+﻿using Quality_Control_EF.Commons;
+using Quality_Control_EF.Converters;
+using Quality_Control_EF.Forms.Navigation;
 using Quality_Control_EF.Forms.Quality.ModelView;
 using Quality_Control_EF.Models;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Ribbon;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace Quality_Control_EF.Forms.Quality
@@ -23,6 +27,8 @@ namespace Quality_Control_EF.Forms.Quality
             navigationMV.ModelView = view;
             view.SetNavigationMV = navigationMV;
             view.SetUser = user;
+
+            SetColumns(view);
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -61,5 +67,68 @@ namespace Quality_Control_EF.Forms.Quality
                 _ = InputManager.Current.ProcessInput(tabKeyEvent);
             }
         }
+
+        private void SetColumns(QualityMV qualityMV)
+        {
+            Style headerStyle = (Style)Resources["AllignColmnHeaderCenter"];
+            Style cellStyleCenter = (Style)Resources["AllignCellCenter"];
+            Style cellStyleLeft = (Style)Resources["AllignCellLeft"];
+
+
+            foreach (QualityDataColumn data in DefaultData.ColumnData)
+            {
+                if (data.EFColumnName.Equals("ProductName") || data.EFColumnName.Equals("ProductNumber")) continue;
+
+
+                DataGridTextColumn column = new DataGridTextColumn
+                {
+                    HeaderStyle = headerStyle,
+                    ElementStyle = cellStyleCenter,
+                    Header = data.ColumnHeader,
+                    Width = data.ColumnWidth,
+                    IsReadOnly = data.IsReadOnly,
+                    CanUserSort = data.CanUserSort
+                };
+
+                Binding binding = new Binding(data.EFColumnName)
+                {
+                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+                };
+
+                if (data.IsValue)
+                {
+                    binding.ConverterCulture = System.Globalization.CultureInfo.CurrentCulture;
+                    binding.StringFormat = data.ValueFormat;
+                    binding.UpdateSourceTrigger = UpdateSourceTrigger.LostFocus;
+                    binding.Mode = BindingMode.TwoWay;
+                    binding.Converter = new EmptyStringToNullConverter();
+                    column.EditingElementStyle = (Style)Resources["DoubleErrorStyle"];
+                }
+                else if (data.ColumnHeader.Equals("Data"))
+                {
+                    binding.Mode = BindingMode.TwoWay;
+                    binding.Converter = new DateTimeConverter();
+                    column.IsReadOnly = false;
+                }
+                column.Binding = binding;
+
+                if (!data.IsAlwaysVisible)
+                {
+                    Binding visible = new Binding
+                    {
+                        Source = qualityMV,
+                        Path = new PropertyPath("GetActiveFields"),
+                        Mode = BindingMode.OneWay,
+                        Converter = new ColumnVisibilityConverter(),
+                        ConverterParameter = data.DBColumnName
+                    };
+
+                    _ = BindingOperations.SetBinding(column, DataGridColumn.VisibilityProperty, visible);
+                }
+
+                DgQualityData.Columns.Add(column);
+            }
+        }
+
     }
 }

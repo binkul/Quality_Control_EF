@@ -4,8 +4,8 @@
     {
         public double FormXpos { get; set; }
         public double FormYpos { get; set; }
-        public double FormWidth { get; set; }
-        public double FormHeight { get; set; }
+        public double FormWidth { get; set; } = 800;
+        public double FormHeight { get; set; } = 400;
 
         public WindowData(double formXpos, double formYpos, double formWidth, double formHeight)
         {

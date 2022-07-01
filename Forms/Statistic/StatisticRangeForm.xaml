@@ -9,8 +9,8 @@
         xmlns:vm="clr-namespace:Quality_Control_EF.Forms.Statistic.ModelView"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:cmd="http://www.galasoft.ch/mvvmlight"
-        d:DataContext="{d:DesignInstance Type=vm:StatisticRangeMV, IsDesignTimeCreatable=false}"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:StatisticRangeMV, IsDesignTimeCreatable=false}"
         Title="Zakres produkcji" Height="450" Width="800" WindowStartupLocation="CenterScreen"  Icon="/Img/Ok-icon.png">
     <Window.Resources>
         <Prox:BindingProxy x:Key="proxy" Data="{Binding}" />

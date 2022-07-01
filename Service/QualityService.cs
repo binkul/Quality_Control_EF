@@ -25,7 +25,7 @@ namespace Quality_Control_EF.Service
             Years = GetAllYears();
         }
 
-        internal void AttachUser(User user) //ok
+        internal void AttachUser(User user)
         {
             _user = user;
             _ = _contex.Users.Attach(_user);
@@ -33,32 +33,32 @@ namespace Quality_Control_EF.Service
 
         internal LabBookContext GetContex => _contex;
 
-        private bool ModifiedQuality => Quality.Any(x => x.Modified); //ok
+        private bool ModifiedQuality => Quality.Any(x => x.Modified);
 
-        private bool ModifiedControlData => QualityData.Any(x => x.Modified); //ok
+        private bool ModifiedControlData => QualityData.Any(x => x.Modified);
 
-        internal bool Modified => ModifiedQuality || ModifiedControlData; //ok
+        internal bool Modified => ModifiedQuality || ModifiedControlData;
 
-        public List<int> Years { get; private set; } //ok
+        public List<int> Years { get; private set; }
 
-        public int Year { get; set; } = DateTime.Today.Year; //ok
+        public int Year { get; set; } = DateTime.Today.Year;
 
-        internal int GetQualityCount => Quality.Count; //ok
+        internal int GetQualityCount => Quality.Count;
 
-        public void ReloadYears() //ok
+        public void ReloadYears()
         {
             int tmpYear = Year;
             Years = GetAllYears();
             Year = Years.Contains(tmpYear) ? tmpYear : Years.Count > 0 ? Years[Years.Count - 1] : -1;
         }
 
-        public void ReloadQuality(int year) //ok
+        public void ReloadQuality(int year)
         {
             FullQuality = GetAllQuality(year);
             Quality = FullQuality;
         }
 
-        internal QualityControlData AddQualityData(QualityControl quality) //ok
+        internal QualityControlData AddQualityData(QualityControl quality)
         {
             QualityControlData data = new QualityControlData
             {
@@ -72,13 +72,18 @@ namespace Quality_Control_EF.Service
             return data;
         }
 
-        public SortableObservableCollection<QualityControl> GetAllQuality(int year) //ok
+        public SortableObservableCollection<QualityControl> GetAllQuality(int year)
         {
             List<QualityControl> tmpList = _contex.QualityControl
                 .Where(x => x.ProductionDate.Year == year)
                 .Include(x => x.QualityControlData)
                 .OrderBy(x => x.Number)
                 .ToList();
+
+            foreach (QualityControl quality in tmpList)
+            {
+                quality.QualityControlData.ToList().ForEach(x => x.DayDistance = (int)(x.MeasureDate - quality.ProductionDate).TotalDays);
+            }
 
             SortableObservableCollection<QualityControl> list = new SortableObservableCollection<QualityControl>(tmpList);
             return list;
@@ -93,9 +98,9 @@ namespace Quality_Control_EF.Service
                 .ToList();
         }
 
-        internal List<string> ActiveFields { get; } = new List<string>(DefaultData.DefaultFieldsList); //ok
+        internal List<string> ActiveFields { get; } = new List<string>(DefaultData.DefaultFieldsList);
 
-        private List<string> GetActiveFields(QualityControl quality) //ok
+        private List<string> GetActiveFields(QualityControl quality)
         {
             List<string> result = new List<string>();
             string fields = quality.ActiveFields;
@@ -121,7 +126,7 @@ namespace Quality_Control_EF.Service
             return !string.IsNullOrEmpty(result) ? result : DefaultData.DefaultDataFields;
         }
 
-        internal void RefreshQualityData(QualityControl quality) //ok
+        internal void RefreshQualityData(QualityControl quality)
         {
             if (Modified)
                 _ = Save();
@@ -141,7 +146,7 @@ namespace Quality_Control_EF.Service
             }
         }
 
-        public void AddNewQualityToList(QualityControl quality) //ok
+        public void AddNewQualityToList(QualityControl quality)
         {
             FullQuality.Add(quality);
             FullQuality.Sort(x => x.Number, ListSortDirection.Ascending);
@@ -167,7 +172,7 @@ namespace Quality_Control_EF.Service
             return quality;
         }
 
-        internal void Filter(string ProductNumber, string ProductName) //ok
+        internal void Filter(string ProductNumber, string ProductName)
         {
             if (!string.IsNullOrEmpty(ProductName) || !string.IsNullOrEmpty(ProductNumber))
             {
@@ -190,7 +195,7 @@ namespace Quality_Control_EF.Service
             }
         }
 
-        internal void Delete(QualityControl quality) //ok
+        internal void Delete(QualityControl quality)
         {
             if (MessageBox.Show("Czy na pewno usunąć produkcję P" + quality.Number + " '" + quality.ProductName + "' z listy?", "Usuwanie",
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
@@ -202,7 +207,7 @@ namespace Quality_Control_EF.Service
             }
         }
 
-        internal void DeleteData(QualityControlData qualityControlData, QualityControl qualityControl) //ok
+        internal void DeleteData(QualityControlData qualityControlData, QualityControl qualityControl)
         {
             MessageBoxResult response = MessageBox.Show("Czy usunąć wybrany pomiar z dnia: '" + qualityControlData.MeasureDate.ToShortDateString() + "'", "Usuwanie",
                 MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -225,7 +230,7 @@ namespace Quality_Control_EF.Service
             }
         }
 
-        internal bool Save() //ok
+        internal bool Save()
         {
             bool reload = false;
 
@@ -272,7 +277,7 @@ namespace Quality_Control_EF.Service
             return reload;
         }
 
-        private bool CheckQualityYear(QualityControl quality) //ok
+        private bool CheckQualityYear(QualityControl quality)
         {
             bool result = false;
 

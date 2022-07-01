@@ -27,7 +27,6 @@ namespace Quality_Control_EF.Forms.Statistic
             DataContext = statisticMV;
 
             SetColumns(statisticMV);
-
         }
 
         private void SetColumns(StatisticRangeMV statisticMV)

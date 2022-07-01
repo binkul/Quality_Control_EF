@@ -100,7 +100,7 @@ namespace Quality_Control_EF.Models
         public string ProductNumber { get; set; } = "";
         public string ProductName { get; set; } = "";
         public string ProductActiveFields { get; set; } = DefaultData.DefaultDataFields;
-        public int DayDistance => (int)(DateTime.Today - MeasureDate).TotalDays;
+        public int DayDistance { get; set; }
         public bool Modified { get; set; }
 
         public virtual QualityControl QualityControl { get; set; }
