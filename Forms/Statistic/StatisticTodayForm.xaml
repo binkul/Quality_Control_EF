@@ -69,7 +69,7 @@
         <Ribbon DockPanel.Dock="Top" FontWeight="Bold" FontSize="14">
             <RibbonTab Header="Operacje">
                 <RibbonGroup Header="Statystyka" FontSize="10">
-                    <StackPanel Orientation="Vertical" Margin="5,0,0,0">
+                    <StackPanel Orientation="Vertical" Margin="5,0,5,0">
                         <Button Width="48" Height="48"
                                 Command="{Binding TodaySaveButton}">
                             <Image Source="/img/save.png"/>
@@ -83,7 +83,22 @@
                         </Button>
                         <Label Content="Zapisz" Padding="0,2,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="12" FontWeight="Bold" />
                     </StackPanel>
-
+                </RibbonGroup>
+                <RibbonGroup Header="Operacje" FontSize="10">
+                    <StackPanel Orientation="Vertical" Margin="5,0,5,0">
+                        <Button Width="48" Height="48"
+                                Command="{Binding ExcelExportButton}">
+                            <Image Source="/img/excel.png"/>
+                            <Button.ToolTip >
+                                <ToolTip Background="Yellow">
+                                    <DockPanel Width="Auto" Height="Auto" Background="Yellow" >
+                                        <TextBlock FontSize="12">Export do Excel</TextBlock>
+                                    </DockPanel>
+                                </ToolTip>
+                            </Button.ToolTip>
+                        </Button>
+                        <Label Content="Excel export" Padding="0,2,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="12" FontWeight="Bold" />
+                    </StackPanel>
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>

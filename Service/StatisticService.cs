@@ -4,9 +4,12 @@ using Quality_Control_EF.Forms.Statistic.Model;
 using Quality_Control_EF.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using Excel = Microsoft.Office.Interop.Excel;
+
 
 namespace Quality_Control_EF.Service
 {
@@ -264,6 +267,140 @@ namespace Quality_Control_EF.Service
                 .ForEach(x => x.Modified = false);
 
             return result;
+        }
+
+        internal void ExportToExcel()
+        {
+            Excel.Application excelApp = OpenExcel();
+            if (excelApp == null)
+                return;
+            Excel.Worksheet excelWorkSheet = PrepareExcelWorkSheet(excelApp);
+
+            int col = 3;
+            int row = 1;
+            foreach (PropertyInfo prop in typeof(QualityControlData).GetProperties())
+            {
+                if (SkipReflectionFields(prop.Name)) continue;
+
+                QualityDataColumn colData = DefaultData.ColumnData.FirstOrDefault(x => x.EFColumnName.Equals(prop.Name));
+
+                if (!GetVisibleColumn.Contains(colData.DBColumnName) &&
+                    colData.EFColumnName != "ProductName" &&
+                    colData.EFColumnName != "ProductNumber") continue;
+
+                row = 1;
+                WriteToExcelCell(excelWorkSheet, prop.Name, colData.ColumnHeader, row, col);
+                foreach (QualityControlData data in Statistic)
+                {
+                    row++;
+                    string value = GetReflectionValue(prop, data);
+                    WriteToExcelCell(excelWorkSheet, prop.Name, value, row, col);
+                }
+                col++;
+            }
+
+            FormatExcelWorkSheet(excelWorkSheet);
+            ShowExcel(excelApp);
+        }
+
+        private string GetReflectionValue(PropertyInfo prop, QualityControlData data)
+        {
+            string value;
+            if (prop.GetValue(data) == null)
+            {
+                value = "";
+            }
+            else if (prop.PropertyType.FullName.Contains("DateTime"))
+            {
+                value = ((DateTime)prop.GetValue(data)).ToShortDateString();
+            }
+            else if (prop.PropertyType.FullName.Contains("Double"))
+            {
+                double d = (double)prop.GetValue(data);
+                value = d.ToString(CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                value = prop.GetValue(data).ToString();
+            }
+
+            return value;
+        }
+
+        private bool SkipReflectionFields(string name)
+        {
+            return name.Equals("ProductActiveFields") ||
+                        name.Equals("DayDistance") ||
+                        name.Equals("Modified") ||
+                        name.Equals("Id") ||
+                        name.Equals("QualityId") ||
+                        name.Equals("QualityControl");
+        }
+        
+        private Excel.Application OpenExcel()
+        {
+            Excel.Application excelApp = null;
+
+            try
+            {
+                excelApp = new Excel.Application();
+                if (excelApp == null)
+                {
+                    _ = MessageBox.Show("Nie można otworzyć Excela. Sprawdź, czy jest poprawnie zainstalowany",
+                        "Błąd otwarcia aplikacji", MessageBoxButton.OK, MessageBoxImage.Error);
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                _ = MessageBox.Show("Nie można uruchomić aplikacji Excel. Sprawdź, czy jest poprawnie zainstalowany '" +
+                                ex.Message + "'", "Błąd otwarcia aplikacji", MessageBoxButton.OK, MessageBoxImage.Error);
+                return null;
+            }
+
+            return excelApp;
+        }
+
+        private void ShowExcel(Excel.Application excelApp)
+        {
+            excelApp.Visible = true;
+            excelApp.UserControl = true;
+            excelApp.ActiveWindow.Activate();
+        }
+
+        private Excel.Worksheet PrepareExcelWorkSheet(Excel.Application excelApp)
+        {
+            _ = excelApp.Workbooks.Add();
+            Excel.Sheets excelSheets = excelApp.Worksheets;
+            return (Excel.Worksheet)excelSheets.get_Item("Arkusz1");
+        }
+
+        private void WriteToExcelCell(Excel.Worksheet excelWorkSheet, string name, string value, int row, int col)
+        {
+            switch (name)
+            {
+                case "ProductName":
+                    excelWorkSheet.Cells[row, 1] = value;
+                    break;
+                case "ProductNumber":
+                    excelWorkSheet.Cells[row, 2] = value;
+                    break;
+                default:
+                    excelWorkSheet.Cells[row, col] = value;
+                    break;
+            }
+        }
+
+        private void FormatExcelWorkSheet(Excel.Worksheet excelWorkSheet)
+        {
+            excelWorkSheet.Cells[1, 1].EntireRow.Font.Size = 12;
+            excelWorkSheet.Cells[1, 1].EntireRow.Font.Bold = true;
+            excelWorkSheet.Cells[1, 1].EntireRow.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+            excelWorkSheet.get_Range("A:A").HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+            excelWorkSheet.get_Range("B:BA").HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+            excelWorkSheet.get_Range("A:BA").Columns.AutoFit();
         }
     }
 }

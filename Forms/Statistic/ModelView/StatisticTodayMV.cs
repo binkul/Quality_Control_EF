@@ -20,6 +20,8 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
         DateTime.Now, DateTime.Now, null, StatisticType.Today);
 
         private ICommand _saveTodayButton;
+        private ICommand _exportToExcelButton;
+
         private readonly StatisticService _service;
         public QualityControlData ActualControlData { private get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
@@ -88,10 +90,23 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
             }
         }
 
+        public ICommand ExcelExportButton
+        {
+            get
+            {
+                if (_exportToExcelButton == null) _exportToExcelButton = new ExportTodayToExcelButton(this);
+                return _exportToExcelButton;
+            }
+        }
+
         internal void SaveToday()
         {
             _ = _service.Save();
         }
 
+        internal void ExcelExport()
+        {
+            _service.ExportToExcel();
+        }
     }
 }
