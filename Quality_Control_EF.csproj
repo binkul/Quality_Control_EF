@@ -253,6 +253,8 @@
     <Compile Include="Forms\Settings\SettingForm.xaml.cs">
       <DependentUpon>SettingForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Statistic\Command\ExportProductToExcelButton.cs" />
+    <Compile Include="Forms\Statistic\Command\ExportRangeToExcelButton.cs" />
     <Compile Include="Forms\Statistic\Command\ExportTodayToExcelButton.cs" />
     <Compile Include="Forms\Statistic\Command\ProductButton.cs" />
     <Compile Include="Forms\Statistic\Command\ProductSaveButton.cs" />

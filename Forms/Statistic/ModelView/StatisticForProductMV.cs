@@ -6,18 +6,18 @@ using Quality_Control_EF.Models;
 using Quality_Control_EF.Service;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace Quality_Control_EF.Forms.Statistic.ModelView
 {
     internal class StatisticForProductMV : INotifyPropertyChanged
     {
         private ICommand _saveTodayButton;
+        private ICommand _exportToExcelButton;
+
         public event PropertyChangedEventHandler PropertyChanged;
         private readonly StatisticService _service;
         public QualityControlData ActualControlData { private get; set; }
@@ -87,9 +87,23 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
             }
         }
 
+        public ICommand ExcelExportButton
+        {
+            get
+            {
+                if (_exportToExcelButton == null) _exportToExcelButton = new ExportProductToExcelButton(this);
+                return _exportToExcelButton;
+            }
+        }
+
         internal void Save()
         {
             _ = _service.Save();
+        }
+
+        internal void ExcelExport()
+        {
+            _service.ExportToExcel();
         }
 
     }

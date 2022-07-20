@@ -16,6 +16,7 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
     internal class StatisticRangeMV : INotifyPropertyChanged
     {
         private ICommand _saveButton;
+        private ICommand _exportToExcelButton;
 
         private StatisticDto _statisticDto;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -87,9 +88,23 @@ namespace Quality_Control_EF.Forms.Statistic.ModelView
             }
         }
 
+        public ICommand ExcelExportButton
+        {
+            get
+            {
+                if (_exportToExcelButton == null) _exportToExcelButton = new ExportRangeToExcelButton(this);
+                return _exportToExcelButton;
+            }
+        }
+
         internal void Save()
         {
             _ = _service.Save();
+        }
+
+        internal void ExcelExport()
+        {
+            _service.ExportToExcel();
         }
 
     }
